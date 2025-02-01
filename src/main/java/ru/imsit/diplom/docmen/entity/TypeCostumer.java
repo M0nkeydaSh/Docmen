@@ -9,20 +9,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "type_costumer")
+public class TypeCostumer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
-
-    @Column(name = "login", unique = true)
-    private String login;
-
-    @Column(name = "password")
-    private String password;
-
-
-
 
 }

@@ -22,6 +22,8 @@ public class StateCard {
     @JdbcTypeCode(SqlTypes.DATE)
     private String changeDate;
 
-
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
 
 }

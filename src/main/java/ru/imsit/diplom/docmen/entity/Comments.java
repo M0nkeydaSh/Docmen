@@ -22,4 +22,17 @@ public class Comments {
     @JdbcTypeCode(SqlTypes.DATE)
     private String changeDate;
 
+    @Column(name = "content")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
+
+
 }

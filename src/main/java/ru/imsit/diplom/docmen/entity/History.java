@@ -21,4 +21,9 @@ public class History {
     @Column(name = "change_date")
     @JdbcTypeCode(SqlTypes.DATE)
     private String changeDate;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
+
 }

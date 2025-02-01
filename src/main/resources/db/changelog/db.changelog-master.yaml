@@ -3,4 +3,6 @@ databaseChangeLog:
       file:  db/changelog/2025/01/22-01-changelog.xml
   - include:
       file: db/changelog/2025/01/addUsers.yaml
+  - include:
+      file: db/changelog/2025/01/addUserAssociation.yaml
 

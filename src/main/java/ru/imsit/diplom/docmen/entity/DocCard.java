@@ -27,6 +27,12 @@ public class DocCard {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String discription;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
 
 
 }

@@ -18,8 +18,15 @@ public class Files {
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    @Column(name = "name")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private String name;
+
     @Column(name = "change_date")
     @JdbcTypeCode(SqlTypes.DATE)
     private String changeDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
 }
