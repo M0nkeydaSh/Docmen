@@ -16,4 +16,7 @@ public class TypeCostumer {
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    @Column(name = "change_date")
+    private String changeDate;
+
 }

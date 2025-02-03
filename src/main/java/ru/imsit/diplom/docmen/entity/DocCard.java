@@ -31,6 +31,9 @@ public class DocCard {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "change_date")
+    private String changeDate;
+
 
 
 

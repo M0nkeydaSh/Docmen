@@ -18,10 +18,6 @@ public class Comments {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "change_date")
-    @JdbcTypeCode(SqlTypes.DATE)
-    private String changeDate;
-
     @Column(name = "content")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String content;
@@ -33,6 +29,9 @@ public class Comments {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_card_id")
     private DocCard docCard;
+
+    @Column(name = "change_date")
+    private String changeDate;
 
 
 }

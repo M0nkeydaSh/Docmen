@@ -22,11 +22,10 @@ public class Files {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
 
-    @Column(name = "change_date")
-    @JdbcTypeCode(SqlTypes.DATE)
-    private String changeDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_card_id")
     private DocCard docCard;
+
+    @Column(name = "change_date")
+    private String changeDate;
 }

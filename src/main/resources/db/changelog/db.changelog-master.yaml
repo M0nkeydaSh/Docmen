@@ -7,4 +7,5 @@ databaseChangeLog:
       file: db/changelog/2025/01/addUserAssociation.yaml
   - include:
       file: db/changelog/2025/01/addComments.yaml
-
+  - include:
+      file: db/changelog/2025/01/addFiles.yaml

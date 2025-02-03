@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738421953699-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_files
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: doc_card_id
+                  type: UUID
+            tableName: files
+  - changeSet:
+      id: 1738421953699-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: doc_card_id
+            baseTableName: files
+            constraintName: FK_FILES_ON_DOC_CARD
+            referencedColumnNames: id
+            referencedTableName: doc_card
+
