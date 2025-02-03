@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738094622974-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+            tableName: doc_card
+  - changeSet:
+      id: 1738094622974-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: doc_card
+            constraintName: FK_DOC_CARD_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738418612305-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_DOC_CARD
+                  name: ID
+                  type: UUID
+              - column:
+                  name: NAME
+                  type: VARCHAR(255)
+              - column:
+                  name: DISCRIPTION
+                  type: VARCHAR(255)
+            tableName: DOC_CARD
+

@@ -11,31 +11,27 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "doc_card")
-public class DocCard {
-
+@Table(name = "comments")
+public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "content")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String name;
-
-    @Column(name = "discription")
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String discription;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
+
     @Column(name = "change_date")
     private String changeDate;
-
-
-
 
 
 }

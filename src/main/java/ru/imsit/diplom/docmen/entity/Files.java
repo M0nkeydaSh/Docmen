@@ -11,9 +11,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "doc_card")
-public class DocCard {
-
+@Table(name = "files")
+public class Files {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
@@ -23,19 +22,10 @@ public class DocCard {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
 
-    @Column(name = "discription")
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String discription;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "doc_card_id")
+    private DocCard docCard;
 
     @Column(name = "change_date")
     private String changeDate;
-
-
-
-
-
 }
