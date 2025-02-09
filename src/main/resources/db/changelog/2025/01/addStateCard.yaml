@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1738418612305-1
+      id: 1738671794544-1
       author: Vadim
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -10,14 +10,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: PK_DOC_CARD
-                  name: ID
+                    primaryKeyName: pk_state_card
+                  name: id
                   type: UUID
               - column:
-                  name: NAME
+                  name: change_date
                   type: VARCHAR(255)
-              - column:
-                  name: DISCRIPTION
-                  type: VARCHAR(255)
-            tableName: DOC_CARD
+            tableName: state_card
 

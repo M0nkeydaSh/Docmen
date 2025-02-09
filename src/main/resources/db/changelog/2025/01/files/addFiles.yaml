@@ -19,6 +19,9 @@ databaseChangeLog:
               - column:
                   name: doc_card_id
                   type: UUID
+              - column:
+                  name: change_date
+                  type: DATE
             tableName: files
   - changeSet:
       id: 1738421953699-2
@@ -31,4 +34,6 @@ databaseChangeLog:
             constraintName: FK_FILES_ON_DOC_CARD
             referencedColumnNames: id
             referencedTableName: doc_card
+
+
 

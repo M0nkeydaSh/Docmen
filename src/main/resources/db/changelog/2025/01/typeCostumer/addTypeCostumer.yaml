@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1738092742421-1
+      id: 1738670895597-1
       author: Vadim
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -10,23 +10,28 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_users
+                    primaryKeyName: pk_type_costumer
                   name: id
                   type: UUID
               - column:
-                  name: login
+                  name: name
                   type: VARCHAR(255)
               - column:
-                  name: password
+                  name: departments_id
+                  type: UUID
+              - column:
+                  name: change_date
                   type: VARCHAR(255)
-            tableName: users
+            tableName: type_costumer
   - changeSet:
-      id: 1738092742421-2
+      id: 1738670895597-2
       author: Vadim
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
-        - addUniqueConstraint:
-            columnNames: login
-            constraintName: uc_users_login
-            tableName: users
+        - addForeignKeyConstraint:
+            baseColumnNames: departments_id
+            baseTableName: type_costumer
+            constraintName: FK_TYPE_COSTUMER_ON_DEPARTMENTS
+            referencedColumnNames: id
+            referencedTableName: departments
 
