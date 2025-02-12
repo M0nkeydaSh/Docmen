@@ -1,7 +1,5 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/2025/01/addStateCard.yaml
-  - include:
       file: db/changelog/2025/01/docCard/addDocCard.yaml
   - include:
       file: db/changelog/2025/01/User/addUsers.yaml

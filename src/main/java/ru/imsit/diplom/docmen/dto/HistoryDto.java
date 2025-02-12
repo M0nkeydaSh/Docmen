@@ -11,5 +11,5 @@ import java.util.UUID;
 public class HistoryDto {
     UUID id;
     DocCardDto docCard;
-    UserDto user;
+    UserIdDto user;
 }

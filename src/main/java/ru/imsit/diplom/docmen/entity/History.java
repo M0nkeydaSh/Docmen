@@ -24,10 +24,6 @@ public class History {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "state_card_id")
-    private StateCard status;
-
     @Column(name = "change_date")
     private String changeDate;
 

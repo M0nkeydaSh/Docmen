@@ -38,17 +38,6 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: doc_card
   - changeSet:
-      id: 1738670835520-3
-      author: Vadim
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: state_card_id
-            baseTableName: history
-            constraintName: FK_HISTORY_ON_STATE_CARD
-            referencedColumnNames: id
-            referencedTableName: state_card
-  - changeSet:
       id: 1738670835520-4
       author: Vadim
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS

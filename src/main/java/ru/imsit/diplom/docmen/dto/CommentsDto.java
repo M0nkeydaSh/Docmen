@@ -9,4 +9,5 @@ import lombok.Value;
 public class CommentsDto {
     String id;
     String content;
+    UserIdDto userId;
 }
