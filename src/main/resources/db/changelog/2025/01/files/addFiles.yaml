@@ -20,6 +20,9 @@ databaseChangeLog:
                   name: doc_card_id
                   type: UUID
               - column:
+                  name: user_id
+                  type: UUID
+              - column:
                   name: change_date
                   type: DATE
             tableName: files
