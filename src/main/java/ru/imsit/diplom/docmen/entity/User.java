@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String changeDate;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "userSec_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "user_sec_id"))
     @BatchSize(size = 50)
     private Set<Authority> authorities = new LinkedHashSet<>();
 
