@@ -17,6 +17,18 @@ databaseChangeLog:
                   name: NAME
                   type: VARCHAR(255)
               - column:
+                  name: change_date
+                  type: VARCHAR(255)
+              - column:
+                  name: key_words
+                  type: VARCHAR(255)
+              - column:
+                  name: reg_num
+                  type: VARCHAR(255)
+              - column:
+                  name: type_document
+                  type: VARCHAR(255)
+              - column:
                   name: DISCRIPTION
                   type: VARCHAR(255)
             tableName: DOC_CARD

@@ -31,6 +31,18 @@ public class DocCard {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "type_document")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private String typeDocument;
+
+    @Column(name = "reg_num")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private String regNum;
+
+    @Column(name = "key_words")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private String keyWords;
+
     @Column(name = "change_date")
     private String changeDate;
 

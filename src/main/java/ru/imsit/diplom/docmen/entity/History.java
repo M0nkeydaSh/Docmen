@@ -20,6 +20,10 @@ public class History {
     @JoinColumn(name = "doc_card_id")
     private DocCard docCard;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "change_date")
     private String changeDate;
 

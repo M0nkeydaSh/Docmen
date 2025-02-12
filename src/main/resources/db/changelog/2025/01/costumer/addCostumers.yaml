@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738670461688-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_costumers
+                  name: id
+                  type: UUID
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: sur_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: gender
+                  type: VARCHAR(255)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: type_costumer_id
+                  type: UUID
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: change_date
+                  type: VARCHAR(255)
+            tableName: costumers
+  - changeSet:
+      id: 1738670461688-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: type_costumer_id
+            baseTableName: costumers
+            constraintName: FK_COSTUMERS_ON_TYPE_COSTUMER
+            referencedColumnNames: id
+            referencedTableName: type_costumer
+  - changeSet:
+      id: 1738670461688-3
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: costumers
+            constraintName: FK_COSTUMERS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+
