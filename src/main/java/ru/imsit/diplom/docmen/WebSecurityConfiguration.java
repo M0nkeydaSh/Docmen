@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,19 +22,25 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration {
 
     private final UserSecRepository userSecRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .anyRequest().authenticated());
+        http.authorizeHttpRequests(authorizeHttpRequests -> {
+            authorizeHttpRequests
+                    .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll();
+            authorizeHttpRequests
+                    .anyRequest().authenticated();
+        });
         http.headers(Customizer.withDefaults());
         http.sessionManagement(Customizer.withDefaults());
         http.formLogin(Customizer.withDefaults());
         http.anonymous(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
+        http.userDetailsService(jpaUserDetailsService());
         return http.build();
     }
 
