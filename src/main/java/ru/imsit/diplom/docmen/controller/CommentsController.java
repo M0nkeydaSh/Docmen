@@ -6,6 +6,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.CommentsDto;
 import ru.imsit.diplom.docmen.filtr.CommentsFilter;
@@ -24,6 +25,7 @@ public class CommentsController {
 
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public PagedModel<CommentsDto> getAll(@ParameterObject @ModelAttribute CommentsFilter filter, @ParameterObject Pageable pageable) {
         Page<CommentsDto> commentsDtos = commentsService.getAll(filter, pageable);
         return new PagedModel<>(commentsDtos);
@@ -31,6 +33,7 @@ public class CommentsController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public CommentsDto getOne(@PathVariable UUID id) {
         return commentsService.getOne(id);
     }

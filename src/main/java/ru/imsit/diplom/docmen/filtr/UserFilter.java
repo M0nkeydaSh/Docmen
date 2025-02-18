@@ -4,14 +4,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 import ru.imsit.diplom.docmen.entity.User;
 
-public record UserFilter(String login) {
+public record UserFilter(String username) {
     public Specification<User> toSpecification() {
-        return Specification.where(loginSpec());
+        return Specification.where(usernameSpec());
     }
 
-    private Specification<User> loginSpec() {
-        return ((root, query, cb) -> StringUtils.hasText(login)
-                ? cb.equal(root.get("login"), login)
+    private Specification<User> usernameSpec() {
+        return ((root, query, cb) -> StringUtils.hasText(username)
+                ? cb.equal(root.get("username"), username)
                 : null);
     }
 }

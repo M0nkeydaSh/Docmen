@@ -8,6 +8,6 @@ import lombok.Value;
 @Value
 public class UserDto {
     String id;
-    String login;
+    String username;
     String password;
 }

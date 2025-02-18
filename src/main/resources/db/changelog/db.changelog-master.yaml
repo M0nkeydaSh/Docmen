@@ -2,9 +2,13 @@ databaseChangeLog:
   - include:
       file: db/changelog/2025/01/docCard/addDocCard.yaml
   - include:
+      file: db/changelog/2025/01/authority/authority.yaml
+  - include:
       file: db/changelog/2025/01/User/addUsers.yaml
   - include:
       file: db/changelog/2025/01/User/addUserAssociation.yaml
+  - include:
+      file: db/changelog/2025/01/User/UserSec.yaml
   - include:
       file: db/changelog/2025/01/comments/addComments.yaml
   - include:
@@ -17,6 +21,8 @@ databaseChangeLog:
       file: db/changelog/2025/01/costumer/addCostumers.yaml
   - include:
       file: db/changelog/2025/01/History/addHistory.yaml
+
+
 
 
 
