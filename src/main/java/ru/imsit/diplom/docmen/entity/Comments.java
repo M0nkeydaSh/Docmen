@@ -33,5 +33,4 @@ public class Comments {
     @Column(name = "change_date")
     private String changeDate;
 
-
 }
