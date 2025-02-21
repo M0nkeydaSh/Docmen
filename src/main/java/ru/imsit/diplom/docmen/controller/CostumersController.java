@@ -1,6 +1,8 @@
 package ru.imsit.diplom.docmen.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -18,47 +20,56 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/costumers")
 @RequiredArgsConstructor
+@Tag(name = "Costumers API")
 public class CostumersController {
 
     private final CostumersService costumersService;
 
     @GetMapping
+    @Operation(summary = "Получить данные о всех costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public PagedModel<CostumersDto> getAll(@ParameterObject @ModelAttribute CostumersFilter filter, @ParameterObject Pageable pageable) {
         Page<CostumersDto> costumersDtos = costumersService.getAll(filter, pageable);
         return new PagedModel<>(costumersDtos);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить данные о конкретном costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto getOne(@PathVariable UUID id) {
         return costumersService.getOne(id);
     }
 
     @GetMapping("/by-ids")
+    @Operation(summary = "Получить данные о множество costumer, указанных в параметре", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public List<CostumersDto> getMany(@RequestParam List<UUID> ids) {
         return costumersService.getMany(ids);
     }
 
     @PostMapping
+    @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto create(@RequestBody CostumersDto dto) {
         return costumersService.create(dto);
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Изменить costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
         return costumersService.patch(id, patchNode);
     }
 
     @PatchMapping
+    @Operation(summary = "Изменить множество costumers", description = "В ответе возвращается список UUID объектов.")
     public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
         return costumersService.patchMany(ids, patchNode);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto delete(@PathVariable UUID id) {
         return costumersService.delete(id);
     }
 
     @DeleteMapping
+    @Operation(summary = "Удалить множество costumers", description = "В ответе возвращается список UUID объектов.")
     public void deleteMany(@RequestParam List<UUID> ids) {
         costumersService.deleteMany(ids);
     }
