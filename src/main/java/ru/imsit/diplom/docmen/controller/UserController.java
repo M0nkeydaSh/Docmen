@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.UserDto;
 import ru.imsit.diplom.docmen.filtr.UserFilter;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "User API")
 public class UserController {
 
@@ -31,11 +33,12 @@ public class UserController {
         return new PagedModel<>(userDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{username}")
     @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public UserDto getOne(@PathVariable UUID id) {
-        return userService.getOne(id);
+    public UserDto getOne(@PathVariable String username) {
+        return userService.getOne(username);
     }
+
     @GetMapping("/by-ids")
     @Operation(summary = "Получить данные о множестве пользователей, указанных в параметре", description = "В ответе возвращается объект userDto c полями id, username, password.")
     public List<UserDto> getMany(@RequestParam List<UUID> ids) {

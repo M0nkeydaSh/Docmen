@@ -37,10 +37,10 @@ public class UserService {
         return users.map(userMapper::toUserDto);
     }
 
-    public UserDto getOne(UUID id) {
-        Optional<User> userOptional = userRepository.findById(id);
+    public UserDto getOne(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
         return userMapper.toUserDto(userOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(username))));
     }
 
     public List<UserDto> getMany(List<UUID> ids) {
