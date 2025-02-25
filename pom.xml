@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.imsit.diplom</groupId>
-    <artifactId>Docmen</artifactId>
+    <artifactId>docmen</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Docmen</name>
-    <description>Docmen</description>
+    <name>docmen</name>
+    <description>Document management</description>
     <url/>
     <licenses>
         <license/>

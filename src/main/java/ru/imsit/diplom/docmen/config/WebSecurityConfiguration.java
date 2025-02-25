@@ -1,4 +1,4 @@
-package ru.imsit.diplom.docmen;
+package ru.imsit.diplom.docmen.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity()
 public class WebSecurityConfiguration {
 
     private final UserSecRepository userSecRepository;
@@ -40,6 +40,7 @@ public class WebSecurityConfiguration {
         http.formLogin(Customizer.withDefaults());
         http.anonymous(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(AbstractHttpConfigurer::disable);
         http.userDetailsService(jpaUserDetailsService());
         return http.build();
     }
