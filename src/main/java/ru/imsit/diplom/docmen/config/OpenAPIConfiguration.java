@@ -1,4 +1,4 @@
-package ru.imsit.diplom.docmen;
+package ru.imsit.diplom.docmen.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
