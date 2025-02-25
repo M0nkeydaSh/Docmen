@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.FilesDto;
 import ru.imsit.diplom.docmen.entity.Files;
 import ru.imsit.diplom.docmen.filtr.FilesFilter;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.FilesMapper;
 import ru.imsit.diplom.docmen.repository.FilesRepository;
 
@@ -24,6 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class FilesService {
+
+    private final UserInfoHelper userInfoHelper;
 
     private final FilesMapper filesMapper;
 
@@ -52,6 +55,7 @@ public class FilesService {
 
     public FilesDto create(FilesDto dto) {
         Files files = filesMapper.toEntity(dto);
+        files.setUser(userInfoHelper.getUser());
         Files resultFiles = filesRepository.save(files);
         return filesMapper.toFilesDto(resultFiles);
     }

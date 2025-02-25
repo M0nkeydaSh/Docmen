@@ -9,5 +9,5 @@ import lombok.Value;
 public class FilesDto {
     String id;
     String name;
-    UserIdDto userId;
+    String userName;
 }
