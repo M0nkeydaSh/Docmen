@@ -1,9 +1,6 @@
 package ru.imsit.diplom.docmen.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import ru.imsit.diplom.docmen.dto.FilesDto;
 import ru.imsit.diplom.docmen.entity.Files;
 
@@ -11,6 +8,7 @@ import ru.imsit.diplom.docmen.entity.Files;
 public interface FilesMapper {
     Files toEntity(FilesDto filesDto);
 
+    @Mapping(target = "userName", source = "files.user.username")
     FilesDto toFilesDto(Files files);
 
     Files updateWithNull(FilesDto filesDto, @MappingTarget Files files);
