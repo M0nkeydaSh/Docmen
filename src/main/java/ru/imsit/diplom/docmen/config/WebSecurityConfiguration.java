@@ -12,6 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.imsit.diplom.docmen.entity.User;
 import ru.imsit.diplom.docmen.repository.UserSecRepository;
@@ -61,5 +63,16 @@ public class WebSecurityConfiguration {
                     .disabled(!Boolean.TRUE.equals(user.getEnabled()))
                     .build();
         };
+    }
+
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        // Здесь вы можете настроить ваш UserDetailsService и PasswordEncoder
+//        auth.userDetailsService(jpaUserDetailsService())
+//                .passwordEncoder(passwordEncoder());
+//    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

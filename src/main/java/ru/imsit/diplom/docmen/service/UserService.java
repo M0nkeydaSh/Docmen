@@ -3,10 +3,12 @@ package ru.imsit.diplom.docmen.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.UserDto;
@@ -24,6 +26,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
 
@@ -52,6 +57,7 @@ public class UserService {
 
     public UserDto create(UserDto dto) {
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User resultUser = userRepository.save(user);
         return userMapper.toUserDto(resultUser);
     }
