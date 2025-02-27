@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.DocCardDto;
 import ru.imsit.diplom.docmen.entity.DocCard;
 import ru.imsit.diplom.docmen.filtr.DocCardFilter;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
@@ -26,6 +27,8 @@ import java.util.UUID;
 public class DocCardService {
 
     private final DocCardMapper docCardMapper;
+
+    private final UserInfoHelper userInfoHelper;
 
     private final DocCardRepository docCardRepository;
 
@@ -52,6 +55,7 @@ public class DocCardService {
 
     public DocCardDto create(DocCardDto dto) {
         DocCard docCard = docCardMapper.toEntity(dto);
+        docCard.setUser(userInfoHelper.getUser());
         DocCard resultDocCard = docCardRepository.save(docCard);
         return docCardMapper.toDocCardDto(resultDocCard);
     }

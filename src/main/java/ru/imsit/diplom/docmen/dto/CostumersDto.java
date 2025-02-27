@@ -17,5 +17,5 @@ public class CostumersDto {
     String gender;
     String phoneNumber;
     TypeCostumerDto typeCostumer;
-    UserIdDto user;
+    String userName;
 }

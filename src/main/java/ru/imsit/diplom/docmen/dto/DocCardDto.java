@@ -12,7 +12,7 @@ public class DocCardDto {
     UUID id;
     String name;
     String discription;
-    UserIdDto user;
+    String userName;
     String typeDocument;
     String regNum;
     String keyWords;
