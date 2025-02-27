@@ -1,9 +1,6 @@
 package ru.imsit.diplom.docmen.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import ru.imsit.diplom.docmen.dto.HistoryDto;
 import ru.imsit.diplom.docmen.entity.History;
 
@@ -11,6 +8,7 @@ import ru.imsit.diplom.docmen.entity.History;
 public interface HistoryMapper {
     History toEntity(HistoryDto historyDto);
 
+    @Mapping(target = "userName", source = "history.user.username")
     HistoryDto toHistoryDto(History history);
 
     History updateWithNull(HistoryDto historyDto, @MappingTarget History history);

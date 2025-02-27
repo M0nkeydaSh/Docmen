@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.HistoryDto;
 import ru.imsit.diplom.docmen.entity.History;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.HistoryMapper;
 import ru.imsit.diplom.docmen.repository.HistoryRepository;
 
@@ -22,6 +23,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class HistoryService {
+
+    private final UserInfoHelper userInfoHelper;
 
     private final HistoryMapper historyMapper;
 

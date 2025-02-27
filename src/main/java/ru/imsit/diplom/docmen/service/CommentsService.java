@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CommentsDto;
 import ru.imsit.diplom.docmen.entity.Comments;
 import ru.imsit.diplom.docmen.filtr.CommentsFilter;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CommentsMapper;
 import ru.imsit.diplom.docmen.repository.CommentsRepository;
 
@@ -24,6 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class CommentsService {
+
+    private final UserInfoHelper userInfoHelper;
 
     private final CommentsMapper commentsMapper;
 
@@ -52,6 +55,7 @@ public class CommentsService {
 
     public CommentsDto create(CommentsDto dto) {
         Comments comments = commentsMapper.toEntity(dto);
+        comments.setUser(userInfoHelper.getUser());
         Comments resultComments = commentsRepository.save(comments);
         return commentsMapper.toCommentsDto(resultComments);
     }
