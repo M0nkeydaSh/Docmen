@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.UserDto;
@@ -24,6 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
 
@@ -52,6 +55,7 @@ public class UserService {
 
     public UserDto create(UserDto dto) {
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User resultUser = userRepository.save(user);
         return userMapper.toUserDto(resultUser);
     }
@@ -63,6 +67,7 @@ public class UserService {
         UserDto userDto = userMapper.toUserDto(user);
         objectMapper.readerForUpdating(userDto).readValue(patchNode);
         userMapper.updateWithNull(userDto, user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User resultUser = userRepository.save(user);
         return userMapper.toUserDto(resultUser);
