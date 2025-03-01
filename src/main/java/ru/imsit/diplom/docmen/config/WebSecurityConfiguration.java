@@ -65,14 +65,10 @@ public class WebSecurityConfiguration {
         };
     }
 
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        // Здесь вы можете настроить ваш UserDetailsService и PasswordEncoder
-//        auth.userDetailsService(jpaUserDetailsService())
-//                .passwordEncoder(passwordEncoder());
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
