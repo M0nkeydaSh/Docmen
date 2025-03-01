@@ -53,25 +53,11 @@ public class UserService {
                 .toList();
     }
 
-    public UserDto create(UserDto dto) {
-        User user = userMapper.toEntity(dto);
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        User resultUser = userRepository.save(user);
-        return userMapper.toUserDto(resultUser);
+    public UserDto create(String username, String password) {
+        var user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).build();
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
-    public UserDto patch(UUID id, JsonNode patchNode) throws IOException {
-        User user = userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id)));
-
-        UserDto userDto = userMapper.toUserDto(user);
-        objectMapper.readerForUpdating(userDto).readValue(patchNode);
-        userMapper.updateWithNull(userDto, user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        User resultUser = userRepository.save(user);
-        return userMapper.toUserDto(resultUser);
-    }
 
     public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
         Collection<User> users = userRepository.findAllById(ids);
@@ -99,4 +85,11 @@ public class UserService {
     public void deleteMany(List<UUID> ids) {
         userRepository.deleteAllById(ids);
     }
+
+    public UserDto patch(String username, String password, boolean enabled) {
+        var user = userRepository.findByUsername(username);
+        user.ifPresent(u -> { u.setEnabled(enabled); u.setPassword(passwordEncoder.encode(password));});
+        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+    }
+
 }

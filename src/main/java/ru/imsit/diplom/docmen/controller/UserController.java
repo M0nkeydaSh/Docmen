@@ -46,15 +46,15 @@ public class UserController {
     }
 
     @PostMapping
-    @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public UserDto create(@RequestBody UserDto dto) {
-        return userService.create(dto);
+    @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полем username")
+    public UserDto create(@RequestParam String username, @RequestParam String password) {
+        return userService.create(username, password);
     }
 
-    @PatchMapping("/{id}")
-    @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public UserDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return userService.patch(id, patchNode);
+    @PatchMapping("/{username}")
+    @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    public UserDto patch(@PathVariable String username, @RequestParam String password, @RequestParam boolean enabled) throws IOException {
+        return userService.patch(username, password, enabled);
     }
 
     @PatchMapping
