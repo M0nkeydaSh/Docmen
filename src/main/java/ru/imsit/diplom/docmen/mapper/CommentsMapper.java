@@ -8,7 +8,7 @@ import ru.imsit.diplom.docmen.entity.Comments;
 public interface CommentsMapper {
     Comments toEntity(CommentsDto commentsDto);
 
-    @Mapping(target = "userName", source = "comments.user.username")
+    @Mapping(target = "username", source = "comments.user.username")
     CommentsDto toCommentsDto(Comments comments);
 
     Comments updateWithNull(CommentsDto commentsDto, @MappingTarget Comments comments);

@@ -7,7 +7,6 @@ import lombok.Value;
  */
 @Value
 public class FilesDto {
-    String id;
     String name;
     String userName;
 }

@@ -1,8 +1,7 @@
 package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.UUID;
@@ -10,7 +9,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "authority")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -55,12 +55,6 @@ public class HistoryController {
         return historyService.patch(id, patchNode);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить множество историй", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return historyService.patchMany(ids, patchNode);
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить историю", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user")
     public HistoryDto delete(@PathVariable UUID id) {

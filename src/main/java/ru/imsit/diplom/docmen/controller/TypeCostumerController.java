@@ -56,12 +56,6 @@ public class TypeCostumerController {
         return typeCostumerService.patch(id, patchNode);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить множество видов работников", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return typeCostumerService.patchMany(ids, patchNode);
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
     public TypeCostumerDto delete(@PathVariable UUID id) {

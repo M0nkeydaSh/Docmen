@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,17 +13,19 @@ import ru.imsit.diplom.docmen.dto.UserDto;
 import ru.imsit.diplom.docmen.entity.User;
 import ru.imsit.diplom.docmen.filtr.UserFilter;
 import ru.imsit.diplom.docmen.mapper.UserMapper;
+import ru.imsit.diplom.docmen.repository.AuthorityRepository;
 import ru.imsit.diplom.docmen.repository.UserRepository;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+    private final AuthorityRepository authorityRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -53,37 +54,10 @@ public class UserService {
                 .toList();
     }
 
-    public UserDto create(String username, String password) {
-        var user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).build();
+    public UserDto create(String username, String password, String authority) {
+        var role = authorityRepository.findByName(authority);
+        var user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(Set.of(role)).build();
         return userMapper.toUserDto(userRepository.save(user));
-    }
-
-
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<User> users = userRepository.findAllById(ids);
-
-        for (User user : users) {
-            UserDto userDto = userMapper.toUserDto(user);
-            objectMapper.readerForUpdating(userDto).readValue(patchNode);
-            userMapper.updateWithNull(userDto, user);
-        }
-
-        List<User> resultUsers = userRepository.saveAll(users);
-        return resultUsers.stream()
-                .map(User::getId)
-                .toList();
-    }
-
-    public UserDto delete(UUID id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            userRepository.delete(user);
-        }
-        return userMapper.toUserDto(user);
-    }
-
-    public void deleteMany(List<UUID> ids) {
-        userRepository.deleteAllById(ids);
     }
 
     public UserDto patch(String username, String password, boolean enabled) {

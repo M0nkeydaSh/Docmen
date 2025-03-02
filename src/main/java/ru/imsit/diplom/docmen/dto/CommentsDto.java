@@ -7,7 +7,6 @@ import lombok.Value;
  */
 @Value
 public class CommentsDto {
-    String id;
     String content;
-    String userName;
+    String username;
 }
