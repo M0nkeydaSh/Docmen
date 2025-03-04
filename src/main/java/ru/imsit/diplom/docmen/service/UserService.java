@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.UserDto;
 import ru.imsit.diplom.docmen.entity.User;
 import ru.imsit.diplom.docmen.filtr.UserFilter;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.UserMapper;
 import ru.imsit.diplom.docmen.repository.AuthorityRepository;
 import ru.imsit.diplom.docmen.repository.UserRepository;
@@ -24,6 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+    private final UserInfoHelper userInfoHelper;
 
     private final AuthorityRepository authorityRepository;
 
@@ -74,7 +77,10 @@ public class UserService {
 
     public UserDto patchPassword(String username, String password) {
         var user = userRepository.findByUsername(username);
-        user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
+        var autorizationUser = userInfoHelper.getUser();
+        if (autorizationUser.getUsername().equals(username)) {
+            user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
+        }
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 }

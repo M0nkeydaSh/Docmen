@@ -56,6 +56,7 @@ public class UserController {
         return userService.patch(username, password, enabled);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
     @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")
     public UserDto patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
