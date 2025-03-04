@@ -57,9 +57,15 @@ public class UserController {
     }
 
     @PatchMapping("/change-password/{username}")
-    @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полем username.")
-    public UserDto patchPassword(@PathVariable String username, @RequestParam String password, @RequestParam boolean enabled) throws IOException {
-        return userService.patch(username, password, enabled);
+    @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    public UserDto patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
+        return userService.patchPassword(username, password);
+    }
+
+    @PatchMapping("/deactivate/{username}")
+    @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
+        return userService.patchDeactivate(username, enabled);
     }
 
 }

@@ -66,4 +66,15 @@ public class UserService {
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 
+    public UserDto patchDeactivate(String username, boolean enabled) {
+        var user = userRepository.findByUsername(username);
+        user.ifPresent(u -> u.setEnabled(enabled));
+        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+    }
+
+    public UserDto patchPassword(String username, String password) {
+        var user = userRepository.findByUsername(username);
+        user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
+        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+    }
 }
