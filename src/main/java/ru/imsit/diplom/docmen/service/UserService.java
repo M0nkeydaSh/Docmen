@@ -57,9 +57,9 @@ public class UserService {
 
     public UserDto create(String username, String password, Set<String> authority) {
         var user = new User();
-        Set <Authority> roles = new HashSet<>();
+        Set<Authority> roles = new HashSet<>();
         for (var i : authority) {
-            var  role = authorityRepository.findByName(i);
+            var role = authorityRepository.findByName(i);
             roles.add(role);
         }
         user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(roles).build();
@@ -68,7 +68,10 @@ public class UserService {
 
     public UserDto patch(String username, String password, boolean enabled) {
         var user = userRepository.findByUsername(username);
-        user.ifPresent(u -> { u.setEnabled(enabled); u.setPassword(passwordEncoder.encode(password));});
+        user.ifPresent(u -> {
+            u.setEnabled(enabled);
+            u.setPassword(passwordEncoder.encode(password));
+        });
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 
@@ -81,11 +84,13 @@ public class UserService {
     public UserDto patchPassword(String username, String password) {
         var user = userRepository.findByUsername(username);
         var autorizationUser = userInfoHelper.getUser();
-        if (autorizationUser.getUsername().equals(username)) {
+        if (autorizationUser.getUsername().equals(username) || autorizationUser.getAuthorities().stream().anyMatch(i -> i.getName().equals("ADMIN"))) {
             user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
             return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
+
 }
+
