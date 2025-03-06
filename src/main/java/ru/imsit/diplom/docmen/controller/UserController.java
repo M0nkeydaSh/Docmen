@@ -14,6 +14,7 @@ import ru.imsit.diplom.docmen.service.UserService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -46,7 +47,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полем username")
-    public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam String authority) {
+    public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam Set<String> authority) {
         return userService.create(username, password, authority);
     }
 
@@ -56,17 +57,17 @@ public class UserController {
         return userService.patch(username, password, enabled);
     }
 
+    @PatchMapping("/deactivate/{username}")
+    @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
+        return userService.patchDeactivate(username, enabled);
+    }
+
     @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
     @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")
     public UserDto patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
         return userService.patchPassword(username, password);
-    }
-
-    @PatchMapping("/deactivate/{username}")
-    @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект userDto c полем username.")
-    public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
-        return userService.patchDeactivate(username, enabled);
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.UserDto;
+import ru.imsit.diplom.docmen.entity.Authority;
 import ru.imsit.diplom.docmen.entity.User;
 import ru.imsit.diplom.docmen.filtr.UserFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
@@ -17,10 +18,7 @@ import ru.imsit.diplom.docmen.mapper.UserMapper;
 import ru.imsit.diplom.docmen.repository.AuthorityRepository;
 import ru.imsit.diplom.docmen.repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -57,9 +55,14 @@ public class UserService {
                 .toList();
     }
 
-    public UserDto create(String username, String password, String authority) {
-        var role = authorityRepository.findByName(authority);
-        var user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(Set.of(role)).build();
+    public UserDto create(String username, String password, Set<String> authority) {
+        var user = new User();
+        Set <Authority> roles = new HashSet<>();
+        for (var i : authority) {
+            var  role = authorityRepository.findByName(i);
+            roles.add(role);
+        }
+        user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(roles).build();
         return userMapper.toUserDto(userRepository.save(user));
     }
 
@@ -80,7 +83,9 @@ public class UserService {
         var autorizationUser = userInfoHelper.getUser();
         if (autorizationUser.getUsername().equals(username)) {
             user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
+            return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 }
