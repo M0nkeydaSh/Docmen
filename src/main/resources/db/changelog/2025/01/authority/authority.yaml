@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1739388863435-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_authority
+                  name: id
+                  type: UUID
+              - column:
+                  name: authority
+                  type: VARCHAR(50)
+            tableName: authority
+  - changeSet:
+      id: 1739388863435-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: authority
+            constraintName: uc_authority_authority
+            tableName: authority
+

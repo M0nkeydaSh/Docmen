@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738340306376-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_comments
+                  name: id
+                  type: UUID
+              - column:
+                  name: change_date
+                  type: DATE
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: doc_card_id
+                  type: UUID
+            tableName: comments
+  - changeSet:
+      id: 1738340306376-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: doc_card_id
+            baseTableName: comments
+            constraintName: FK_COMMENTS_ON_DOC_CARD
+            referencedColumnNames: id
+            referencedTableName: doc_card
+  - changeSet:
+      id: 1738340306376-3
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: comments
+            constraintName: FK_COMMENTS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+

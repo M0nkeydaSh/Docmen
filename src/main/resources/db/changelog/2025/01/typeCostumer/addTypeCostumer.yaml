@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738670895597-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_type_costumer
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: departments_id
+                  type: UUID
+              - column:
+                  name: change_date
+                  type: VARCHAR(255)
+            tableName: type_costumer
+  - changeSet:
+      id: 1738670895597-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: departments_id
+            baseTableName: type_costumer
+            constraintName: FK_TYPE_COSTUMER_ON_DEPARTMENTS
+            referencedColumnNames: id
+            referencedTableName: departments
+

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738670613466-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_departments
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: change_date
+                  type: VARCHAR(255)
+            tableName: departments
+
