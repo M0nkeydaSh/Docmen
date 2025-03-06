@@ -46,7 +46,7 @@ public class Costumers {
     @JoinColumn(name = "type_costumer_id")
     private TypeCostumer typeCostumer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

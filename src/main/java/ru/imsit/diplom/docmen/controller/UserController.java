@@ -13,9 +13,7 @@ import ru.imsit.diplom.docmen.filtr.UserFilter;
 import ru.imsit.diplom.docmen.service.UserService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/users")
@@ -39,12 +37,6 @@ public class UserController {
         return userService.getOne(username);
     }
 
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множестве пользователей, указанных в параметре", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public List<UserDto> getMany(@RequestParam List<UUID> ids) {
-        return userService.getMany(ids);
-    }
-
     @PostMapping
     @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полем username")
     public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam Set<String> authority) {
@@ -53,8 +45,8 @@ public class UserController {
 
     @PatchMapping("/{username}")
     @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полем username.")
-    public UserDto patch(@PathVariable String username, @RequestParam String password, @RequestParam boolean enabled) throws IOException {
-        return userService.patch(username, password, enabled);
+    public UserDto patch(@PathVariable String username, @RequestParam boolean enabled, @RequestParam Set<String> authorities) throws IOException {
+        return userService.patch(username, enabled, authorities);
     }
 
     @PatchMapping("/deactivate/{username}")
@@ -66,8 +58,13 @@ public class UserController {
     @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
     @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")
-    public UserDto patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
-        return userService.patchPassword(username, password);
+    public String patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
+        try {
+            userService.patchPassword(username, password);
+            return "success";
+        } catch (Exception e) {
+            return "error";
+        }
     }
 
 }

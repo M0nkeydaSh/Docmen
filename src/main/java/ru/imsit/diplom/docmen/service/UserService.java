@@ -66,11 +66,17 @@ public class UserService {
         return userMapper.toUserDto(userRepository.save(user));
     }
 
-    public UserDto patch(String username, String password, boolean enabled) {
+    public UserDto patch(String username, boolean enabled, Set<String> authorities) {
         var user = userRepository.findByUsername(username);
+        Set<Authority> roles = new HashSet<>();
+        for (var i : authorities) {
+            var role = authorityRepository.findByName(i);
+            roles.add(role);
+        }
+
         user.ifPresent(u -> {
             u.setEnabled(enabled);
-            u.setPassword(passwordEncoder.encode(password));
+            u.setAuthorities(roles);
         });
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
@@ -81,12 +87,12 @@ public class UserService {
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 
-    public UserDto patchPassword(String username, String password) {
+    public void patchPassword(String username, String password) {
         var user = userRepository.findByUsername(username);
         var autorizationUser = userInfoHelper.getUser();
         if (autorizationUser.getUsername().equals(username) || autorizationUser.getAuthorities().stream().anyMatch(i -> i.getName().equals("ADMIN"))) {
             user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
-            return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+            userRepository.save(user.orElseThrow());
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
