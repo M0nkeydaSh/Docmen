@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.CommentsMapper;
 import ru.imsit.diplom.docmen.repository.CommentsRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,21 +69,6 @@ public class CommentsService {
 
         Comments resultComments = commentsRepository.save(comments);
         return commentsMapper.toCommentsDto(resultComments);
-    }
-
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<Comments> comments = commentsRepository.findAllById(ids);
-
-        for (Comments comment : comments) {
-            CommentsDto commentsDto = commentsMapper.toCommentsDto(comment);
-            objectMapper.readerForUpdating(commentsDto).readValue(patchNode);
-            commentsMapper.updateWithNull(commentsDto, comment);
-        }
-
-        List<Comments> resultComments = commentsRepository.saveAll(comments);
-        return resultComments.stream()
-                .map(Comments::getId)
-                .toList();
     }
 
     public CommentsDto delete(UUID id) {

@@ -56,12 +56,6 @@ public class CostumersController {
         return costumersService.patch(id, patchNode);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить множество costumers", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return costumersService.patchMany(ids, patchNode);
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto delete(@PathVariable UUID id) {

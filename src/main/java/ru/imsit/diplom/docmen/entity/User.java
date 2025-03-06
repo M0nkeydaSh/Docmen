@@ -1,8 +1,7 @@
 package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,10 +12,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "users", indexes = {
         @Index(name = "idx_securityuser_username", columnList = "USERNAME")
 })
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)

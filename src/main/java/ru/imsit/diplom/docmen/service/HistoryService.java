@@ -15,7 +15,6 @@ import ru.imsit.diplom.docmen.mapper.HistoryMapper;
 import ru.imsit.diplom.docmen.repository.HistoryRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,20 +67,6 @@ public class HistoryService {
         return historyMapper.toHistoryDto(resultHistory);
     }
 
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<History> histories = historyRepository.findAllById(ids);
-
-        for (History history : histories) {
-            HistoryDto historyDto = historyMapper.toHistoryDto(history);
-            objectMapper.readerForUpdating(historyDto).readValue(patchNode);
-            historyMapper.updateWithNull(historyDto, history);
-        }
-
-        List<History> resultHistories = historyRepository.saveAll(histories);
-        return resultHistories.stream()
-                .map(History::getId)
-                .toList();
-    }
 
     public HistoryDto delete(UUID id) {
         History history = historyRepository.findById(id).orElse(null);

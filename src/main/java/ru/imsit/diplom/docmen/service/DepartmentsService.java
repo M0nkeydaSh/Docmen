@@ -16,7 +16,6 @@ import ru.imsit.diplom.docmen.mapper.DepartmentsMapper;
 import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,21 +65,6 @@ public class DepartmentsService {
 
         Departments resultDepartments = departmentsRepository.save(departments);
         return departmentsMapper.toDepartmentsDto(resultDepartments);
-    }
-
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<Departments> departments = departmentsRepository.findAllById(ids);
-
-        for (Departments department : departments) {
-            DepartmentsDto departmentsDto = departmentsMapper.toDepartmentsDto(department);
-            objectMapper.readerForUpdating(departmentsDto).readValue(patchNode);
-            departmentsMapper.updateWithNull(departmentsDto, department);
-        }
-
-        List<Departments> resultDepartments = departmentsRepository.saveAll(departments);
-        return resultDepartments.stream()
-                .map(Departments::getId)
-                .toList();
     }
 
     public DepartmentsDto delete(UUID id) {

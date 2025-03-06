@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.DocCardMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -72,20 +71,6 @@ public class DocCardService {
         return docCardMapper.toDocCardDto(resultDocCard);
     }
 
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<DocCard> docCards = docCardRepository.findAllById(ids);
-
-        for (DocCard docCard : docCards) {
-            DocCardDto docCardDto = docCardMapper.toDocCardDto(docCard);
-            objectMapper.readerForUpdating(docCardDto).readValue(patchNode);
-            docCardMapper.updateWithNull(docCardDto, docCard);
-        }
-
-        List<DocCard> resultDocCards = docCardRepository.saveAll(docCards);
-        return resultDocCards.stream()
-                .map(DocCard::getId)
-                .toList();
-    }
 
     public DocCardDto delete(UUID id) {
         DocCard docCard = docCardRepository.findById(id).orElse(null);

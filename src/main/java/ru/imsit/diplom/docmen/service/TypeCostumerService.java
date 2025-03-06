@@ -16,7 +16,6 @@ import ru.imsit.diplom.docmen.mapper.TypeCostumerMapper;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,21 +65,6 @@ public class TypeCostumerService {
 
         TypeCostumer resultTypeCostumer = typeCostumerRepository.save(typeCostumer);
         return typeCostumerMapper.toTypeCostumerDto(resultTypeCostumer);
-    }
-
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<TypeCostumer> typeCostumers = typeCostumerRepository.findAllById(ids);
-
-        for (TypeCostumer typeCostumer : typeCostumers) {
-            TypeCostumerDto typeCostumerDto = typeCostumerMapper.toTypeCostumerDto(typeCostumer);
-            objectMapper.readerForUpdating(typeCostumerDto).readValue(patchNode);
-            typeCostumerMapper.updateWithNull(typeCostumerDto, typeCostumer);
-        }
-
-        List<TypeCostumer> resultTypeCostumers = typeCostumerRepository.saveAll(typeCostumers);
-        return resultTypeCostumers.stream()
-                .map(TypeCostumer::getId)
-                .toList();
     }
 
     public TypeCostumerDto delete(UUID id) {

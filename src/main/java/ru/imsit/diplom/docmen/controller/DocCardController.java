@@ -56,12 +56,6 @@ public class DocCardController {
         return docCardService.patch(id, patchNode);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить множество карточек", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return docCardService.patchMany(ids, patchNode);
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
     public DocCardDto delete(@PathVariable UUID id) {

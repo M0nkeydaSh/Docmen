@@ -56,12 +56,6 @@ public class FilesController {
         return filesService.patch(id, patchNode);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить множество файлов", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return filesService.patchMany(ids, patchNode);
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
     public FilesDto delete(@PathVariable UUID id) {

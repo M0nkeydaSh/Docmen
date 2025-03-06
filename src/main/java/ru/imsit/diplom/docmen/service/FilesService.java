@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.FilesMapper;
 import ru.imsit.diplom.docmen.repository.FilesRepository;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,21 +69,6 @@ public class FilesService {
 
         Files resultFiles = filesRepository.save(files);
         return filesMapper.toFilesDto(resultFiles);
-    }
-
-    public List<UUID> patchMany(List<UUID> ids, JsonNode patchNode) throws IOException {
-        Collection<Files> files = filesRepository.findAllById(ids);
-
-        for (Files file : files) {
-            FilesDto filesDto = filesMapper.toFilesDto(file);
-            objectMapper.readerForUpdating(filesDto).readValue(patchNode);
-            filesMapper.updateWithNull(filesDto, file);
-        }
-
-        List<Files> resultFiles = filesRepository.saveAll(files);
-        return resultFiles.stream()
-                .map(Files::getId)
-                .toList();
     }
 
     public FilesDto delete(UUID id) {

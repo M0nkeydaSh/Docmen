@@ -64,14 +64,6 @@ public class CommentsController {
         return commentsService.patch(id, patchNode);
     }
 
-
-    @PatchMapping
-    @Operation(summary = "Изменить множество коментариев", description = "В ответе возвращается список UUID объектов.")
-    public List<UUID> patchMany(@RequestParam List<UUID> ids, @RequestBody JsonNode patchNode) throws IOException {
-        return commentsService.patchMany(ids, patchNode);
-    }
-
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
     public CommentsDto delete(@PathVariable UUID id) {
