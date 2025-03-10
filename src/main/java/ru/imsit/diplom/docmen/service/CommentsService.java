@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.CommentsMapper;
 import ru.imsit.diplom.docmen.repository.CommentsRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,13 +44,6 @@ public class CommentsService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
-    public List<CommentsDto> getMany(List<UUID> ids) {
-        List<Comments> comments = commentsRepository.findAllById(ids);
-        return comments.stream()
-                .map(commentsMapper::toCommentsDto)
-                .toList();
-    }
-
     public CommentsDto create(CommentsDto dto) {
         Comments comments = commentsMapper.toEntity(dto);
         comments.setUser(userInfoHelper.getUser());
@@ -77,9 +69,5 @@ public class CommentsService {
             commentsRepository.delete(comments);
         }
         return commentsMapper.toCommentsDto(comments);
-    }
-
-    public void deleteMany(List<UUID> ids) {
-        commentsRepository.deleteAllById(ids);
     }
 }

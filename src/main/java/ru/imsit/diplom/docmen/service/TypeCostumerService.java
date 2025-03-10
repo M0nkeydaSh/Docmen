@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,18 +12,19 @@ import ru.imsit.diplom.docmen.dto.TypeCostumerDto;
 import ru.imsit.diplom.docmen.entity.TypeCostumer;
 import ru.imsit.diplom.docmen.filtr.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.mapper.TypeCostumerMapper;
+import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class TypeCostumerService {
 
     private final TypeCostumerMapper typeCostumerMapper;
+
+    private final DepartmentsRepository departmentsRepository;
 
     private final TypeCostumerRepository typeCostumerRepository;
 
@@ -36,46 +36,31 @@ public class TypeCostumerService {
         return typeCostumers.map(typeCostumerMapper::toTypeCostumerDto);
     }
 
-    public TypeCostumerDto getOne(UUID id) {
-        Optional<TypeCostumer> typeCostumerOptional = typeCostumerRepository.findById(id);
+    public TypeCostumerDto getOne(String name) {
+        Optional<TypeCostumer> typeCostumerOptional = typeCostumerRepository.findByName(name);
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
     }
 
-    public List<TypeCostumerDto> getMany(List<UUID> ids) {
-        List<TypeCostumer> typeCostumers = typeCostumerRepository.findAllById(ids);
-        return typeCostumers.stream()
-                .map(typeCostumerMapper::toTypeCostumerDto)
-                .toList();
+    public TypeCostumerDto create(String name, String departments) {
+        var typeCostumer = new TypeCostumer();
+        var department = departmentsRepository.findByName(departments);
+        typeCostumer = TypeCostumer.builder().name(name).build(); //.departments(department)
+        return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 
-    public TypeCostumerDto create(TypeCostumerDto dto) {
-        TypeCostumer typeCostumer = typeCostumerMapper.toEntity(dto);
-        TypeCostumer resultTypeCostumer = typeCostumerRepository.save(typeCostumer);
-        return typeCostumerMapper.toTypeCostumerDto(resultTypeCostumer);
+    public TypeCostumerDto patch(String name, String changeName) throws IOException {
+        var typeCostumer = typeCostumerRepository.findByName(name);
+        typeCostumer.ifPresent(u -> u.setName(changeName));
+        return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer.orElseThrow()));
     }
 
-    public TypeCostumerDto patch(UUID id, JsonNode patchNode) throws IOException {
-        TypeCostumer typeCostumer = typeCostumerRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id)));
-
-        TypeCostumerDto typeCostumerDto = typeCostumerMapper.toTypeCostumerDto(typeCostumer);
-        objectMapper.readerForUpdating(typeCostumerDto).readValue(patchNode);
-        typeCostumerMapper.updateWithNull(typeCostumerDto, typeCostumer);
-
-        TypeCostumer resultTypeCostumer = typeCostumerRepository.save(typeCostumer);
-        return typeCostumerMapper.toTypeCostumerDto(resultTypeCostumer);
-    }
-
-    public TypeCostumerDto delete(UUID id) {
-        TypeCostumer typeCostumer = typeCostumerRepository.findById(id).orElse(null);
+    public TypeCostumerDto delete(String name) {
+        TypeCostumer typeCostumer = typeCostumerRepository.findByName(name).orElse(null);
         if (typeCostumer != null) {
             typeCostumerRepository.delete(typeCostumer);
         }
         return typeCostumerMapper.toTypeCostumerDto(typeCostumer);
     }
 
-    public void deleteMany(List<UUID> ids) {
-        typeCostumerRepository.deleteAllById(ids);
-    }
 }

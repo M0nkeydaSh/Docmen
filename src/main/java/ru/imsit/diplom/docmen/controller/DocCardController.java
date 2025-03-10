@@ -14,7 +14,6 @@ import ru.imsit.diplom.docmen.filtr.DocCardFilter;
 import ru.imsit.diplom.docmen.service.DocCardService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,12 +37,6 @@ public class DocCardController {
         return docCardService.getOne(id);
     }
 
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множество карточек, указанных в параметре", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
-    public List<DocCardDto> getMany(@RequestParam List<UUID> ids) {
-        return docCardService.getMany(ids);
-    }
-
     @PostMapping
     @Operation(summary = "Создать карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
     public DocCardDto create(@RequestBody DocCardDto dto) {
@@ -62,9 +55,4 @@ public class DocCardController {
         return docCardService.delete(id);
     }
 
-    @DeleteMapping
-    @Operation(summary = "Удалить множество карточек", description = "В ответе возвращается список UUID объектов.")
-    public void deleteMany(@RequestParam List<UUID> ids) {
-        docCardService.deleteMany(ids);
-    }
 }

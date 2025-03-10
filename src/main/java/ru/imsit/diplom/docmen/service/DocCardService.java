@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.DocCardMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,13 +42,6 @@ public class DocCardService {
         Optional<DocCard> docCardOptional = docCardRepository.findById(id);
         return docCardMapper.toDocCardDto(docCardOptional.orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
-    }
-
-    public List<DocCardDto> getMany(List<UUID> ids) {
-        List<DocCard> docCards = docCardRepository.findAllById(ids);
-        return docCards.stream()
-                .map(docCardMapper::toDocCardDto)
-                .toList();
     }
 
     public DocCardDto create(DocCardDto dto) {
@@ -80,7 +72,5 @@ public class DocCardService {
         return docCardMapper.toDocCardDto(docCard);
     }
 
-    public void deleteMany(List<UUID> ids) {
-        docCardRepository.deleteAllById(ids);
-    }
+
 }

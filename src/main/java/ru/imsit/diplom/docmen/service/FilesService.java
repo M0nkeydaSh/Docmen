@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.FilesMapper;
 import ru.imsit.diplom.docmen.repository.FilesRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,13 +42,6 @@ public class FilesService {
         Optional<Files> filesOptional = filesRepository.findById(id);
         return filesMapper.toFilesDto(filesOptional.orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
-    }
-
-    public List<FilesDto> getMany(List<UUID> ids) {
-        List<Files> files = filesRepository.findAllById(ids);
-        return files.stream()
-                .map(filesMapper::toFilesDto)
-                .toList();
     }
 
     public FilesDto create(FilesDto dto) {
@@ -79,7 +71,5 @@ public class FilesService {
         return filesMapper.toFilesDto(files);
     }
 
-    public void deleteMany(List<UUID> ids) {
-        filesRepository.deleteAllById(ids);
-    }
+
 }

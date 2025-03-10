@@ -14,7 +14,6 @@ import ru.imsit.diplom.docmen.filtr.FilesFilter;
 import ru.imsit.diplom.docmen.service.FilesService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,12 +37,6 @@ public class FilesController {
         return filesService.getOne(id);
     }
 
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множество файлов, указанных в параметре", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public List<FilesDto> getMany(@RequestParam List<UUID> ids) {
-        return filesService.getMany(ids);
-    }
-
     @PostMapping
     @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
     public FilesDto create(@RequestBody FilesDto dto) {
@@ -62,9 +55,5 @@ public class FilesController {
         return filesService.delete(id);
     }
 
-    @DeleteMapping
-    @Operation(summary = "Удалить множество файлов", description = "В ответе возвращается список UUID объектов.")
-    public void deleteMany(@RequestParam List<UUID> ids) {
-        filesService.deleteMany(ids);
-    }
+
 }

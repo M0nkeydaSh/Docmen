@@ -1,8 +1,7 @@
 package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -11,7 +10,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "type_costumer")
+@NoArgsConstructor
+@AllArgsConstructor
 public class TypeCostumer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

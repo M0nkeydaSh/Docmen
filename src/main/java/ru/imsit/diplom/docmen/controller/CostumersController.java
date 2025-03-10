@@ -14,7 +14,6 @@ import ru.imsit.diplom.docmen.filtr.CostumersFilter;
 import ru.imsit.diplom.docmen.service.CostumersService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,12 +37,6 @@ public class CostumersController {
         return costumersService.getOne(id);
     }
 
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множество costumer, указанных в параметре", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
-    public List<CostumersDto> getMany(@RequestParam List<UUID> ids) {
-        return costumersService.getMany(ids);
-    }
-
     @PostMapping
     @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto create(@RequestBody CostumersDto dto) {
@@ -62,9 +55,5 @@ public class CostumersController {
         return costumersService.delete(id);
     }
 
-    @DeleteMapping
-    @Operation(summary = "Удалить множество costumers", description = "В ответе возвращается список UUID объектов.")
-    public void deleteMany(@RequestParam List<UUID> ids) {
-        costumersService.deleteMany(ids);
-    }
+
 }

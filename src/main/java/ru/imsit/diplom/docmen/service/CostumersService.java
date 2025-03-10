@@ -17,7 +17,6 @@ import ru.imsit.diplom.docmen.mapper.CostumersMapper;
 import ru.imsit.diplom.docmen.repository.CostumersRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,13 +42,6 @@ public class CostumersService {
         Optional<Costumers> costumersOptional = costumersRepository.findById(id);
         return costumersMapper.toCostumersDto(costumersOptional.orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
-    }
-
-    public List<CostumersDto> getMany(List<UUID> ids) {
-        List<Costumers> costumers = costumersRepository.findAllById(ids);
-        return costumers.stream()
-                .map(costumersMapper::toCostumersDto)
-                .toList();
     }
 
     public CostumersDto create(CostumersDto dto) {
@@ -79,7 +71,4 @@ public class CostumersService {
         return costumersMapper.toCostumersDto(costumers);
     }
 
-    public void deleteMany(List<UUID> ids) {
-        costumersRepository.deleteAllById(ids);
-    }
 }

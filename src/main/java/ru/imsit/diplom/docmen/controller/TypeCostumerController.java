@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,6 @@ import ru.imsit.diplom.docmen.filtr.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.service.TypeCostumerService;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/typeCostumers")
@@ -32,39 +29,28 @@ public class TypeCostumerController {
         return new PagedModel<>(typeCostumerDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @Operation(summary = "Получить данные о конкретном виде работника ", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto getOne(@PathVariable UUID id) {
-        return typeCostumerService.getOne(id);
-    }
-
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множестве видов работников , указанных в параметре", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public List<TypeCostumerDto> getMany(@RequestParam List<UUID> ids) {
-        return typeCostumerService.getMany(ids);
+    public TypeCostumerDto getOne(@PathVariable String name) {
+        return typeCostumerService.getOne(name);
     }
 
     @PostMapping
     @Operation(summary = "Создать вид работника ", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto create(@RequestBody TypeCostumerDto dto) {
-        return typeCostumerService.create(dto);
+    public TypeCostumerDto create(@RequestParam String name, @RequestParam String departments) {
+        return typeCostumerService.create(name, departments);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{name}")
     @Operation(summary = "Изменить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return typeCostumerService.patch(id, patchNode);
+    public TypeCostumerDto patch(@PathVariable String name, @RequestParam String changeName) throws IOException {
+        return typeCostumerService.patch(name, changeName);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @Operation(summary = "Удалить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto delete(@PathVariable UUID id) {
-        return typeCostumerService.delete(id);
+    public TypeCostumerDto delete(@PathVariable String name) {
+        return typeCostumerService.delete(name);
     }
 
-    @DeleteMapping
-    @Operation(summary = "Удалить множество видов работников", description = "В ответе возвращается список UUID объектов.")
-    public void deleteMany(@RequestParam List<UUID> ids) {
-        typeCostumerService.deleteMany(ids);
-    }
 }

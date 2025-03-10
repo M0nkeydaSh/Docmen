@@ -9,6 +9,7 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.UserDto;
+import ru.imsit.diplom.docmen.dto.UserInfoDto;
 import ru.imsit.diplom.docmen.filtr.UserFilter;
 import ru.imsit.diplom.docmen.service.UserService;
 
@@ -32,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public UserDto getOne(@PathVariable String username) {
+    @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект userInfoDto c логином, списком ролей и статусом ")
+    public UserInfoDto getOne(@PathVariable String username) {
         return userService.getOne(username);
     }
 

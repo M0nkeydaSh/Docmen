@@ -13,7 +13,6 @@ import ru.imsit.diplom.docmen.dto.HistoryDto;
 import ru.imsit.diplom.docmen.service.HistoryService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,12 +36,6 @@ public class HistoryController {
         return historyService.getOne(id);
     }
 
-    @GetMapping("/by-ids")
-    @Operation(summary = "Получить данные о множество историй, указанных в параметре", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
-    public List<HistoryDto> getMany(@RequestParam List<UUID> ids) {
-        return historyService.getMany(ids);
-    }
-
     @PostMapping
     @Operation(summary = "Создать историю", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
     public HistoryDto create(@RequestBody HistoryDto dto) {
@@ -61,9 +54,4 @@ public class HistoryController {
         return historyService.delete(id);
     }
 
-    @DeleteMapping
-    @Operation(summary = "Удалить множество историй", description = "В ответе возвращается список UUID объектов.")
-    public void deleteMany(@RequestParam List<UUID> ids) {
-        historyService.deleteMany(ids);
-    }
 }

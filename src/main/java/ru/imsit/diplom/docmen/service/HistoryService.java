@@ -15,7 +15,6 @@ import ru.imsit.diplom.docmen.mapper.HistoryMapper;
 import ru.imsit.diplom.docmen.repository.HistoryRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,13 +39,6 @@ public class HistoryService {
         Optional<History> historyOptional = historyRepository.findById(id);
         return historyMapper.toHistoryDto(historyOptional.orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
-    }
-
-    public List<HistoryDto> getMany(List<UUID> ids) {
-        List<History> histories = historyRepository.findAllById(ids);
-        return histories.stream()
-                .map(historyMapper::toHistoryDto)
-                .toList();
     }
 
     public HistoryDto create(HistoryDto dto) {
@@ -76,7 +68,4 @@ public class HistoryService {
         return historyMapper.toHistoryDto(history);
     }
 
-    public void deleteMany(List<UUID> ids) {
-        historyRepository.deleteAllById(ids);
-    }
 }

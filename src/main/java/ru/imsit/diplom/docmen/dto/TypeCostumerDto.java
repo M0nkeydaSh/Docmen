@@ -8,5 +8,4 @@ import lombok.Value;
 @Value
 public class TypeCostumerDto {
     String name;
-    DepartmentsDto departments;
 }

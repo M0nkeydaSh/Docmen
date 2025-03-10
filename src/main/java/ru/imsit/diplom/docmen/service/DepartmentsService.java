@@ -1,7 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +14,7 @@ import ru.imsit.diplom.docmen.mapper.DepartmentsMapper;
 import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -28,54 +24,36 @@ public class DepartmentsService {
 
     private final DepartmentsRepository departmentsRepository;
 
-    private final ObjectMapper objectMapper;
-
     public Page<DepartmentsDto> getAll(DepartmentsFilter filter, Pageable pageable) {
         Specification<Departments> spec = filter.toSpecification();
         Page<Departments> departments = departmentsRepository.findAll(spec, pageable);
         return departments.map(departmentsMapper::toDepartmentsDto);
     }
 
-    public DepartmentsDto getOne(UUID id) {
-        Optional<Departments> departmentsOptional = departmentsRepository.findById(id);
+    public DepartmentsDto getOne(String name) {
+        Optional<Departments> departmentsOptional = departmentsRepository.findByName(name);
         return departmentsMapper.toDepartmentsDto(departmentsOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
     }
 
-    public List<DepartmentsDto> getMany(List<UUID> ids) {
-        List<Departments> departments = departmentsRepository.findAllById(ids);
-        return departments.stream()
-                .map(departmentsMapper::toDepartmentsDto)
-                .toList();
+    public DepartmentsDto create(String name) {
+        var departments = new Departments();
+        departments = Departments.builder().name(name).build();
+        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(departments));
     }
 
-    public DepartmentsDto create(DepartmentsDto dto) {
-        Departments departments = departmentsMapper.toEntity(dto);
-        Departments resultDepartments = departmentsRepository.save(departments);
-        return departmentsMapper.toDepartmentsDto(resultDepartments);
+    public DepartmentsDto patch(String name, String changeName) throws IOException {
+        var department = departmentsRepository.findByName(name);
+        department.ifPresent(u -> u.setName(changeName));
+        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department.orElseThrow()));
     }
 
-    public DepartmentsDto patch(UUID id, JsonNode patchNode) throws IOException {
-        Departments departments = departmentsRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id)));
-
-        DepartmentsDto departmentsDto = departmentsMapper.toDepartmentsDto(departments);
-        objectMapper.readerForUpdating(departmentsDto).readValue(patchNode);
-        departmentsMapper.updateWithNull(departmentsDto, departments);
-
-        Departments resultDepartments = departmentsRepository.save(departments);
-        return departmentsMapper.toDepartmentsDto(resultDepartments);
-    }
-
-    public DepartmentsDto delete(UUID id) {
-        Departments departments = departmentsRepository.findById(id).orElse(null);
+    public DepartmentsDto delete(String name) {
+        Departments departments = departmentsRepository.findByName(name).orElse(null);
         if (departments != null) {
             departmentsRepository.delete(departments);
         }
         return departmentsMapper.toDepartmentsDto(departments);
     }
-
-    public void deleteMany(List<UUID> ids) {
-        departmentsRepository.deleteAllById(ids);
-    }
 }
+
