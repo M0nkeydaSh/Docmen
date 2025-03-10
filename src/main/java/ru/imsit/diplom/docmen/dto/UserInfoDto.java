@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.dto;
 
 import lombok.Value;
+import ru.imsit.diplom.docmen.entity.Authority;
 
 import java.util.Set;
 
@@ -12,8 +13,8 @@ public class UserInfoDto {
 
     String username;
 
-    boolean status;
+    boolean enabled;
 
-    Set<String> roles;
+    Set<Authority> authorities;
 
 }

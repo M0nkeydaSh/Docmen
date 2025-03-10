@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import ru.imsit.diplom.docmen.entity.Departments;
 
-import java.util.Optional;
 import java.util.UUID;
 
-public interface DepartmentsRepository extends JpaRepository<Departments, UUID>, JpaSpecificationExecutor<Departments> {
+public interface DepartmentsSecRepository extends JpaRepository<Departments, UUID>, JpaSpecificationExecutor<Departments> {
 
-    Optional<Departments> findByName(String name);
+    Departments findByName(String name);
+
 }
