@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +28,6 @@ public class CostumersService {
     private final CostumersMapper costumersMapper;
 
     private final CostumersRepository costumersRepository;
-
-    private final ObjectMapper objectMapper;
 
     public Page<CostumersDto> getAll(CostumersFilter filter, Pageable pageable) {
         Specification<Costumers> spec = filter.toSpecification();
