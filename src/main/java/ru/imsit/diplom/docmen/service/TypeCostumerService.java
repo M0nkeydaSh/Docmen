@@ -12,7 +12,7 @@ import ru.imsit.diplom.docmen.dto.TypeCostumerDto;
 import ru.imsit.diplom.docmen.entity.TypeCostumer;
 import ru.imsit.diplom.docmen.filtr.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.mapper.TypeCostumerMapper;
-import ru.imsit.diplom.docmen.repository.DepartmentsSecRepository;
+import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class TypeCostumerService {
 
     private final TypeCostumerMapper typeCostumerMapper;
 
-    private final DepartmentsSecRepository departmentsSecRepository;
+    private final DepartmentsRepository departmentsRepository;
 
     private final TypeCostumerRepository typeCostumerRepository;
 
@@ -44,8 +44,8 @@ public class TypeCostumerService {
 
     public TypeCostumerDto create(String name, String departments) {
         var typeCostumer = new TypeCostumer();
-        var department = departmentsSecRepository.findByName(departments);
-        typeCostumer = TypeCostumer.builder().name(name).departments(department).build(); //.departments(department)
+        var department = departmentsRepository.findByName(departments);
+        typeCostumer = TypeCostumer.builder().name(name).departments(department.orElseThrow()).build();
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 

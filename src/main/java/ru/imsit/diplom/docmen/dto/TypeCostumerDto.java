@@ -9,4 +9,5 @@ import lombok.Value;
 public class TypeCostumerDto {
     String name;
 
+    DepartmentsDto departments;
 }

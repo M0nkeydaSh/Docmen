@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: Not_Null_User_Id_And_Type_Costumer_Id
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnName: user_id
+            tableName: costumers
+        - addNotNullConstraint:
+            columnName: type_costumer_id
+            tableName: costumers

@@ -21,6 +21,8 @@ databaseChangeLog:
       file: db/changelog/2025/01/costumer/addCostumers.yaml
   - include:
       file: db/changelog/2025/01/History/addHistory.yaml
+  - include:
+      file: db/changelog/2025/01/costumer/notNull.yaml
 
 
 
