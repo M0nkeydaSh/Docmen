@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CommentsDto;
 import ru.imsit.diplom.docmen.entity.Comments;
-import ru.imsit.diplom.docmen.filtr.CommentsFilter;
+import ru.imsit.diplom.docmen.filter.CommentsFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CommentsMapper;
 import ru.imsit.diplom.docmen.repository.CommentsRepository;

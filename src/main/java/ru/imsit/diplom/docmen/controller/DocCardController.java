@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.DocCardDto;
-import ru.imsit.diplom.docmen.filtr.DocCardFilter;
+import ru.imsit.diplom.docmen.filter.DocCardFilter;
 import ru.imsit.diplom.docmen.service.DocCardService;
 
 import java.io.IOException;

@@ -12,7 +12,7 @@ import ru.imsit.diplom.docmen.dto.UserDto;
 import ru.imsit.diplom.docmen.dto.UserInfoDto;
 import ru.imsit.diplom.docmen.entity.Authority;
 import ru.imsit.diplom.docmen.entity.User;
-import ru.imsit.diplom.docmen.filtr.UserFilter;
+import ru.imsit.diplom.docmen.filter.UserFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.UserInfoMapper;
 import ru.imsit.diplom.docmen.mapper.UserMapper;

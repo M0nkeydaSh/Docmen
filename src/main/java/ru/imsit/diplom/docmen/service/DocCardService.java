@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.DocCardDto;
 import ru.imsit.diplom.docmen.entity.DocCard;
-import ru.imsit.diplom.docmen.filtr.DocCardFilter;
+import ru.imsit.diplom.docmen.filter.DocCardFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;

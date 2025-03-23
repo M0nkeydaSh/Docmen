@@ -13,5 +13,4 @@ public class DocCardDto {
     String typeDocument;
     String regNum;
     String keyWords;
-    String changeDate;
 }

@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.FilesDto;
-import ru.imsit.diplom.docmen.filtr.FilesFilter;
+import ru.imsit.diplom.docmen.filter.FilesFilter;
 import ru.imsit.diplom.docmen.service.FilesService;
 
 import java.io.IOException;

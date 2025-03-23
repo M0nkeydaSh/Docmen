@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.FilesDto;
 import ru.imsit.diplom.docmen.entity.Files;
-import ru.imsit.diplom.docmen.filtr.FilesFilter;
+import ru.imsit.diplom.docmen.filter.FilesFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.FilesMapper;
 import ru.imsit.diplom.docmen.repository.FilesRepository;

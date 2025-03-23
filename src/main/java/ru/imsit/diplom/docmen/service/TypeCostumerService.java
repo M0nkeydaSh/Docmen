@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.TypeCostumerDto;
 import ru.imsit.diplom.docmen.entity.TypeCostumer;
-import ru.imsit.diplom.docmen.filtr.TypeCostumerFilter;
+import ru.imsit.diplom.docmen.filter.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.mapper.TypeCostumerMapper;
 import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;

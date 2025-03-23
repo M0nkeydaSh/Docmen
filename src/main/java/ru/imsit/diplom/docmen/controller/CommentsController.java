@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.CommentsDto;
-import ru.imsit.diplom.docmen.filtr.CommentsFilter;
+import ru.imsit.diplom.docmen.filter.CommentsFilter;
 import ru.imsit.diplom.docmen.service.CommentsService;
 
 import java.io.IOException;
