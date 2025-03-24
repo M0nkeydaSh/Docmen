@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.DepartmentsDto;
-import ru.imsit.diplom.docmen.filtr.DepartmentsFilter;
+import ru.imsit.diplom.docmen.filter.DepartmentsFilter;
 import ru.imsit.diplom.docmen.service.DepartmentsService;
 
 import java.io.IOException;
@@ -25,8 +25,8 @@ public class DepartmentsController {
     @GetMapping
     @Operation(summary = "Получить данные о всех департаментах", description = "В ответе возвращается объект DepartmentsDto c полем name.")
     public PagedModel<DepartmentsDto> getAll(@ParameterObject @ModelAttribute DepartmentsFilter filter, @ParameterObject Pageable pageable) {
-        Page<DepartmentsDto> departmentsDtos = departmentsService.getAll(filter, pageable);
-        return new PagedModel<>(departmentsDtos);
+        Page<DepartmentsDto> departmentsDto = departmentsService.getAll(filter, pageable);
+        return new PagedModel<>(departmentsDto);
     }
 
     @GetMapping("/{name}")

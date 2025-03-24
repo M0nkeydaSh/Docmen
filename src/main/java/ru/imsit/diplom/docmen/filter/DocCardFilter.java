@@ -1,4 +1,4 @@
-package ru.imsit.diplom.docmen.filtr;
+package ru.imsit.diplom.docmen.filter;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;

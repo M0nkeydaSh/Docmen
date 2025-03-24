@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import ru.imsit.diplom.docmen.entity.DocCard;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface DocCardRepository extends JpaRepository<DocCard, UUID>, JpaSpecificationExecutor<DocCard> {
+    Optional<DocCard> findByName(String name);
 }

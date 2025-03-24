@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.UserDto;
 import ru.imsit.diplom.docmen.dto.UserInfoDto;
-import ru.imsit.diplom.docmen.filtr.UserFilter;
+import ru.imsit.diplom.docmen.filter.UserFilter;
 import ru.imsit.diplom.docmen.service.UserService;
 
 import java.io.IOException;

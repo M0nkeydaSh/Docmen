@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.DepartmentsDto;
 import ru.imsit.diplom.docmen.entity.Departments;
-import ru.imsit.diplom.docmen.filtr.DepartmentsFilter;
+import ru.imsit.diplom.docmen.filter.DepartmentsFilter;
 import ru.imsit.diplom.docmen.mapper.DepartmentsMapper;
 import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 
@@ -37,9 +37,7 @@ public class DepartmentsService {
     }
 
     public DepartmentsDto create(String name) {
-        var departments = new Departments();
-        departments = Departments.builder().name(name).build();
-        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(departments));
+        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(Departments.builder().name(name).build()));
     }
 
     public DepartmentsDto patch(String name, String changeName) throws IOException {

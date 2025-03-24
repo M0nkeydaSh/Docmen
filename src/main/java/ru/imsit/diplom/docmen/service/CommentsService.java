@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,14 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CommentsDto;
 import ru.imsit.diplom.docmen.entity.Comments;
-import ru.imsit.diplom.docmen.filtr.CommentsFilter;
+import ru.imsit.diplom.docmen.filter.CommentsFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CommentsMapper;
 import ru.imsit.diplom.docmen.repository.CommentsRepository;
+import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +29,8 @@ public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
+    private final DocCardRepository docCardRepository;
+
     private final ObjectMapper objectMapper;
 
     public Page<CommentsDto> getAll(CommentsFilter filter, Pageable pageable) {
@@ -38,33 +39,29 @@ public class CommentsService {
         return comments.map(commentsMapper::toCommentsDto);
     }
 
-    public CommentsDto getOne(UUID id) {
-        Optional<Comments> commentsOptional = commentsRepository.findById(id);
+    public CommentsDto getOne(String username) {
+        Optional<Comments> commentsOptional = commentsRepository.findByUser_Username(username);
         return commentsMapper.toCommentsDto(commentsOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(username))));
     }
 
-    public CommentsDto create(CommentsDto dto) {
-        Comments comments = commentsMapper.toEntity(dto);
-        comments.setUser(userInfoHelper.getUser());
-        Comments resultComments = commentsRepository.save(comments);
-        return commentsMapper.toCommentsDto(resultComments);
+    public CommentsDto create(String content, String docCard) {
+        var user = userInfoHelper.getUser();
+        var docCards = docCardRepository.findByName(docCard);
+        var comment = Comments.builder().content(content).docCard(docCards.orElseThrow()).user(user).build();
+        return commentsMapper.toCommentsDto(commentsRepository.save(comment));
     }
 
-    public CommentsDto patch(UUID id, JsonNode patchNode) throws IOException {
-        Comments comments = commentsRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id)));
-
-        CommentsDto commentsDto = commentsMapper.toCommentsDto(comments);
-        objectMapper.readerForUpdating(commentsDto).readValue(patchNode);
-        commentsMapper.updateWithNull(commentsDto, comments);
-
-        Comments resultComments = commentsRepository.save(comments);
-        return commentsMapper.toCommentsDto(resultComments);
+    public CommentsDto patch(String username, String content, String docCard) throws IOException {
+       var docCards = docCardRepository.findByName(docCard);
+       var comments = commentsRepository.findByUser_Username(username);
+       comments.ifPresent(value -> value.setContent(content));
+       comments.ifPresent(value -> value.setDocCard(docCards.orElseThrow()));
+       return commentsMapper.toCommentsDto(commentsRepository.save(comments.orElseThrow()));
     }
 
-    public CommentsDto delete(UUID id) {
-        Comments comments = commentsRepository.findById(id).orElse(null);
+    public CommentsDto delete(String username) {
+        Comments comments = commentsRepository.findByUser_Username(username).orElse(null);
         if (comments != null) {
             commentsRepository.delete(comments);
         }

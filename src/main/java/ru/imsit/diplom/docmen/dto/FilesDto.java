@@ -8,5 +8,6 @@ import lombok.Value;
 @Value
 public class FilesDto {
     String name;
+    DocCardDto docCard;
     String userName;
 }

@@ -1,7 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,14 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.DocCardDto;
 import ru.imsit.diplom.docmen.entity.DocCard;
-import ru.imsit.diplom.docmen.filtr.DocCardFilter;
+import ru.imsit.diplom.docmen.filter.DocCardFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
+import ru.imsit.diplom.docmen.repository.TypeDocumentRepository;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +28,7 @@ public class DocCardService {
 
     private final DocCardRepository docCardRepository;
 
-    private final ObjectMapper objectMapper;
+    private final TypeDocumentRepository typeDocumentRepository;
 
     public Page<DocCardDto> getAll(DocCardFilter filter, Pageable pageable) {
         Specification<DocCard> spec = filter.toSpecification();
@@ -38,34 +36,32 @@ public class DocCardService {
         return docCards.map(docCardMapper::toDocCardDto);
     }
 
-    public DocCardDto getOne(UUID id) {
-        Optional<DocCard> docCardOptional = docCardRepository.findById(id);
+    public DocCardDto getOne(String name) {
+        Optional<DocCard> docCardOptional = docCardRepository.findByName(name);
         return docCardMapper.toDocCardDto(docCardOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
     }
 
-    public DocCardDto create(DocCardDto dto) {
-        DocCard docCard = docCardMapper.toEntity(dto);
-        docCard.setUser(userInfoHelper.getUser());
-        DocCard resultDocCard = docCardRepository.save(docCard);
-        return docCardMapper.toDocCardDto(resultDocCard);
+    public DocCardDto create(String name, String description, String typeDocument, String regNum, String keyWords) {
+        //var typeDocuments = typeDocumentRepository.findByName(typeDocument);
+        var user = userInfoHelper.getUser();
+        var docCard = DocCard.builder().name(name).discription(description).user(user).typeDocument(typeDocument).regNum(regNum).keyWords(keyWords).build();
+        return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
-    public DocCardDto patch(UUID id, JsonNode patchNode) throws IOException {
-        DocCard docCard = docCardRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id)));
-
-        DocCardDto docCardDto = docCardMapper.toDocCardDto(docCard);
-        objectMapper.readerForUpdating(docCardDto).readValue(patchNode);
-        docCardMapper.updateWithNull(docCardDto, docCard);
-
-        DocCard resultDocCard = docCardRepository.save(docCard);
-        return docCardMapper.toDocCardDto(resultDocCard);
+    public DocCardDto patch(String name, String description, String typeDocument, String regNum, String keyWords) throws IOException {
+        var docCard = docCardRepository.findByName(name);
+        docCard.ifPresent(value -> value.setName(name));
+        docCard.ifPresent(value -> value.setTypeDocument(typeDocument));
+        docCard.ifPresent(value -> value.setDiscription(description));
+        docCard.ifPresent(value -> value.setRegNum(regNum));
+        docCard.ifPresent(value -> value.setKeyWords(keyWords));
+        return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
     }
 
 
-    public DocCardDto delete(UUID id) {
-        DocCard docCard = docCardRepository.findById(id).orElse(null);
+    public DocCardDto delete(String name) {
+        DocCard docCard = docCardRepository.findByName(name).orElse(null);
         if (docCard != null) {
             docCardRepository.delete(docCard);
         }

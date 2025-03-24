@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.FilesDto;
-import ru.imsit.diplom.docmen.filtr.FilesFilter;
+import ru.imsit.diplom.docmen.filter.FilesFilter;
 import ru.imsit.diplom.docmen.service.FilesService;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/files")
@@ -31,28 +29,28 @@ public class FilesController {
         return new PagedModel<>(filesDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto getOne(@PathVariable UUID id) {
-        return filesService.getOne(id);
+    public FilesDto getOne(@RequestParam String name) {
+        return filesService.getOne(name);
     }
 
     @PostMapping
     @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto create(@RequestBody FilesDto dto) {
-        return filesService.create(dto);
+    public FilesDto create(@RequestParam String name, @RequestParam String docCard) {
+        return filesService.create(name, docCard);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{name}")
     @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return filesService.patch(id, patchNode);
+    public FilesDto patch(@RequestParam String name, @RequestParam String docCard) throws IOException {
+        return filesService.patch(name, docCard);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto delete(@PathVariable UUID id) {
-        return filesService.delete(id);
+    public FilesDto delete(@RequestParam String name) {
+        return filesService.delete(name);
     }
 
 

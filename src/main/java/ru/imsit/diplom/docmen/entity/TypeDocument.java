@@ -11,10 +11,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @Builder
-@Table(name = "files")
+@Table(name = "type_document")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Files {
+public class TypeDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
@@ -24,14 +24,7 @@ public class Files {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_card_id")
-    private DocCard docCard;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(name = "change_date")
     private String changeDate;
+
 }

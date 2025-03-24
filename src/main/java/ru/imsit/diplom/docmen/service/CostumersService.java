@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CostumersDto;
 import ru.imsit.diplom.docmen.entity.Costumers;
-import ru.imsit.diplom.docmen.filtr.CostumersFilter;
+import ru.imsit.diplom.docmen.filter.CostumersFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CostumersMapper;
 import ru.imsit.diplom.docmen.repository.CostumersRepository;
@@ -41,7 +41,7 @@ public class CostumersService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(username))));
     }
 
-    public CostumersDto create(String firstname, String surName, String lastName, String email, String phoneNumber,String gender, String typeCostumer, String username) {
+    public CostumersDto create(String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer, String username) {
         var costumers = new Costumers();
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
         var user = userInfoHelper.getUserByUsername(username);

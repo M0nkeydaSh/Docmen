@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.TypeCostumerDto;
-import ru.imsit.diplom.docmen.filtr.TypeCostumerFilter;
+import ru.imsit.diplom.docmen.filter.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.service.TypeCostumerService;
 
 import java.io.IOException;

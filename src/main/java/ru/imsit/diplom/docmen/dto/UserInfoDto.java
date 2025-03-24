@@ -10,11 +10,8 @@ import java.util.Set;
  */
 @Value
 public class UserInfoDto {
-
     String username;
-
     boolean enabled;
-
     Set<Authority> authorities;
 
 }
