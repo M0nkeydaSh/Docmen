@@ -37,9 +37,7 @@ public class DepartmentsService {
     }
 
     public DepartmentsDto create(String name) {
-        var departments = new Departments();
-        departments = Departments.builder().name(name).build();
-        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(departments));
+        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(Departments.builder().name(name).build()));
     }
 
     public DepartmentsDto patch(String name, String changeName) throws IOException {

@@ -9,4 +9,5 @@ import lombok.Value;
 public class CommentsDto {
     String content;
     String username;
+    DocCardDto docCard;
 }

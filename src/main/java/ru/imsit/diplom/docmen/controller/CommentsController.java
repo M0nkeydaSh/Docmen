@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import ru.imsit.diplom.docmen.filter.CommentsFilter;
 import ru.imsit.diplom.docmen.service.CommentsService;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/comments")
@@ -31,28 +29,28 @@ public class CommentsController {
         return new PagedModel<>(commentsDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{username}")
     @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto getOne(@PathVariable UUID id) {
-        return commentsService.getOne(id);
+    public CommentsDto getOne(@RequestParam String username) {
+        return commentsService.getOne(username);
     }
 
     @PostMapping
     @Operation(summary = "Создать коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto create(@RequestBody CommentsDto dto) {
-        return commentsService.create(dto);
+    public CommentsDto create(@RequestParam String content, @RequestParam String docCard) {
+        return commentsService.create(content, docCard);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{username}")
     @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return commentsService.patch(id, patchNode);
+    public CommentsDto patch(@RequestParam String username, @RequestParam String content, @RequestParam String docCard) throws IOException {
+        return commentsService.patch(username, content, docCard);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto delete(@PathVariable UUID id) {
-        return commentsService.delete(id);
+    public CommentsDto delete(@RequestParam String username) {
+        return commentsService.delete(username);
     }
 
 }

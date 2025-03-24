@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import ru.imsit.diplom.docmen.filter.DocCardFilter;
 import ru.imsit.diplom.docmen.service.DocCardService;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/docCards")
@@ -31,28 +29,30 @@ public class DocCardController {
         return new PagedModel<>(docCardDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @Operation(summary = "Получить данные о конкретной карточке", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
-    public DocCardDto getOne(@PathVariable UUID id) {
-        return docCardService.getOne(id);
+    public DocCardDto getOne(@RequestParam String name) {
+        return docCardService.getOne(name);
     }
 
     @PostMapping
     @Operation(summary = "Создать карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
-    public DocCardDto create(@RequestBody DocCardDto dto) {
-        return docCardService.create(dto);
+    public DocCardDto create(@RequestParam String name, @RequestParam String description,
+                             @RequestParam String typeDocument, @RequestParam String regNum, @RequestParam String keyWords) {
+        return docCardService.create(name, description, typeDocument, regNum, keyWords);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{name}")
     @Operation(summary = "Изменить карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
-    public DocCardDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return docCardService.patch(id, patchNode);
+    public DocCardDto patch(@RequestParam String name, @RequestParam String description,
+                            @RequestParam String typeDocument, @RequestParam String regNum, @RequestParam String keyWords) throws IOException {
+        return docCardService.patch(name, description, typeDocument, regNum, keyWords);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @Operation(summary = "Удалить карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
-    public DocCardDto delete(@PathVariable UUID id) {
-        return docCardService.delete(id);
+    public DocCardDto delete(@RequestParam String name) {
+        return docCardService.delete(name);
     }
 
 }
