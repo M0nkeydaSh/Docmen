@@ -25,17 +25,17 @@ public class DocCard {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
 
-    @Column(name = "discription")
+    @Column(name = "description")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String discription;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "type_document")
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String typeDocument;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_document_id")
+    private TypeDocument typeDocument;
 
     @Column(name = "reg_num")
     @JdbcTypeCode(SqlTypes.VARCHAR)

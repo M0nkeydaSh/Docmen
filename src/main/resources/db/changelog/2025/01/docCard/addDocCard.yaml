@@ -26,10 +26,24 @@ databaseChangeLog:
                   name: reg_num
                   type: VARCHAR(255)
               - column:
-                  name: type_document
-                  type: VARCHAR(255)
+                  name: type_document_id
+                  type: UUID
               - column:
-                  name: DISCRIPTION
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: DESCRIPTION
                   type: VARCHAR(255)
             tableName: DOC_CARD
-
+        - addForeignKeyConstraint:
+            baseColumnNames: type_document_id
+            baseTableName: doc_card
+            constraintName: FK_DOC_CARD_ON_TYPE_DOCUMENT
+            referencedColumnNames: id
+            referencedTableName: TYPE_DOCUMENT
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: doc_card
+            constraintName: FK_DOC_CARD_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
