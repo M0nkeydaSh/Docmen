@@ -8,9 +8,9 @@ import lombok.Value;
 @Value
 public class DocCardDto {
     String name;
-    String discription;
+    String description;
     String userName;
-    String typeDocument;
+    TypeDocumentDto typeDocument;
     String regNum;
     String keyWords;
 }

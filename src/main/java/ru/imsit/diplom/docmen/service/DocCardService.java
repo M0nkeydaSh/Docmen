@@ -42,18 +42,19 @@ public class DocCardService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
     }
 
-    public DocCardDto create(String name, String description, String typeDocument, String regNum, String keyWords) {
-        //var typeDocuments = typeDocumentRepository.findByName(typeDocument);
+    public DocCardDto create(String name, String description, String typeDocumentName, String regNum, String keyWords) {
+        var typeDocument = typeDocumentRepository.findByName(typeDocumentName);
         var user = userInfoHelper.getUser();
-        var docCard = DocCard.builder().name(name).discription(description).user(user).typeDocument(typeDocument).regNum(regNum).keyWords(keyWords).build();
+        var docCard = DocCard.builder().name(name).description(description).user(user).typeDocument(typeDocument.orElseThrow()).regNum(regNum).keyWords(keyWords).build();
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
-    public DocCardDto patch(String name, String description, String typeDocument, String regNum, String keyWords) throws IOException {
+    public DocCardDto patch(String name, String description, String typeDocumentName, String regNum, String keyWords) throws IOException {
         var docCard = docCardRepository.findByName(name);
+        var typeDocument = typeDocumentRepository.findByName(typeDocumentName);
         docCard.ifPresent(value -> value.setName(name));
-        docCard.ifPresent(value -> value.setTypeDocument(typeDocument));
-        docCard.ifPresent(value -> value.setDiscription(description));
+        docCard.ifPresent(value -> value.setTypeDocument(typeDocument.orElseThrow()));
+        docCard.ifPresent(value -> value.setDescription(description));
         docCard.ifPresent(value -> value.setRegNum(regNum));
         docCard.ifPresent(value -> value.setKeyWords(keyWords));
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
