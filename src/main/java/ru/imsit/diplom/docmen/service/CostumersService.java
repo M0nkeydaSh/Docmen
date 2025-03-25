@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CostumersDto;
 import ru.imsit.diplom.docmen.entity.Costumers;
+import ru.imsit.diplom.docmen.enums.Gender;
 import ru.imsit.diplom.docmen.filter.CostumersFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CostumersMapper;
@@ -45,7 +46,7 @@ public class CostumersService {
         var costumers = new Costumers();
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
         var user = userInfoHelper.getUserByUsername(username);
-        costumers = Costumers.builder().firstName(firstname).surName(surName).lastName(lastName).email(email).phoneNumber(phoneNumber).gender(gender).typeCostumer(typeCostumers.orElseThrow()).user(user).build();
+        costumers = Costumers.builder().firstName(firstname).surName(surName).lastName(lastName).email(email).phoneNumber(phoneNumber).gender(Gender.valueOf(gender)).typeCostumer(typeCostumers.orElseThrow()).user(user).build();
         return costumersMapper.toCostumersDto(costumersRepository.save(costumers));
     }
 
@@ -58,7 +59,7 @@ public class CostumersService {
         costumer.ifPresent(costumer1 -> costumer1.setLastName(lastName));
         costumer.ifPresent(costumer1 -> costumer1.setEmail(email));
         costumer.ifPresent(costumer1 -> costumer1.setPhoneNumber(phoneNumber));
-        costumer.ifPresent(costumer1 -> costumer1.setGender(gender));
+        costumer.ifPresent(costumer1 -> costumer1.setGender(Gender.valueOf(gender)));
         costumer.ifPresent(costumer1 -> costumer1.setTypeCostumer(typeCostumers.orElseThrow()));
         costumer.ifPresent(costumer1 -> costumer1.setUser(user));
         return costumersMapper.toCostumersDto(costumersRepository.save(costumer.orElseThrow()));
