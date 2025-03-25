@@ -18,6 +18,7 @@ import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -39,10 +40,10 @@ public class CommentsService {
         return comments.map(commentsMapper::toCommentsDto);
     }
 
-    public CommentsDto getOne(String username) {
-        Optional<Comments> commentsOptional = commentsRepository.findByUser_Username(username);
+    public CommentsDto getOne(UUID id) {
+        Optional<Comments> commentsOptional = commentsRepository.findById(id);
         return commentsMapper.toCommentsDto(commentsOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(username))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
     public CommentsDto create(String content, String docCard) {
@@ -52,16 +53,16 @@ public class CommentsService {
         return commentsMapper.toCommentsDto(commentsRepository.save(comment));
     }
 
-    public CommentsDto patch(String username, String content, String docCard) throws IOException {
+    public CommentsDto patch(UUID id, String content, String docCard) throws IOException {
        var docCards = docCardRepository.findByName(docCard);
-       var comments = commentsRepository.findByUser_Username(username);
+       var comments = commentsRepository.findById(id);
        comments.ifPresent(value -> value.setContent(content));
        comments.ifPresent(value -> value.setDocCard(docCards.orElseThrow()));
        return commentsMapper.toCommentsDto(commentsRepository.save(comments.orElseThrow()));
     }
 
-    public CommentsDto delete(String username) {
-        Comments comments = commentsRepository.findByUser_Username(username).orElse(null);
+    public CommentsDto delete(UUID id) {
+        Comments comments = commentsRepository.findById(id).orElse(null);
         if (comments != null) {
             commentsRepository.delete(comments);
         }

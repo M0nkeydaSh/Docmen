@@ -17,6 +17,7 @@ import ru.imsit.diplom.docmen.repository.FilesRepository;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -36,10 +37,10 @@ public class FilesService {
         return files.map(filesMapper::toFilesDto);
     }
 
-    public FilesDto getOne(String name) {
-        Optional<Files> filesOptional = filesRepository.findByName(name);
+    public FilesDto getOne(UUID id) {
+        Optional<Files> filesOptional = filesRepository.findById(id);
         return filesMapper.toFilesDto(filesOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
     public FilesDto create(String name, String docCard) {
@@ -49,16 +50,16 @@ public class FilesService {
         return filesMapper.toFilesDto(filesRepository.save(file));
     }
 
-    public FilesDto patch(String name, String docCard) throws IOException {
-        var Files = filesRepository.findByName(name);
+    public FilesDto patch(UUID id, String name, String docCard) throws IOException {
+        var Files = filesRepository.findById(id);
         var docCards = docCardRepository.findByName(docCard);
         Files.ifPresent(value -> value.setName(name));
         Files.ifPresent(value -> value.setDocCard(docCards.orElseThrow()));
         return filesMapper.toFilesDto(filesRepository.save(Files.orElseThrow()));
     }
 
-    public FilesDto delete(String name) {
-        Files files = filesRepository.findByName(name).orElse(null);
+    public FilesDto delete(UUID id) {
+        Files files = filesRepository.findById(id).orElse(null);
         if (files != null) {
             filesRepository.delete(files);
         }

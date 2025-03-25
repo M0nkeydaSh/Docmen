@@ -13,6 +13,7 @@ import ru.imsit.diplom.docmen.filter.CommentsFilter;
 import ru.imsit.diplom.docmen.service.CommentsService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/comments")
@@ -29,10 +30,10 @@ public class CommentsController {
         return new PagedModel<>(commentsDtos);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/{id}")
     @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto getOne(@RequestParam String username) {
-        return commentsService.getOne(username);
+    public CommentsDto getOne(@RequestParam UUID id) {
+        return commentsService.getOne(id);
     }
 
     @PostMapping
@@ -41,16 +42,16 @@ public class CommentsController {
         return commentsService.create(content, docCard);
     }
 
-    @PatchMapping("/{username}")
+    @PatchMapping("/{id}")
     @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto patch(@RequestParam String username, @RequestParam String content, @RequestParam String docCard) throws IOException {
-        return commentsService.patch(username, content, docCard);
+    public CommentsDto patch(@RequestParam UUID id, @RequestParam String content, @RequestParam String docCard) throws IOException {
+        return commentsService.patch(id, content, docCard);
     }
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto delete(@RequestParam String username) {
-        return commentsService.delete(username);
+    public CommentsDto delete(@RequestParam UUID id) {
+        return commentsService.delete(id);
     }
 
 }

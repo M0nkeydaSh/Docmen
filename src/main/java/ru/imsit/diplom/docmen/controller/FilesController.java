@@ -13,6 +13,7 @@ import ru.imsit.diplom.docmen.filter.FilesFilter;
 import ru.imsit.diplom.docmen.service.FilesService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/files")
@@ -23,34 +24,34 @@ public class FilesController {
     private final FilesService filesService;
 
     @GetMapping
-    @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
+    @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public PagedModel<FilesDto> getAll(@ParameterObject @ModelAttribute FilesFilter filter, @ParameterObject Pageable pageable) {
         Page<FilesDto> filesDtos = filesService.getAll(filter, pageable);
         return new PagedModel<>(filesDtos);
     }
 
-    @GetMapping("/{name}")
-    @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto getOne(@RequestParam String name) {
-        return filesService.getOne(name);
+    @GetMapping("/{id}")
+    @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    public FilesDto getOne(@RequestParam UUID id) {
+        return filesService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
+    @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public FilesDto create(@RequestParam String name, @RequestParam String docCard) {
         return filesService.create(name, docCard);
     }
 
-    @PatchMapping("/{name}")
-    @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto patch(@RequestParam String name, @RequestParam String docCard) throws IOException {
-        return filesService.patch(name, docCard);
+    @PatchMapping("/{id}")
+    @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    public FilesDto patch(@RequestParam UUID id, @RequestParam String name,  @RequestParam String docCard) throws IOException {
+        return filesService.patch(id, name, docCard);
     }
 
-    @DeleteMapping("/{name}")
-    @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями id, name,  userId.")
-    public FilesDto delete(@RequestParam String name) {
-        return filesService.delete(name);
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    public FilesDto delete(@RequestParam UUID id) {
+        return filesService.delete(id);
     }
 
 }
