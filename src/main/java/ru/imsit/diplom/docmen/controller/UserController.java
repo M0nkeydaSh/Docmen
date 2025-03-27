@@ -3,6 +3,7 @@ package ru.imsit.diplom.docmen.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
@@ -27,7 +28,7 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Получить данные о всех пользователях", description = "В ответе возвращается объект userDto c полями id, username, password.")
-    public PagedModel<UserDto> getAll(@ModelAttribute UserFilter filter, Pageable pageable) {
+    public PagedModel<UserDto> getAll(@ParameterObject @ModelAttribute UserFilter filter, @ParameterObject Pageable pageable) {
         Page<UserDto> userDtos = userService.getAll(filter, pageable);
         return new PagedModel<>(userDtos);
     }

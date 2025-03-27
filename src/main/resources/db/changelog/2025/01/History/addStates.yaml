@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-states-column
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: history
+            columns:
+              - column:
+                  name: state
+                  type: VARCHAR(255)
+        - dropColumn:
+            tableName: history
+            columns:
+              - column:
+                  name: state_card_id
+

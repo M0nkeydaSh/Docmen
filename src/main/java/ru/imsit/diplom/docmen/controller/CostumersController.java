@@ -29,7 +29,7 @@ public class CostumersController {
         return new PagedModel<>(costumersDtos);
     }
 
-    @GetMapping
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
     public CostumersDto getOne(@RequestParam String username) {
         return costumersService.getOne(username);
