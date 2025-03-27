@@ -48,7 +48,7 @@ public class TypeCostumerService {
 
     public TypeCostumerDto patch(String name, String changeName) throws IOException {
         var typeCostumer = typeCostumerRepository.findByName(name);
-        typeCostumer.ifPresent(u -> u.setName(changeName));
+        typeCostumer.ifPresent(value -> value.setName(changeName));
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer.orElseThrow()));
     }
 

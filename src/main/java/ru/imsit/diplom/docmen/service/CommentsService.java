@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +30,6 @@ public class CommentsService {
     private final CommentsRepository commentsRepository;
 
     private final DocCardRepository docCardRepository;
-
-    private final ObjectMapper objectMapper;
 
     public Page<CommentsDto> getAll(CommentsFilter filter, Pageable pageable) {
         Specification<Comments> spec = filter.toSpecification();

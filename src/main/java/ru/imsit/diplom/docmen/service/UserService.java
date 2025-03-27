@@ -50,11 +50,11 @@ public class UserService {
         return userInfoMapper.toUserInfoDto(userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
-    public UserDto create(String username, String password, Set<String> authority) {
+    public UserDto create(String username, String password, Set<String> authoritySet) {
         var user = new User();
         Set<Authority> roles = new HashSet<>();
-        for (var i : authority) {
-            var role = authorityRepository.findByName(i);
+        for (var authority : authoritySet) {
+            var role = authorityRepository.findByName(authority);
             roles.add(role);
         }
         user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(roles).build();
@@ -64,21 +64,21 @@ public class UserService {
     public UserDto patch(String username, boolean enabled, Set<String> authorities) {
         var user = userRepository.findByUsername(username);
         Set<Authority> roles = new HashSet<>();
-        for (var i : authorities) {
-            var role = authorityRepository.findByName(i);
+        for (var authority : authorities) {
+            var role = authorityRepository.findByName(authority);
             roles.add(role);
         }
 
-        user.ifPresent(u -> {
-            u.setEnabled(enabled);
-            u.setAuthorities(roles);
+        user.ifPresent(value -> {
+            value.setEnabled(enabled);
+            value.setAuthorities(roles);
         });
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 
     public UserDto patchDeactivate(String username, boolean enabled) {
         var user = userRepository.findByUsername(username);
-        user.ifPresent(u -> u.setEnabled(enabled));
+        user.ifPresent(value -> value.setEnabled(enabled));
         return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
     }
 
@@ -86,7 +86,7 @@ public class UserService {
         var user = userRepository.findByUsername(username);
         var autorizationUser = userInfoHelper.getUser();
         if (autorizationUser.getUsername().equals(username) || autorizationUser.getAuthorities().stream().anyMatch(i -> i.getName().equals("ADMIN"))) {
-            user.ifPresent(u -> u.setPassword(passwordEncoder.encode(password)));
+            user.ifPresent(value -> value.setPassword(passwordEncoder.encode(password)));
             userRepository.save(user.orElseThrow());
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

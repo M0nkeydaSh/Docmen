@@ -54,14 +54,14 @@ public class CostumersService {
         var costumer = costumersRepository.findByUser_Username(username);
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
         var user = userInfoHelper.getUserByUsername(username);
-        costumer.ifPresent(costumer1 -> costumer1.setFirstName(firstname));
-        costumer.ifPresent(costumer1 -> costumer1.setSurName(surName));
-        costumer.ifPresent(costumer1 -> costumer1.setLastName(lastName));
-        costumer.ifPresent(costumer1 -> costumer1.setEmail(email));
-        costumer.ifPresent(costumer1 -> costumer1.setPhoneNumber(phoneNumber));
-        costumer.ifPresent(costumer1 -> costumer1.setGender(Gender.valueOf(gender)));
-        costumer.ifPresent(costumer1 -> costumer1.setTypeCostumer(typeCostumers.orElseThrow()));
-        costumer.ifPresent(costumer1 -> costumer1.setUser(user));
+        costumer.ifPresent(value -> value.setFirstName(firstname));
+        costumer.ifPresent(value -> value.setSurName(surName));
+        costumer.ifPresent(value -> value.setLastName(lastName));
+        costumer.ifPresent(value -> value.setEmail(email));
+        costumer.ifPresent(value -> value.setPhoneNumber(phoneNumber));
+        costumer.ifPresent(value -> value.setGender(Gender.valueOf(gender)));
+        costumer.ifPresent(value -> value.setTypeCostumer(typeCostumers.orElseThrow()));
+        costumer.ifPresent(value -> value.setUser(user));
         return costumersMapper.toCostumersDto(costumersRepository.save(costumer.orElseThrow()));
     }
 

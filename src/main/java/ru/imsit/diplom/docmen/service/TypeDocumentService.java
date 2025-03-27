@@ -38,7 +38,7 @@ public class TypeDocumentService {
 
     public TypeDocumentDto patch(String name, String changeName) throws IOException {
         var typeDocument = typeDocumentRepository.findByName(name);
-        typeDocument.ifPresent(u -> u.setName(changeName));
+        typeDocument.ifPresent(value -> value.setName(changeName));
         return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(typeDocument.orElseThrow()));
     }
 

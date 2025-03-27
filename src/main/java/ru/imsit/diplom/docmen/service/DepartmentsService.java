@@ -42,7 +42,7 @@ public class DepartmentsService {
 
     public DepartmentsDto patch(String name, String changeName) throws IOException {
         var department = departmentsRepository.findByName(name);
-        department.ifPresent(u -> u.setName(changeName));
+        department.ifPresent(value -> value.setName(changeName));
         return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department.orElseThrow()));
     }
 
