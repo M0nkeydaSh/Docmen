@@ -13,6 +13,7 @@ import ru.imsit.diplom.docmen.filter.TypeCostumerFilter;
 import ru.imsit.diplom.docmen.service.TypeCostumerService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/typeCostumers")
@@ -22,17 +23,17 @@ public class TypeCostumerController {
 
     private final TypeCostumerService typeCostumerService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех видах работников", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
     public PagedModel<TypeCostumerDto> getAll(@ParameterObject @ModelAttribute TypeCostumerFilter filter, @ParameterObject Pageable pageable) {
         Page<TypeCostumerDto> typeCostumerDtos = typeCostumerService.getAll(filter, pageable);
         return new PagedModel<>(typeCostumerDtos);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном виде работника ", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto getOne(@PathVariable String name) {
-        return typeCostumerService.getOne(name);
+    public TypeCostumerDto getOne(@RequestParam UUID id) {
+        return typeCostumerService.getOne(id);
     }
 
     @PostMapping
@@ -41,16 +42,16 @@ public class TypeCostumerController {
         return typeCostumerService.create(name, departments);
     }
 
-    @PatchMapping("/{name}")
+    @PatchMapping
     @Operation(summary = "Изменить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto patch(@PathVariable String name, @RequestParam String changeName) throws IOException {
-        return typeCostumerService.patch(name, changeName);
+    public TypeCostumerDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+        return typeCostumerService.patch(id, name);
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping
     @Operation(summary = "Удалить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
-    public TypeCostumerDto delete(@PathVariable String name) {
-        return typeCostumerService.delete(name);
+    public TypeCostumerDto delete(@RequestParam UUID id) {
+        return typeCostumerService.delete(id);
     }
 
 }

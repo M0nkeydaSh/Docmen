@@ -23,14 +23,14 @@ public class FilesController {
 
     private final FilesService filesService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public PagedModel<FilesDto> getAll(@ParameterObject @ModelAttribute FilesFilter filter, @ParameterObject Pageable pageable) {
         Page<FilesDto> filesDtos = filesService.getAll(filter, pageable);
         return new PagedModel<>(filesDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public FilesDto getOne(@RequestParam UUID id) {
         return filesService.getOne(id);
@@ -42,13 +42,13 @@ public class FilesController {
         return filesService.create(name, docCard);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public FilesDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
         return filesService.patch(id, name);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
     public FilesDto delete(@RequestParam UUID id) {
         return filesService.delete(id);

@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-state-column
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: doc_card
+            columns:
+              - column:
+                  name: state
+                  type: VARCHAR(255)
+
+

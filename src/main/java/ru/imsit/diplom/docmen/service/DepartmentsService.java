@@ -15,6 +15,7 @@ import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -30,24 +31,24 @@ public class DepartmentsService {
         return departments.map(departmentsMapper::toDepartmentsDto);
     }
 
-    public DepartmentsDto getOne(String name) {
-        Optional<Departments> departmentsOptional = departmentsRepository.findByName(name);
+    public DepartmentsDto getOne(UUID id) {
+        Optional<Departments> departmentsOptional = departmentsRepository.findById(id);
         return departmentsMapper.toDepartmentsDto(departmentsOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
     public DepartmentsDto create(String name) {
         return departmentsMapper.toDepartmentsDto(departmentsRepository.save(Departments.builder().name(name).build()));
     }
 
-    public DepartmentsDto patch(String name, String changeName) throws IOException {
-        var department = departmentsRepository.findByName(name);
-        department.ifPresent(value -> value.setName(changeName));
+    public DepartmentsDto patch(UUID id, String name) throws IOException {
+        var department = departmentsRepository.findById(id);
+        department.ifPresent(value -> value.setName(name));
         return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department.orElseThrow()));
     }
 
-    public DepartmentsDto delete(String name) {
-        Departments departments = departmentsRepository.findByName(name).orElse(null);
+    public DepartmentsDto delete(UUID id) {
+        Departments departments = departmentsRepository.findById(id).orElse(null);
         if (departments != null) {
             departmentsRepository.delete(departments);
         }

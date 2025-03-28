@@ -12,6 +12,7 @@ import ru.imsit.diplom.docmen.mapper.TypeDocumentMapper;
 import ru.imsit.diplom.docmen.repository.TypeDocumentRepository;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -27,8 +28,8 @@ public class TypeDocumentService {
         return typeDocument.map(typeDocumentMapper::toTypeDocumentDto);
     }
 
-    public TypeDocumentDto getOne(String name) {
-        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.findByName(name).orElseThrow());
+    public TypeDocumentDto getOne(UUID id) {
+        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.findById(id).orElseThrow());
     }
 
 
@@ -36,14 +37,14 @@ public class TypeDocumentService {
         return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(TypeDocument.builder().name(name).build()));
     }
 
-    public TypeDocumentDto patch(String name, String changeName) throws IOException {
-        var typeDocument = typeDocumentRepository.findByName(name);
-        typeDocument.ifPresent(value -> value.setName(changeName));
+    public TypeDocumentDto patch(UUID id, String name) throws IOException {
+        var typeDocument = typeDocumentRepository.findById(id);
+        typeDocument.ifPresent(value -> value.setName(name));
         return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(typeDocument.orElseThrow()));
     }
 
-    public TypeDocumentDto delete(String name) {
-        TypeDocument typeDocument = typeDocumentRepository.findByName(name).orElse(null);
+    public TypeDocumentDto delete(UUID id) {
+        TypeDocument typeDocument = typeDocumentRepository.findById(id).orElse(null);
         if (typeDocument != null) {
             typeDocumentRepository.delete(typeDocument);
         }

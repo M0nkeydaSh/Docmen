@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,34 +22,34 @@ public class HistoryController {
 
     private final HistoryService historyService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех историях", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
     public PagedModel<HistoryDto> getAll(@ParameterObject Pageable pageable) {
         Page<HistoryDto> historyDtos = historyService.getAll(pageable);
         return new PagedModel<>(historyDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретной истории", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
-    public HistoryDto getOne(@PathVariable UUID id) {
+    public HistoryDto getOne(@RequestParam UUID id) {
         return historyService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать историю", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
-    public HistoryDto create(@RequestBody HistoryDto dto) {
-        return historyService.create(dto);
+    public HistoryDto create(@RequestParam String docCard, @RequestParam String userName, @RequestParam String state) {
+        return historyService.create(docCard, userName, state);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Operation(summary = "Изменить историю", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user.")
-    public HistoryDto patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return historyService.patch(id, patchNode);
+    public HistoryDto patch(@RequestParam UUID id, @RequestParam String docCard, @RequestParam String userName, @RequestParam String state) throws IOException {
+        return historyService.patch(id, docCard, userName, state);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(summary = "Удалить историю", description = "В ответе возвращается объект HistoryDto c полями id, docCardId, user")
-    public HistoryDto delete(@PathVariable UUID id) {
+    public HistoryDto delete(@RequestParam UUID id) {
         return historyService.delete(id);
     }
 
