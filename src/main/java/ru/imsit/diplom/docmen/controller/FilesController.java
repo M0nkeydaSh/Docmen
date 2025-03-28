@@ -44,8 +44,8 @@ public class FilesController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
-    public FilesDto patch(@RequestParam UUID id, @RequestParam String name,  @RequestParam String docCard) throws IOException {
-        return filesService.patch(id, name, docCard);
+    public FilesDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+        return filesService.patch(id, name);
     }
 
     @DeleteMapping("/{id}")

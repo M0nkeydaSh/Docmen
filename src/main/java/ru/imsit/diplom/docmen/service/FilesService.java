@@ -50,11 +50,9 @@ public class FilesService {
         return filesMapper.toFilesDto(filesRepository.save(file));
     }
 
-    public FilesDto patch(UUID id, String name, String docCard) throws IOException {
+    public FilesDto patch(UUID id, String name) throws IOException {
         var Files = filesRepository.findById(id);
-        var docCards = docCardRepository.findByName(docCard);
         Files.ifPresent(value -> value.setName(name));
-        Files.ifPresent(value -> value.setDocCard(docCards.orElseThrow()));
         return filesMapper.toFilesDto(filesRepository.save(Files.orElseThrow()));
     }
 

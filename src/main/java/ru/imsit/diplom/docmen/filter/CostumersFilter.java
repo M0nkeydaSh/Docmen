@@ -14,25 +14,25 @@ public record CostumersFilter(String firstName, String lastName, String surName,
 
     private Specification<Costumers> firstNameSpec() {
         return ((root, query, cb) -> StringUtils.hasText(firstName)
-                ? cb.equal(root.get("firstName"), firstName)
+                ? cb.equal(cb.lower(root.get("firstName")), firstName.toLowerCase())
                 : null);
     }
 
     private Specification<Costumers> lastNameSpec() {
         return ((root, query, cb) -> StringUtils.hasText(lastName)
-                ? cb.equal(root.get("lastName"), lastName)
+                ? cb.equal(cb.lower(root.get("lastName")), lastName.toLowerCase())
                 : null);
     }
 
     private Specification<Costumers> surNameSpec() {
         return ((root, query, cb) -> StringUtils.hasText(surName)
-                ? cb.equal(root.get("surName"), surName)
+                ? cb.equal(cb.lower(root.get("surName")), surName.toLowerCase())
                 : null);
     }
 
     private Specification<Costumers> genderSpec() {
         return ((root, query, cb) -> StringUtils.hasText(gender)
-                ? cb.equal(root.get("gender"), gender)
+                ? cb.equal(cb.lower(root.get("gender")), gender.toLowerCase())
                 : null);
     }
 }

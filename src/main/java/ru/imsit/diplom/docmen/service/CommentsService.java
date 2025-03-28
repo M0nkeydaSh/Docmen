@@ -50,11 +50,9 @@ public class CommentsService {
         return commentsMapper.toCommentsDto(commentsRepository.save(comment));
     }
 
-    public CommentsDto patch(UUID id, String content, String docCard) throws IOException {
-       var docCards = docCardRepository.findByName(docCard);
+    public CommentsDto patch(UUID id, String content) throws IOException {
        var comments = commentsRepository.findById(id);
        comments.ifPresent(value -> value.setContent(content));
-       comments.ifPresent(value -> value.setDocCard(docCards.orElseThrow()));
        return commentsMapper.toCommentsDto(commentsRepository.save(comments.orElseThrow()));
     }
 

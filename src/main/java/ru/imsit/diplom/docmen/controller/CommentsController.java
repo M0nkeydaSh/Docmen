@@ -44,8 +44,8 @@ public class CommentsController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
-    public CommentsDto patch(@RequestParam UUID id, @RequestParam String content, @RequestParam String docCard) throws IOException {
-        return commentsService.patch(id, content, docCard);
+    public CommentsDto patch(@RequestParam UUID id, @RequestParam String content) throws IOException {
+        return commentsService.patch(id, content);
     }
 
     @DeleteMapping("/{id}")

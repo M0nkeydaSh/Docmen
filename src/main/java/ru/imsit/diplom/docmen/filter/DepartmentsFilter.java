@@ -11,7 +11,7 @@ public record DepartmentsFilter(String name) {
 
     private Specification<Departments> nameSpec() {
         return ((root, query, cb) -> StringUtils.hasText(name)
-                ? cb.equal(root.get("name"), name)
+                ? cb.equal(cb.lower(root.get("name")), name.toLowerCase())
                 : null);
     }
 }
