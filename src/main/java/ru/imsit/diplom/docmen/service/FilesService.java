@@ -51,9 +51,9 @@ public class FilesService {
     }
 
     public FilesDto patch(UUID id, String name) throws IOException {
-        var Files = filesRepository.findById(id);
-        Files.ifPresent(value -> value.setName(name));
-        return filesMapper.toFilesDto(filesRepository.save(Files.orElseThrow()));
+        var file = filesRepository.findById(id);
+        file.ifPresent(value -> value.setName(name));
+        return filesMapper.toFilesDto(filesRepository.save(file.orElseThrow()));
     }
 
     public FilesDto delete(UUID id) {

@@ -1,15 +1,20 @@
 package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import ru.imsit.diplom.docmen.enums.States;
 
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "history")
+@NoArgsConstructor
+@AllArgsConstructor
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,6 +28,11 @@ public class History {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private States state;
 
     @Column(name = "change_date")
     private String changeDate;

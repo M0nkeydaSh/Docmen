@@ -13,6 +13,7 @@ import ru.imsit.diplom.docmen.filter.TypeDocumentFilter;
 import ru.imsit.diplom.docmen.service.TypeDocumentService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/admin-ui/typeDocuments")
@@ -22,17 +23,17 @@ public class TypeDocumentController {
 
     private final TypeDocumentService typeDocumentService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех типах документов", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
     public PagedModel<TypeDocumentDto> getAll(@ParameterObject @ModelAttribute TypeDocumentFilter filter, @ParameterObject Pageable pageable) {
         Page<TypeDocumentDto> typeDocumentsDto = typeDocumentService.getAll(filter, pageable);
         return new PagedModel<>(typeDocumentsDto);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном типе документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
-    public TypeDocumentDto getOne(@PathVariable String name) {
-        return typeDocumentService.getOne(name);
+    public TypeDocumentDto getOne(@RequestParam UUID id) {
+        return typeDocumentService.getOne(id);
     }
 
     @PostMapping
@@ -41,16 +42,16 @@ public class TypeDocumentController {
         return typeDocumentService.create(name);
     }
 
-    @PatchMapping("/{name}")
+    @PatchMapping
     @Operation(summary = "изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
-    public TypeDocumentDto patch(@PathVariable String name, @RequestParam String changeName) throws IOException {
-        return typeDocumentService.patch(name, changeName);
+    public TypeDocumentDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+        return typeDocumentService.patch(id, name);
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping
     @Operation(summary = "удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
-    public TypeDocumentDto delete(@PathVariable String name) {
-        return typeDocumentService.delete(name);
+    public TypeDocumentDto delete(@RequestParam UUID id) {
+        return typeDocumentService.delete(id);
     }
 
 }

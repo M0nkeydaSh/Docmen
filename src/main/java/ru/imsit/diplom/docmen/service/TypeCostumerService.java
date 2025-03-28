@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.TypeCostumerDto;
 import ru.imsit.diplom.docmen.entity.TypeCostumer;
 import ru.imsit.diplom.docmen.filter.TypeCostumerFilter;
@@ -15,7 +13,7 @@ import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -33,10 +31,8 @@ public class TypeCostumerService {
         return typeCostumers.map(typeCostumerMapper::toTypeCostumerDto);
     }
 
-    public TypeCostumerDto getOne(String name) {
-        Optional<TypeCostumer> typeCostumerOptional = typeCostumerRepository.findByName(name);
-        return typeCostumerMapper.toTypeCostumerDto(typeCostumerOptional.orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(name))));
+    public TypeCostumerDto getOne(UUID id) {
+       return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.findById(id).orElseThrow());
     }
 
     public TypeCostumerDto create(String name, String departments) {
@@ -46,14 +42,14 @@ public class TypeCostumerService {
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 
-    public TypeCostumerDto patch(String name, String changeName) throws IOException {
-        var typeCostumer = typeCostumerRepository.findByName(name);
-        typeCostumer.ifPresent(value -> value.setName(changeName));
+    public TypeCostumerDto patch(UUID id, String name) throws IOException {
+        var typeCostumer = typeCostumerRepository.findById(id);
+        typeCostumer.ifPresent(value -> value.setName(name));
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer.orElseThrow()));
     }
 
-    public TypeCostumerDto delete(String name) {
-        TypeCostumer typeCostumer = typeCostumerRepository.findByName(name).orElse(null);
+    public TypeCostumerDto delete(UUID id) {
+        TypeCostumer typeCostumer = typeCostumerRepository.findById(id).orElse(null);
         if (typeCostumer != null) {
             typeCostumerRepository.delete(typeCostumer);
         }

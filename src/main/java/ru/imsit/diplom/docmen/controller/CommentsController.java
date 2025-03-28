@@ -23,14 +23,14 @@ public class CommentsController {
 
     private final CommentsService commentsService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех коментариях", description = "В ответе возвращаются объекты Comments c полями id, content и userId.")
     public PagedModel<CommentsDto> getAll(@ParameterObject @ModelAttribute CommentsFilter filter, @ParameterObject Pageable pageable) {
         Page<CommentsDto> commentsDtos = commentsService.getAll(filter, pageable);
         return new PagedModel<>(commentsDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
     public CommentsDto getOne(@RequestParam UUID id) {
         return commentsService.getOne(id);
@@ -42,13 +42,13 @@ public class CommentsController {
         return commentsService.create(content, docCard);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
     public CommentsDto patch(@RequestParam UUID id, @RequestParam String content) throws IOException {
         return commentsService.patch(id, content);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
     public CommentsDto delete(@RequestParam UUID id) {
         return commentsService.delete(id);
