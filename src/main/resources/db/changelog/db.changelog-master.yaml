@@ -10,6 +10,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/2025/01/User/UserSecurity.yaml
   - include:
+      file: db/changelog/2025/01/initial/initial.yaml
+  - include:
       file: db/changelog/2025/01/comments/addComments.yaml
   - include:
       file: db/changelog/2025/01/files/addFiles.yaml
@@ -30,9 +32,9 @@ databaseChangeLog:
   - include:
       file: db/changelog/2025/01/routeStep/addRouteStep.yaml
   - include:
-      file: db/changelog/2025/01/docCardRoute/addDocCardRoute.yaml
-  - include:
       file: db/changelog/2025/01/routeStepCostumers/addRouteStepCostumers.yaml
+  - include:
+      file: db/changelog/2025/01/docCardRoute/addDocCardRoute.yaml
 
 
 
