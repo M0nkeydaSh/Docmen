@@ -21,11 +21,12 @@ import java.util.Set;
 @RequestMapping("/rest/admin-ui/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
-@Tag(name = "User API")
+
 public class UserController {
 
     private final UserService userService;
 
+    @Tag(name = "User API")
     @GetMapping
     @Operation(summary = "Получить данные о всех пользователях", description = "В ответе возвращается объект userDto c полями id, username, password.")
     public PagedModel<UserDto> getAll(@ParameterObject @ModelAttribute UserFilter filter, @ParameterObject Pageable pageable) {
@@ -33,30 +34,43 @@ public class UserController {
         return new PagedModel<>(userDtos);
     }
 
+    @Tag(name = "User API")
     @GetMapping("/{username}")
     @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект userInfoDto c логином, списком ролей и статусом ")
     public UserInfoDto getOne(@PathVariable String username) {
         return userService.getOne(username);
     }
 
+    @Tag(name = "User API")
     @PostMapping
     @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полем username")
     public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam Set<String> authority) {
         return userService.create(username, password, authority);
     }
 
+    @Tag(name = "User API")
     @PatchMapping("/{username}")
     @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полем username.")
     public UserDto patch(@PathVariable String username, @RequestParam boolean enabled, @RequestParam Set<String> authorities) throws IOException {
         return userService.patch(username, enabled, authorities);
     }
 
+    @Tag(name = "User API")
     @PatchMapping("/deactivate/{username}")
     @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект userDto c полем username.")
     public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
         return userService.patchDeactivate(username, enabled);
     }
 
+    @Tag(name = "User API for users")
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/current-user/{username}")
+    @Operation(summary = "Получить данные о текущем пользователе", description = "В ответе возвращается объект userInfoDto c логином, списком ролей и статусом ")
+    public UserInfoDto getCurrenUser() {
+        return userService.getCurrentUser();
+    }
+
+    @Tag(name = "User API for users")
     @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
     @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")

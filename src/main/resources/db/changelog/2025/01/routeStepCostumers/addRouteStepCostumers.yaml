@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1743789315980-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_route_step_costumers
+                  name: id
+                  type: UUID
+              - column:
+                  name: route_step_id
+                  type: UUID
+              - column:
+                  name: costumer_id
+                  type: UUID
+              - column:
+                  name: ready
+                  type: VARCHAR(255)
+              - column:
+                  name: control_date
+                  type: VARCHAR(255)
+              - column:
+                  name: change_date
+                  type: VARCHAR(255)
+            tableName: route_step_costumers
+  - changeSet:
+      id: 1743789315980-2
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: costumer_id
+            baseTableName: route_step_costumers
+            constraintName: FK_ROUTE_STEP_COSTUMERS_ON_COSTUMER
+            referencedColumnNames: id
+            referencedTableName: costumers
+  - changeSet:
+      id: 1743789315980-3
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: route_step_id
+            baseTableName: route_step_costumers
+            constraintName: FK_ROUTE_STEP_COSTUMERS_ON_ROUTE_STEP
+            referencedColumnNames: id
+            referencedTableName: route_steps

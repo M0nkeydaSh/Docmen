@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1743768386612-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_route_steps
+                  name: id
+                  type: UUID
+              - column:
+                  name: doc_card_id
+                  type: UUID
+              - column:
+                  name: number_of_step
+                  type: VARCHAR(255)
+              - column:
+                  name: route_step_state
+                  type: VARCHAR(255)
+              - column:
+                  name: change_date
+                  type: VARCHAR(255)
+            tableName: route_steps
+        - addForeignKeyConstraint:
+            baseColumnNames: doc_card_id
+            baseTableName: route_steps
+            constraintName: FK_ROUTE_STEPS_ON_DOC_CARD
+            referencedColumnNames: id
+            referencedTableName: doc_card
+

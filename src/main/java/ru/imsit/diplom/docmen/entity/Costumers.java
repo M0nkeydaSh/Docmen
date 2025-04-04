@@ -54,6 +54,10 @@ public class Costumers {
     @JoinColumn(name = "user_id")
     private User user;
 
+//    @ManyToMany (fetch = FetchType.LAZY)
+//    @JoinColumn(name = "route_step_participants_id")
+//    private RouteStepParticipants RouteStepParticipants;
+
     @Column(name = "change_date")
     private String changeDate;
 }

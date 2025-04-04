@@ -27,8 +27,12 @@ databaseChangeLog:
       file: db/changelog/2025/01/History/addStates.yaml
   - include:
       file: db/changelog/2025/01/docCard/addState.yaml
-
-
+  - include:
+      file: db/changelog/2025/01/routeStep/addRouteStep.yaml
+  - include:
+      file: db/changelog/2025/01/docCardRoute/addDocCardRoute.yaml
+  - include:
+      file: db/changelog/2025/01/routeStepCostumers/addRouteStepCostumers.yaml
 
 
 

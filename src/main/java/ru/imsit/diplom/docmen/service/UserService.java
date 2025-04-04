@@ -50,6 +50,11 @@ public class UserService {
         return userInfoMapper.toUserInfoDto(userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
+    public UserInfoDto getCurrentUser() {
+        Optional<User> userOptional = userRepository.findByUsername((userInfoHelper.getUser()).getUsername());
+        return userInfoMapper.toUserInfoDto(userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
     public UserDto create(String username, String password, Set<String> authoritySet) {
         var user = new User();
         Set<Authority> roles = new HashSet<>();
