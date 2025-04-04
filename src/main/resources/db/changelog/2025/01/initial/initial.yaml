@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1738670835520-1
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - loadData:
+            file: csv/users.csv
+            tableName: USERS
+            columns:
+              - column:
+                  name: ID
+                  header: id
+              - column:
+                  name: USERNAME
+                  header: username
+              - column:
+                  name: PASSWORD
+                  header: password
+              - column:
+                  name: ENABLED
+                  header: enabled
+        - loadData:
+            file: csv/authorities.csv
+            tableName: AUTHORITY
+            columns:
+              - column:
+                  name: ID
+                  header: id
+              - column:
+                  name: AUTHORITY
+                  header: authority
+        - loadData:
+            file: csv/users_authorities.csv
+            tableName: USERS_AUTHORITIES
+            columns:
+              - column:
+                  name: AUTHORITIES_ID
+                  header: authorities_id
+              - column:
+                  name: USER_SEC_ID
+                  header: user_sec_id
+
+
