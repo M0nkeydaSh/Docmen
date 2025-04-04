@@ -1,8 +1,9 @@
 databaseChangeLog:
   - changeSet:
-      id: 1738670835520-1
+      id: initial_script
       author: Vadim
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      failOnError: false
       changes:
         - loadData:
             file: csv/users.csv
