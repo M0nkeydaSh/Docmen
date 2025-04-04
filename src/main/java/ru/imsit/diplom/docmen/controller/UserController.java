@@ -28,7 +28,7 @@ public class UserController {
 
     @Tag(name = "User API")
     @GetMapping
-    @Operation(summary = "Получить данные о всех пользователях", description = "В ответе возвращается объект userDto c полями id, username, password.")
+    @Operation(summary = "Получить данные о всех пользователях", description = "В ответе возвращается объект UserDto ")
     public PagedModel<UserDto> getAll(@ParameterObject @ModelAttribute UserFilter filter, @ParameterObject Pageable pageable) {
         Page<UserDto> userDtos = userService.getAll(filter, pageable);
         return new PagedModel<>(userDtos);
@@ -36,28 +36,28 @@ public class UserController {
 
     @Tag(name = "User API")
     @GetMapping("/{username}")
-    @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект userInfoDto c логином, списком ролей и статусом ")
+    @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект UserInfoDto")
     public UserInfoDto getOne(@PathVariable String username) {
         return userService.getOne(username);
     }
 
     @Tag(name = "User API")
     @PostMapping
-    @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект userDto c полем username")
+    @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект UserDto")
     public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam Set<String> authority) {
         return userService.create(username, password, authority);
     }
 
     @Tag(name = "User API")
     @PatchMapping("/{username}")
-    @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект UserDto")
     public UserDto patch(@PathVariable String username, @RequestParam boolean enabled, @RequestParam Set<String> authorities) throws IOException {
         return userService.patch(username, enabled, authorities);
     }
 
     @Tag(name = "User API")
     @PatchMapping("/deactivate/{username}")
-    @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект UserDto")
     public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
         return userService.patchDeactivate(username, enabled);
     }
@@ -65,7 +65,7 @@ public class UserController {
     @Tag(name = "User API for users")
     @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/current-user/{username}")
-    @Operation(summary = "Получить данные о текущем пользователе", description = "В ответе возвращается объект userInfoDto c логином, списком ролей и статусом ")
+    @Operation(summary = "Получить данные о текущем пользователе", description = "В ответе возвращается объект UserInfoDto")
     public UserInfoDto getCurrenUser() {
         return userService.getCurrentUser();
     }
@@ -73,7 +73,7 @@ public class UserController {
     @Tag(name = "User API for users")
     @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
-    @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект userDto c полем username.")
+    @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект UserDto")
     public String patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
         try {
             userService.patchPassword(username, password);

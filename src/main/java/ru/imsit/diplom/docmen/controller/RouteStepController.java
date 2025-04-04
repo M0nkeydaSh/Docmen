@@ -1,5 +1,6 @@
 package ru.imsit.diplom.docmen.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -23,27 +24,33 @@ public class RouteStepController {
     private final RouteStepService routeStepService;
 
     @GetMapping
+    @Operation(summary = "Получить данные о всех шагах маршрута", description = "В ответе возвращаются объекты RouteStepDto")
     public PagedModel<RouteStepDto> getAll(@ParameterObject @ModelAttribute RouteStepFilter filter, @ParameterObject Pageable pageable) {
         Page<RouteStepDto> routeStepDtos = routeStepService.getAll(filter, pageable);
         return new PagedModel<>(routeStepDtos);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить данные о конкретном шаге маршрута", description = "В ответе возвращается объект RouteStepDto")
+
     public RouteStepDto getOne(@RequestParam UUID id) {
         return routeStepService.getOne(id);
     }
 
     @PostMapping
+    @Operation(summary = "Создать шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
     public RouteStepDto create(@RequestParam String docCard, @RequestParam String numberOfStep, @RequestParam String routeStepState) {
         return routeStepService.create(docCard, numberOfStep, routeStepState);
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Изменить шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
     public RouteStepDto patch(@RequestParam UUID id, @RequestParam String docCard, @RequestParam String numberOfStep, @RequestParam String routeStepState) throws IOException {
         return routeStepService.patch(id, docCard, numberOfStep, routeStepState);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
     public RouteStepDto delete(@RequestParam UUID id) {
         return routeStepService.delete(id);
     }

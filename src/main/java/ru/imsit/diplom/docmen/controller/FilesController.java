@@ -24,32 +24,32 @@ public class FilesController {
     private final FilesService filesService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объекты FilesDto")
     public PagedModel<FilesDto> getAll(@ParameterObject @ModelAttribute FilesFilter filter, @ParameterObject Pageable pageable) {
         Page<FilesDto> filesDtos = filesService.getAll(filter, pageable);
         return new PagedModel<>(filesDtos);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto")
     public FilesDto getOne(@RequestParam UUID id) {
         return filesService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto")
     public FilesDto create(@RequestParam String name, @RequestParam String docCard) {
         return filesService.create(name, docCard);
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto")
     public FilesDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
         return filesService.patch(id, name);
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto c полями  name,  userId.")
+    @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto")
     public FilesDto delete(@RequestParam UUID id) {
         return filesService.delete(id);
     }

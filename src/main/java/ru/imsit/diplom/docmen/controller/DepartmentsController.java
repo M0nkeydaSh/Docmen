@@ -24,32 +24,32 @@ public class DepartmentsController {
     private final DepartmentsService departmentsService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех департаментах", description = "В ответе возвращается объект DepartmentsDto c полем name.")
+    @Operation(summary = "Получить данные о всех департаментах", description = "В ответе возвращается объекты DepartmentsDto")
     public PagedModel<DepartmentsDto> getAll(@ParameterObject @ModelAttribute DepartmentsFilter filter, @ParameterObject Pageable pageable) {
         Page<DepartmentsDto> departmentsDto = departmentsService.getAll(filter, pageable);
         return new PagedModel<>(departmentsDto);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном департаменте", description = "В ответе возвращается объект DepartmentsDto c полем name.")
+    @Operation(summary = "Получить данные о конкретном департаменте", description = "В ответе возвращается объект DepartmentsDto")
     public DepartmentsDto getOne(@RequestParam UUID id) {
         return departmentsService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать департамент", description = "В ответе возвращается объект DepartmentsDto c полем name.")
+    @Operation(summary = "Создать департамент", description = "В ответе возвращается объект DepartmentsDto")
     public DepartmentsDto create(@RequestParam String name) {
         return departmentsService.create(name);
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить департамент", description = "В ответе возвращается объект DepartmentsDto c полем name.")
+    @Operation(summary = "Изменить департамент", description = "В ответе возвращается объект DepartmentsDto")
     public DepartmentsDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
         return departmentsService.patch(id, name);
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить департамент", description = "В ответе возвращается объект DepartmentsDto c полем name.")
+    @Operation(summary = "Удалить департамент", description = "В ответе возвращается объект DepartmentsDto")
     public DepartmentsDto delete(@RequestParam UUID id) {
         return departmentsService.delete(id);
     }

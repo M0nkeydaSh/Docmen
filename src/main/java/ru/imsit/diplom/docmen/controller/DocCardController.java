@@ -24,34 +24,34 @@ public class DocCardController {
     private final DocCardService docCardService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех карточках", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
+    @Operation(summary = "Получить данные о всех карточках", description = "В ответе возвращается объекты DocCardDto")
     public PagedModel<DocCardDto> getAll(@ParameterObject @ModelAttribute DocCardFilter filter, @ParameterObject Pageable pageable) {
         Page<DocCardDto> docCardDtos = docCardService.getAll(filter, pageable);
         return new PagedModel<>(docCardDtos);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретной карточке", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
+    @Operation(summary = "Получить данные о конкретной карточке", description = "В ответе возвращается объект DocCardDto")
     public DocCardDto getOne(@RequestParam UUID id) {
         return docCardService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
+    @Operation(summary = "Создать карточку", description = "В ответе возвращается объект DocCardDto")
     public DocCardDto create(@RequestParam String name, @RequestParam String description, @RequestParam String state,
                              @RequestParam String typeDocument, @RequestParam String regNum, @RequestParam String keyWords) {
         return docCardService.create(name, description, typeDocument, regNum, keyWords, state);
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
+    @Operation(summary = "Изменить карточку", description = "В ответе возвращается объект DocCardDto")
     public DocCardDto patch(@RequestParam UUID id, @RequestParam String name, @RequestParam String description, @RequestParam String state,
                             @RequestParam String typeDocument, @RequestParam String regNum, @RequestParam String keyWords) throws IOException {
         return docCardService.patch(id, name, description, typeDocument, regNum, keyWords, state);
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить карточку", description = "В ответе возвращается объект DocCardDto c полями id, name, description, user, typeDocument, regNum, keyWords, changeDate.")
+    @Operation(summary = "Удалить карточку", description = "В ответе возвращается объект DocCardDto")
     public DocCardDto delete(@RequestParam UUID id) {
         return docCardService.delete(id);
     }

@@ -23,20 +23,20 @@ public class CostumersController {
     private final CostumersService costumersService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
+    @Operation(summary = "Получить данные о всех costumer", description = "В ответе возвращается объекты CostumerDto")
     public PagedModel<CostumersDto> getAll(@ParameterObject @ModelAttribute CostumersFilter filter, @ParameterObject Pageable pageable) {
         Page<CostumersDto> costumersDtos = costumersService.getAll(filter, pageable);
         return new PagedModel<>(costumersDtos);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
+    @Operation(summary = "Получить данные о конкретном costumer", description = "В ответе возвращается объект CostumerDto")
     public CostumersDto getOne(@RequestParam String username) {
         return costumersService.getOne(username);
     }
 
     @PostMapping
-    @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
+    @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto")
     public CostumersDto create(@RequestParam String firstname, @RequestParam String surName, @RequestParam String lastName,
                                @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String gender,
                                @RequestParam String typeCostumer, @RequestParam String username) {
@@ -44,7 +44,7 @@ public class CostumersController {
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить costumer", description = "В ответе возвращается объект CostumerDto c полями firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
+    @Operation(summary = "Изменить costumer", description = "В ответе возвращается объект CostumerDto")
     public CostumersDto patch(@RequestParam String username, @RequestParam String firstname, @RequestParam String surName, @RequestParam String lastName,
                               @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String gender,
                               @RequestParam String typeCostumer) throws IOException {
@@ -52,7 +52,7 @@ public class CostumersController {
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить costumer", description = "В ответе возвращается объект CostumerDto c полями id, firstName, surName, lastName, email, gender, phoneNumber, typeCostumer, user.")
+    @Operation(summary = "Удалить costumer", description = "В ответе возвращается объект CostumerDto")
     public CostumersDto delete(@RequestParam String username) {
         return costumersService.delete(username);
     }

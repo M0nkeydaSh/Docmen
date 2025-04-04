@@ -24,32 +24,32 @@ public class TypeCostumerController {
     private final TypeCostumerService typeCostumerService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех видах работников", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
+    @Operation(summary = "Получить данные о всех видах работников", description = "В ответе возвращается объект typeCostumerDto")
     public PagedModel<TypeCostumerDto> getAll(@ParameterObject @ModelAttribute TypeCostumerFilter filter, @ParameterObject Pageable pageable) {
         Page<TypeCostumerDto> typeCostumerDtos = typeCostumerService.getAll(filter, pageable);
         return new PagedModel<>(typeCostumerDtos);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном виде работника ", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
+    @Operation(summary = "Получить данные о конкретном виде работника ", description = "В ответе возвращается объект typeCostumerDto")
     public TypeCostumerDto getOne(@RequestParam UUID id) {
         return typeCostumerService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать вид работника ", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
+    @Operation(summary = "Создать вид работника ", description = "В ответе возвращается объект typeCostumerDto")
     public TypeCostumerDto create(@RequestParam String name, @RequestParam String departments) {
         return typeCostumerService.create(name, departments);
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
+    @Operation(summary = "Изменить вид работника", description = "В ответе возвращается объект typeCostumerDto")
     public TypeCostumerDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
         return typeCostumerService.patch(id, name);
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить вид работника", description = "В ответе возвращается объект typeCostumerDto c полями id, name, departments.")
+    @Operation(summary = "Удалить вид работника", description = "В ответе возвращается объект typeCostumerDto")
     public TypeCostumerDto delete(@RequestParam UUID id) {
         return typeCostumerService.delete(id);
     }

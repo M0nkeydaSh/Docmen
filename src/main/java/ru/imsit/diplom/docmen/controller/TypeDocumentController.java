@@ -24,32 +24,32 @@ public class TypeDocumentController {
     private final TypeDocumentService typeDocumentService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех типах документов", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
+    @Operation(summary = "Получить данные о всех типах документов", description = "В ответе возвращается объект TypeDocumentDto")
     public PagedModel<TypeDocumentDto> getAll(@ParameterObject @ModelAttribute TypeDocumentFilter filter, @ParameterObject Pageable pageable) {
         Page<TypeDocumentDto> typeDocumentsDto = typeDocumentService.getAll(filter, pageable);
         return new PagedModel<>(typeDocumentsDto);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном типе документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
+    @Operation(summary = "Получить данные о конкретном типе документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto getOne(@RequestParam UUID id) {
         return typeDocumentService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "создать тип документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
+    @Operation(summary = "создать тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto create(@RequestParam String name) {
         return typeDocumentService.create(name);
     }
 
     @PatchMapping
-    @Operation(summary = "изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
+    @Operation(summary = "изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
         return typeDocumentService.patch(id, name);
     }
 
     @DeleteMapping
-    @Operation(summary = "удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto c полем name.")
+    @Operation(summary = "удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto delete(@RequestParam UUID id) {
         return typeDocumentService.delete(id);
     }
