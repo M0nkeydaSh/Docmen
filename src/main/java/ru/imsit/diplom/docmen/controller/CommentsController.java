@@ -24,32 +24,32 @@ public class CommentsController {
     private final CommentsService commentsService;
 
     @GetMapping("/getAll")
-    @Operation(summary = "Получить данные о всех коментариях", description = "В ответе возвращаются объекты Comments c полями id, content и userId.")
+    @Operation(summary = "Получить данные о всех коментариях", description = "В ответе возвращаются объекты CommentsDto.")
     public PagedModel<CommentsDto> getAll(@ParameterObject @ModelAttribute CommentsFilter filter, @ParameterObject Pageable pageable) {
         Page<CommentsDto> commentsDtos = commentsService.getAll(filter, pageable);
         return new PagedModel<>(commentsDtos);
     }
 
     @GetMapping("/getOne")
-    @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
+    @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto.")
     public CommentsDto getOne(@RequestParam UUID id) {
         return commentsService.getOne(id);
     }
 
     @PostMapping
-    @Operation(summary = "Создать коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
+    @Operation(summary = "Создать коментарий", description = "В ответе возвращается объект CommentsDto.")
     public CommentsDto create(@RequestParam String content, @RequestParam String docCard) {
         return commentsService.create(content, docCard);
     }
 
     @PatchMapping
-    @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
+    @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto")
     public CommentsDto patch(@RequestParam UUID id, @RequestParam String content) throws IOException {
         return commentsService.patch(id, content);
     }
 
     @DeleteMapping
-    @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto c полями id, content и userId.")
+    @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto")
     public CommentsDto delete(@RequestParam UUID id) {
         return commentsService.delete(id);
     }
