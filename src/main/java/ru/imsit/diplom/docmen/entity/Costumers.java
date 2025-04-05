@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import ru.imsit.diplom.docmen.enums.Gender;
+import ru.imsit.diplom.docmen.enums.GenderEnum;
 
 import java.util.UUID;
 
@@ -40,7 +40,7 @@ public class Costumers {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private Gender gender;
+    private GenderEnum genderEnum;
 
     @Column(name = "phone_number")
     @JdbcTypeCode(SqlTypes.VARCHAR)

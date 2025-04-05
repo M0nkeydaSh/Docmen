@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.CostumersDto;
 import ru.imsit.diplom.docmen.entity.Costumers;
-import ru.imsit.diplom.docmen.enums.Gender;
+import ru.imsit.diplom.docmen.enums.GenderEnum;
 import ru.imsit.diplom.docmen.filter.CostumersFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.CostumersMapper;
@@ -46,7 +46,17 @@ public class CostumersService {
         var costumers = new Costumers();
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
         var user = userInfoHelper.getUserByUsername(username);
-        costumers = Costumers.builder().firstName(firstname).surName(surName).lastName(lastName).email(email).phoneNumber(phoneNumber).gender(Gender.valueOf(gender)).typeCostumer(typeCostumers.orElseThrow()).user(user).build();
+        // Создание через builder нужно распологать вертикально!
+        costumers = Costumers.builder()
+                .firstName(firstname)
+                .surName(surName)
+                .lastName(lastName)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .genderEnum(GenderEnum.getGender(gender))
+                .typeCostumer(typeCostumers.orElseThrow())
+                .user(user)
+                .build();
         return costumersMapper.toCostumersDto(costumersRepository.save(costumers));
     }
 
@@ -59,7 +69,7 @@ public class CostumersService {
         costumer.ifPresent(value -> value.setLastName(lastName));
         costumer.ifPresent(value -> value.setEmail(email));
         costumer.ifPresent(value -> value.setPhoneNumber(phoneNumber));
-        costumer.ifPresent(value -> value.setGender(Gender.valueOf(gender)));
+        costumer.ifPresent(value -> value.setGenderEnum(GenderEnum.valueOf(gender)));
         costumer.ifPresent(value -> value.setTypeCostumer(typeCostumers.orElseThrow()));
         costumer.ifPresent(value -> value.setUser(user));
         return costumersMapper.toCostumersDto(costumersRepository.save(costumer.orElseThrow()));
