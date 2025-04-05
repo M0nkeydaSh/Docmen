@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.CostumersDto;
+import ru.imsit.diplom.docmen.enums.GenderEnum;
 import ru.imsit.diplom.docmen.filter.CostumersFilter;
 import ru.imsit.diplom.docmen.service.CostumersService;
 
@@ -38,8 +40,9 @@ public class CostumersController {
     @PostMapping
     @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto")
     public CostumersDto create(@RequestParam String firstname, @RequestParam String surName, @RequestParam String lastName,
-                               @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String gender,
-                               @RequestParam String typeCostumer, @RequestParam String username) {
+                               @RequestParam String email, @RequestParam String phoneNumber,
+                               @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED)
+                               @RequestParam String gender, @RequestParam String typeCostumer, @RequestParam String username) {
         return costumersService.create(firstname, surName, lastName, email, phoneNumber, gender, typeCostumer, username);
     }
 

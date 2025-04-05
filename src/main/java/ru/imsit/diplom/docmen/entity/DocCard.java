@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import ru.imsit.diplom.docmen.enums.States;
+import ru.imsit.diplom.docmen.enums.StatesEnum;
 
 import java.util.UUID;
 
@@ -49,7 +49,7 @@ public class DocCard {
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private States state;
+    private StatesEnum state;
 
     @Column(name = "change_date")
     private String changeDate;

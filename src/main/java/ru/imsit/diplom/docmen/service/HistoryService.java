@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.HistoryDto;
 import ru.imsit.diplom.docmen.entity.History;
-import ru.imsit.diplom.docmen.enums.States;
+import ru.imsit.diplom.docmen.enums.StatesEnum;
 import ru.imsit.diplom.docmen.filter.HistoryFilter;
 import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.HistoryMapper;
@@ -47,7 +47,7 @@ public class HistoryService {
     public HistoryDto create(UUID docCardId, String state) {
         var docCard = docCardRepository.findById(docCardId);
         var user = userInfoHelper.getUser();
-        var history = History.builder().docCard(docCard.orElseThrow()).user(user).state(States.valueOf(state)).build();
+        var history = History.builder().docCard(docCard.orElseThrow()).user(user).state(StatesEnum.valueOf(state)).build();
         return historyMapper.toHistoryDto(historyRepository.save(history));
 
     }
@@ -56,7 +56,7 @@ public class HistoryService {
         var history = historyRepository.findById(id);
         var docCard = docCardRepository.findByName(docCardName);
         history.ifPresent(value -> value.setDocCard(docCard.orElseThrow()));
-        history.ifPresent(value -> value.setState(States.valueOf(state)));
+        history.ifPresent(value -> value.setState(StatesEnum.valueOf(state)));
         return historyMapper.toHistoryDto(historyRepository.save(history.orElseThrow()));
     }
 

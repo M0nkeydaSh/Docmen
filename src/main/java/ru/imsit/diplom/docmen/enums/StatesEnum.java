@@ -1,6 +1,6 @@
 package ru.imsit.diplom.docmen.enums;
 
-public enum States {
+public enum StatesEnum {
 
         DRAFT ("Черновик"),
         PENDING ("На рассмотрении"),
@@ -18,7 +18,7 @@ public enum States {
         COMPLETED ("Завершен"),
         ARCHIVED ("Архивирован");
 
-        States(String state) {
+        StatesEnum(String state) {
         }
 
     }
