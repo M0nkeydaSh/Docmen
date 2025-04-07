@@ -8,7 +8,7 @@ import ru.imsit.diplom.docmen.enums.RouteStepStatesEnum;
  */
 @Value
 public class RouteStepDto {
-    DocCardDto docCard;
+    String docCardId;
     String number;
     RouteStepStatesEnum routeStepState;
 }

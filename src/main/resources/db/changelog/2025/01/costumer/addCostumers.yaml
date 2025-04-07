@@ -63,4 +63,13 @@ databaseChangeLog:
             constraintName: FK_COSTUMERS_ON_USER
             referencedColumnNames: id
             referencedTableName: users
+  - changeSet:
+      id: addUniqueIndexToUserID
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: user_id
+            tableName: costumers
+            constraintName: uc_costumers_user_id
 

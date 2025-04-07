@@ -8,8 +8,8 @@ import ru.imsit.diplom.docmen.entity.RouteStepCostumers;
  */
 @Value
 public class RouteStepCostumersDto {
-    RouteStepDto routeStep;
-    CostumersDto costumer;
+    String routeStepId;
+    String costumerId;
     String ready;
     String dateTime;
 }

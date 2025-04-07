@@ -14,7 +14,7 @@ databaseChangeLog:
                   name: id
                   type: UUID
               - column:
-                  name: route_step_id
+                  name: route_step_costumer_id
                   type: UUID
               - column:
                   name: ready
@@ -27,7 +27,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: doc_card_route
         - addForeignKeyConstraint:
-            baseColumnNames: id
+            baseColumnNames: route_step_costumer_id
             baseTableName: doc_card_route
             constraintName: FK_DOC_CARD_ROUTE_ON_ROUTE_STEP_COSTUMERS
             referencedColumnNames: id

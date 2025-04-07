@@ -23,33 +23,32 @@ public class RouteStepController {
 
     private final RouteStepService routeStepService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех шагах маршрута", description = "В ответе возвращаются объекты RouteStepDto")
     public PagedModel<RouteStepDto> getAll(@ParameterObject @ModelAttribute RouteStepFilter filter, @ParameterObject Pageable pageable) {
         Page<RouteStepDto> routeStepDtos = routeStepService.getAll(filter, pageable);
         return new PagedModel<>(routeStepDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном шаге маршрута", description = "В ответе возвращается объект RouteStepDto")
-
     public RouteStepDto getOne(@RequestParam UUID id) {
         return routeStepService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
-    public RouteStepDto create(@RequestParam String docCard, @RequestParam String numberOfStep, @RequestParam String routeStepState) {
-        return routeStepService.create(docCard, numberOfStep, routeStepState);
+    public RouteStepDto create(@RequestParam String docCardId, @RequestParam String numberOfStep, @RequestParam String routeStepState) {
+        return routeStepService.create(docCardId, numberOfStep, routeStepState);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Operation(summary = "Изменить шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
-    public RouteStepDto patch(@RequestParam UUID id, @RequestParam String docCard, @RequestParam String numberOfStep, @RequestParam String routeStepState) throws IOException {
-        return routeStepService.patch(id, docCard, numberOfStep, routeStepState);
+    public RouteStepDto patch(@RequestParam UUID id, @RequestParam String docCardId, @RequestParam String numberOfStep, @RequestParam String routeStepState) throws IOException {
+        return routeStepService.patch(id, docCardId, numberOfStep, routeStepState);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(summary = "Удалить шаг маршрута", description = "В ответе возвращается объект RouteStepDto")
     public RouteStepDto delete(@RequestParam UUID id) {
         return routeStepService.delete(id);

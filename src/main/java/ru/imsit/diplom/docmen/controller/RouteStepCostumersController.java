@@ -23,33 +23,32 @@ public class RouteStepCostumersController {
 
     private final RouteStepCostumersService routeStepCostumersService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех пользователях шагов маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public PagedModel<RouteStepCostumersDto> getAll(@ParameterObject @ModelAttribute RouteStepCostumersFilter filter, @ParameterObject Pageable pageable) {
         Page<RouteStepCostumersDto> routeStepParticipantsDtos = routeStepCostumersService.getAll(filter, pageable);
         return new PagedModel<>(routeStepParticipantsDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном пользователе шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public RouteStepCostumersDto getOne(@RequestParam UUID id) {
         return routeStepCostumersService.getOne(id);
     }
 
-
     @PostMapping
     @Operation(summary = "Создать пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto create(@RequestParam String routeStep, @RequestParam String costumers, @RequestParam String ready, @RequestParam String dateTime) {
-        return routeStepCostumersService.create(routeStep, costumers, ready, dateTime);
+    public RouteStepCostumersDto create(@RequestParam String routeStepId, @RequestParam String costumerId, @RequestParam String ready, @RequestParam String dateTime) {
+        return routeStepCostumersService.create(routeStepId, costumerId, ready, dateTime);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Operation(summary = "изменить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto patch(@RequestParam UUID id, @RequestParam String routeStep, @RequestParam String costumers, @RequestParam String ready, @RequestParam String dateTime) throws IOException {
-        return routeStepCostumersService.patch(id, routeStep, costumers, ready, dateTime);
+    public RouteStepCostumersDto patch(@RequestParam UUID id, @RequestParam String routeStepId, @RequestParam String costumerId, @RequestParam String ready, @RequestParam String dateTime) throws IOException {
+        return routeStepCostumersService.patch(id, routeStepId, costumerId, ready, dateTime);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(summary = "Удалить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public RouteStepCostumersDto delete(@RequestParam UUID id) {
         return routeStepCostumersService.delete(id);
