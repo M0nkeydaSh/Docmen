@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -32,25 +33,32 @@ public class RouteStepCostumersController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном пользователе шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto getOne(@RequestParam UUID id) {
+    public RouteStepCostumersDto getOne(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID id) {
         return routeStepCostumersService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto create(@RequestParam String routeStepId, @RequestParam String costumerId, @RequestParam String ready, @RequestParam String dateTime) {
+    public RouteStepCostumersDto create(@Schema(description = "ID шага маршрута") @RequestParam String routeStepId,
+                                        @Schema(description = "ID работника") @RequestParam String costumerId,
+                                        @Schema(description = "Готоность") @RequestParam String ready,
+                                        @Schema(description = "Срок исполнения") @RequestParam String dateTime) {
         return routeStepCostumersService.create(routeStepId, costumerId, ready, dateTime);
     }
 
     @PatchMapping
     @Operation(summary = "изменить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto patch(@RequestParam UUID id, @RequestParam String routeStepId, @RequestParam String costumerId, @RequestParam String ready, @RequestParam String dateTime) throws IOException {
+    public RouteStepCostumersDto patch(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID id,
+                                       @Schema(description = "ID  шага маршрута") @RequestParam String routeStepId,
+                                       @Schema(description = "ID работника") @RequestParam String costumerId,
+                                       @Schema(description = "Готовность") @RequestParam String ready,
+                                       @Schema(description = "Срок исполнения") @RequestParam String dateTime) throws IOException {
         return routeStepCostumersService.patch(id, routeStepId, costumerId, ready, dateTime);
     }
 
     @DeleteMapping
     @Operation(summary = "Удалить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
-    public RouteStepCostumersDto delete(@RequestParam UUID id) {
+    public RouteStepCostumersDto delete(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID id) {
         return routeStepCostumersService.delete(id);
     }
 

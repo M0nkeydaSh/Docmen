@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -32,25 +33,26 @@ public class TypeDocumentController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном типе документа", description = "В ответе возвращается объект TypeDocumentDto")
-    public TypeDocumentDto getOne(@RequestParam UUID id) {
+    public TypeDocumentDto getOne(@Schema(description = "ID типа документа") @RequestParam UUID id) {
         return typeDocumentService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "создать тип документа", description = "В ответе возвращается объект TypeDocumentDto")
-    public TypeDocumentDto create(@RequestParam String name) {
+    public TypeDocumentDto create(@Schema(description = "Название типа документа") @RequestParam String name) {
         return typeDocumentService.create(name);
     }
 
     @PatchMapping
     @Operation(summary = "изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
-    public TypeDocumentDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+    public TypeDocumentDto patch(@Schema(description = "ID типа документа") @RequestParam UUID id,
+                                 @Schema(description = "Название типа документа") @RequestParam String name) throws IOException {
         return typeDocumentService.patch(id, name);
     }
 
     @DeleteMapping
     @Operation(summary = "удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
-    public TypeDocumentDto delete(@RequestParam UUID id) {
+    public TypeDocumentDto delete(@Schema(description = "ID типа документа") @RequestParam UUID id) {
         return typeDocumentService.delete(id);
     }
 

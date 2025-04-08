@@ -33,30 +33,39 @@ public class CostumersController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном costumer", description = "В ответе возвращается объект CostumerDto")
-    public CostumersDto getOne(@RequestParam String username) {
+    public CostumersDto getOne(@Schema(description = "Логин сотрудника")@RequestParam String username) {
         return costumersService.getOne(username);
     }
 
     @PostMapping
     @Operation(summary = "Создать costumer", description = "В ответе возвращается объект CostumerDto")
-    public CostumersDto create(@RequestParam String firstname, @RequestParam String surName, @RequestParam String lastName,
-                               @RequestParam String email, @RequestParam String phoneNumber,
-                               @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED)
-                               @RequestParam String gender, @RequestParam String typeCostumer, @RequestParam String username) {
+    public CostumersDto create(@Schema(description = "Имя сотрудника") @RequestParam String firstname,
+                               @Schema(description = "Фамилия сотрудника") @RequestParam String surName,
+                               @Schema(description = "Фамилия сотрудника") @RequestParam String lastName,
+                               @Schema(description = "Почта сотрудника") @RequestParam String email,
+                               @Schema(description = "Телефон сотрудника")@RequestParam String phoneNumber,
+                               @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String gender,
+                               @Schema(description = "Должность сотрудника") @RequestParam String typeCostumer,
+                               @Schema(description = "Логин сотрудника") @RequestParam String username) {
         return costumersService.create(firstname, surName, lastName, email, phoneNumber, gender, typeCostumer, username);
     }
 
     @PatchMapping
     @Operation(summary = "Изменить costumer", description = "В ответе возвращается объект CostumerDto")
-    public CostumersDto patch(@RequestParam String username, @RequestParam String firstname, @RequestParam String surName, @RequestParam String lastName,
-                              @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String gender,
-                              @RequestParam String typeCostumer) throws IOException {
+    public CostumersDto patch(@Schema(description = "Логин сотрудника") @RequestParam String username,
+                              @Schema(description = "Имя сотрудника") @RequestParam String firstname,
+                              @Schema(description = "Фамилия сотрудника") @RequestParam String surName,
+                              @Schema(description = "Логин сотрудника") @RequestParam String lastName,
+                              @Schema(description = "Почта сотрудника") @RequestParam String email,
+                              @Schema(description = "Телефон сотрудника") @RequestParam String phoneNumber,
+                              @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String gender,
+                              @Schema(description = "Должность сотрудника") @RequestParam String typeCostumer) throws IOException {
         return costumersService.patch(username, firstname, surName, lastName, email, phoneNumber, gender, typeCostumer);
     }
 
     @DeleteMapping
     @Operation(summary = "Удалить costumer", description = "В ответе возвращается объект CostumerDto")
-    public CostumersDto delete(@RequestParam String username) {
+    public CostumersDto delete(@Schema(description = "Логин сотрудника") @RequestParam String username) {
         return costumersService.delete(username);
     }
 

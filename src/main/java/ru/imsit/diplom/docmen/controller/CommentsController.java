@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -32,25 +33,28 @@ public class CommentsController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном коментарии", description = "В ответе возвращается объект CommentsDto.")
-    public CommentsDto getOne(@RequestParam UUID id) {
+    public CommentsDto getOne(@Schema(description = "ID коментария") @RequestParam UUID id) {
         return commentsService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать коментарий", description = "В ответе возвращается объект CommentsDto.")
-    public CommentsDto create(@RequestParam String content, @RequestParam String docCard) {
+    public CommentsDto create(
+            @Schema(description = "Содержание коментария") @RequestParam String content,
+            @Schema(description = "Карточка документа коментария") @RequestParam String docCard) {
         return commentsService.create(content, docCard);
     }
 
     @PatchMapping
     @Operation(summary = "Изменить коментарий", description = "В ответе возвращается объект CommentsDto")
-    public CommentsDto patch(@RequestParam UUID id, @RequestParam String content) throws IOException {
+    public CommentsDto patch(@Schema(description = "ID коментария") @RequestParam UUID id,
+                             @Schema(description = "Содержание коментария") @RequestParam String content) throws IOException {
         return commentsService.patch(id, content);
     }
 
     @DeleteMapping
     @Operation(summary = "Удалить коментарий", description = "В ответе возвращается объект CommentsDto")
-    public CommentsDto delete(@RequestParam UUID id) {
+    public CommentsDto delete(@Schema(description = "ID коментария") @RequestParam UUID id) {
         return commentsService.delete(id);
     }
 

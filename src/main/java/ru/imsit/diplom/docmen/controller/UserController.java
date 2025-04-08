@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -37,28 +38,33 @@ public class UserController {
     @Tag(name = "User API")
     @GetMapping("/{username}")
     @Operation(summary = "Получить данные о конкретном пользователе", description = "В ответе возвращается объект UserInfoDto")
-    public UserInfoDto getOne(@PathVariable String username) {
+    public UserInfoDto getOne(@Schema(description = "Логин пользователя") @PathVariable String username) {
         return userService.getOne(username);
     }
 
     @Tag(name = "User API")
     @PostMapping
     @Operation(summary = "Создать пользователя", description = "В ответе возвращается объект UserDto")
-    public UserDto create(@RequestParam String username, @RequestParam String password, @RequestParam Set<String> authority) {
+    public UserDto create(@Schema(description = "Логин пользователя") @RequestParam String username,
+                          @Schema(description = "Пароль пользователя")@RequestParam String password,
+                          @Schema(description = "Роли пользователя") @RequestParam Set<String> authority) {
         return userService.create(username, password, authority);
     }
 
     @Tag(name = "User API")
     @PatchMapping("/{username}")
     @Operation(summary = "Изменить пользователя", description = "В ответе возвращается объект UserDto")
-    public UserDto patch(@PathVariable String username, @RequestParam boolean enabled, @RequestParam Set<String> authorities) throws IOException {
+    public UserDto patch(@Schema(description = "Логин пользователя") @PathVariable String username,
+                         @Schema(description = "Состояние активности пользователя") @RequestParam boolean enabled,
+                         @Schema(description = "Роли пользователя") @RequestParam Set<String> authorities) throws IOException {
         return userService.patch(username, enabled, authorities);
     }
 
     @Tag(name = "User API")
     @PatchMapping("/deactivate/{username}")
     @Operation(summary = "Изменить статус активности пользователя", description = "В ответе возвращается объект UserDto")
-    public UserDto patchDeactivate(@PathVariable String username, @RequestParam boolean enabled) throws IOException {
+    public UserDto patchDeactivate(@Schema(description = "Логин пользователя") @PathVariable String username,
+                                   @Schema(description = "Состояние активности пользователя")@RequestParam boolean enabled) throws IOException {
         return userService.patchDeactivate(username, enabled);
     }
 
@@ -74,7 +80,8 @@ public class UserController {
     @PreAuthorize("hasAuthority('USER')")
     @PatchMapping("/change-password/{username}")
     @Operation(summary = "Изменить пароль пользователя", description = "В ответе возвращается объект UserDto")
-    public String patchPassword(@PathVariable String username, @RequestParam String password) throws IOException {
+    public String patchPassword(@Schema(description = "Логин пользователя") @PathVariable String username,
+                                @Schema(description = "Пароль пользователя") @RequestParam String password) throws IOException {
         try {
             userService.patchPassword(username, password);
             return "success";
