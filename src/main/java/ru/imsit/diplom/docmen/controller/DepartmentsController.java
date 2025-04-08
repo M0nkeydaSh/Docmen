@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -32,25 +33,26 @@ public class DepartmentsController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном департаменте", description = "В ответе возвращается объект DepartmentsDto")
-    public DepartmentsDto getOne(@RequestParam UUID id) {
+    public DepartmentsDto getOne(@Schema(description = "ID департамента") @RequestParam UUID id) {
         return departmentsService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать департамент", description = "В ответе возвращается объект DepartmentsDto")
-    public DepartmentsDto create(@RequestParam String name) {
+    public DepartmentsDto create(@Schema(description = "Название департамента") @RequestParam String name) {
         return departmentsService.create(name);
     }
 
     @PatchMapping
     @Operation(summary = "Изменить департамент", description = "В ответе возвращается объект DepartmentsDto")
-    public DepartmentsDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+    public DepartmentsDto patch(@Schema(description = "ID департамента") @RequestParam UUID id,
+                                @Schema(description = "Название департамента")@RequestParam String name) throws IOException {
         return departmentsService.patch(id, name);
     }
 
     @DeleteMapping
     @Operation(summary = "Удалить департамент", description = "В ответе возвращается объект DepartmentsDto")
-    public DepartmentsDto delete(@RequestParam UUID id) {
+    public DepartmentsDto delete(@Schema(description = "ID департамента") @RequestParam UUID id) {
         return departmentsService.delete(id);
     }
 

@@ -1,6 +1,7 @@
 package ru.imsit.diplom.docmen.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -32,25 +33,26 @@ public class FilesController {
 
     @GetMapping("/getOne")
     @Operation(summary = "Получить данные о конкретном файле", description = "В ответе возвращается объект FilesDto")
-    public FilesDto getOne(@RequestParam UUID id) {
+    public FilesDto getOne(@Schema(description = "ID файла") @RequestParam UUID id) {
         return filesService.getOne(id);
     }
 
     @PostMapping
     @Operation(summary = "Создать файл", description = "В ответе возвращается объект FilesDto")
-    public FilesDto create(@RequestParam String name, @RequestParam String docCard) {
+    public FilesDto create(@Schema(description = "Имя файла")@RequestParam String name, @Schema(description = "ID карточки документа файла")@RequestParam String docCard) {
         return filesService.create(name, docCard);
     }
 
     @PatchMapping
     @Operation(summary = "Изменить файл", description = "В ответе возвращается объект FilesDto")
-    public FilesDto patch(@RequestParam UUID id, @RequestParam String name) throws IOException {
+    public FilesDto patch(@Schema(description = "ID файла") @RequestParam UUID id,
+                          @Schema(description = "Новое имя файла") @RequestParam String name) throws IOException {
         return filesService.patch(id, name);
     }
 
     @DeleteMapping
     @Operation(summary = "Удалить файл", description = "В ответе возвращается объект FilesDto")
-    public FilesDto delete(@RequestParam UUID id) {
+    public FilesDto delete(@Schema(description = "ID файла") @RequestParam UUID id) {
         return filesService.delete(id);
     }
 
