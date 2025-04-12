@@ -10,13 +10,15 @@ import ru.imsit.diplom.docmen.enums.StatesEnum;
  */
 @Value
 public class DocCardDto {
+    String id;
     String name;
     String description;
     String userName;
     TypeDocumentDto typeDocument;
     String regNum;
     String keyWords;
-    @ArraySchema(schema = @Schema(description = "Статус карточки документа", example = "Черновик", implementation = StatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED))
+    @ArraySchema(schema = @Schema(description = "Статус карточки документа", example = "Черновик",
+            implementation = StatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED))
     String state;
 
 }

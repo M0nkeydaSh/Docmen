@@ -54,10 +54,10 @@ public class DocCardController {
     public DocCardDto patch(@Schema(description = "ID карточки документа") @RequestParam UUID id,
                             @Schema(description = "Имя карточки документа") @RequestParam String name,
                             @Schema(description = "Описание карточки документа") @RequestParam String description,
-                            @Schema(description = "Статус карточки документа") @RequestParam String state,
+                            @Schema(description = "Статус карточки документа", implementation = StatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String state,
                             @Schema(description = "Тип карточки документа") @RequestParam String typeDocument,
                             @Schema(description = "Регистрационный номер карточки документа") @RequestParam String regNum,
-                            @Schema(description = "Ключевые слова карточки документа")  @RequestParam String keyWords) throws IOException {
+                            @Schema(description = "Ключевые слова карточки документа") @RequestParam String keyWords) throws IOException {
         return docCardService.patch(id, name, description, typeDocument, regNum, keyWords, state);
     }
 

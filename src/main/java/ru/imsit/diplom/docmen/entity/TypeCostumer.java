@@ -26,7 +26,7 @@ public class TypeCostumer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departments_id")
-    private Departments departments;
+    private Departments department;
 
     @Column(name = "change_date")
     private String changeDate;
