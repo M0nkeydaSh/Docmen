@@ -53,7 +53,7 @@ public class CostumersService {
                 .lastName(lastName)
                 .email(email)
                 .phoneNumber(phoneNumber)
-                .genderEnum(GenderEnum.getGender(gender))
+                .gender(GenderEnum.getGender(gender))
                 .typeCostumer(typeCostumers.orElseThrow())
                 .user(user)
                 .build();
@@ -69,7 +69,7 @@ public class CostumersService {
         costumer.ifPresent(value -> value.setLastName(lastName));
         costumer.ifPresent(value -> value.setEmail(email));
         costumer.ifPresent(value -> value.setPhoneNumber(phoneNumber));
-        costumer.ifPresent(value -> value.setGenderEnum(GenderEnum.valueOf(gender)));
+        costumer.ifPresent(value -> value.setGender(GenderEnum.valueOf(gender)));
         costumer.ifPresent(value -> value.setTypeCostumer(typeCostumers.orElseThrow()));
         costumer.ifPresent(value -> value.setUser(user));
         return costumersMapper.toCostumersDto(costumersRepository.save(costumer.orElseThrow()));

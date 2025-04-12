@@ -47,7 +47,14 @@ public class DocCardService {
     public DocCardDto create(String name, String description, String typeDocumentName, String regNum, String keyWords, String state) {
         var typeDocument = typeDocumentRepository.findByName(typeDocumentName);
         var user = userInfoHelper.getUser();
-        var docCard = DocCard.builder().name(name).description(description).user(user).state(StatesEnum.valueOf(state)).typeDocument(typeDocument.orElseThrow()).regNum(regNum).keyWords(keyWords).build();
+        var docCard = DocCard.builder()
+                .name(name)
+                .description(description)
+                .user(user)
+                .state(StatesEnum.getState(state))
+                .typeDocument(typeDocument.orElseThrow())
+                .regNum(regNum)
+                .keyWords(keyWords).build();
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
@@ -59,7 +66,7 @@ public class DocCardService {
         docCard.ifPresent(value -> value.setDescription(description));
         docCard.ifPresent(value -> value.setRegNum(regNum));
         docCard.ifPresent(value -> value.setKeyWords(keyWords));
-        docCard.ifPresent(value -> value.setState(StatesEnum.valueOf(state)));
+        docCard.ifPresent(value -> value.setState(StatesEnum.getState(state)));
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
     }
 

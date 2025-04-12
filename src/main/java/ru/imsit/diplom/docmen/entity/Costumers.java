@@ -40,7 +40,7 @@ public class Costumers {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private GenderEnum genderEnum;
+    private GenderEnum gender;
 
     @Column(name = "phone_number")
     @JdbcTypeCode(SqlTypes.VARCHAR)

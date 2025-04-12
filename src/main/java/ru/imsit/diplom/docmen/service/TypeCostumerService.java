@@ -38,7 +38,7 @@ public class TypeCostumerService {
     public TypeCostumerDto create(String name, String departments) {
         var typeCostumer = new TypeCostumer();
         var department = departmentsRepository.findByName(departments);
-        typeCostumer = TypeCostumer.builder().name(name).departments(department.orElseThrow()).build();
+        typeCostumer = TypeCostumer.builder().name(name).department(department.orElseThrow()).build();
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 
