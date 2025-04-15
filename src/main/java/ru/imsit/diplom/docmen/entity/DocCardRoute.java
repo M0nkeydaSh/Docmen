@@ -1,15 +1,17 @@
 package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "doc_card_route")
+@NoArgsConstructor
+@AllArgsConstructor
 public class DocCardRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,13 +1,15 @@
 package ru.imsit.diplom.docmen.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
-import ru.imsit.diplom.docmen.entity.DocCardRoute;
+import ru.imsit.diplom.docmen.dto.DocCardRouteDto;
 import ru.imsit.diplom.docmen.filter.DocCardRouteFilter;
 import ru.imsit.diplom.docmen.service.DocCardRouteService;
 
@@ -17,43 +19,54 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/docCardRoutes")
 @RequiredArgsConstructor
+@Tag(name = "DocCardRoute API")
 public class DocCardRouteController {
 
     private final DocCardRouteService docCardRouteService;
 
-    @GetMapping
-    public PagedModel<DocCardRoute> getAll(@ParameterObject @ModelAttribute DocCardRouteFilter filter, @ParameterObject Pageable pageable) {
-        Page<DocCardRoute> docCardRoutes = docCardRouteService.getAll(filter, pageable);
+    @GetMapping("/getAll")
+    @Operation(summary = "Получить данные о всех маршрутах карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public PagedModel<DocCardRouteDto> getAll(@ParameterObject @ModelAttribute DocCardRouteFilter filter, @ParameterObject Pageable pageable) {
+        Page<DocCardRouteDto> docCardRoutes = docCardRouteService.getAll(filter, pageable);
         return new PagedModel<>(docCardRoutes);
     }
 
-    @GetMapping("/{id}")
-    public DocCardRoute getOne(@PathVariable UUID id) {
+    @GetMapping("/getOne")
+    @Operation(summary = "Получить данные об одном маршруте карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto getOne(@Schema(description = "ID карточки документа") @RequestParam UUID id) {
         return docCardRouteService.getOne(id);
     }
 
     @PostMapping
-    public DocCardRoute create(@RequestBody DocCardRoute docCardRoute) {
-        return docCardRouteService.create(docCardRoute);
+    @Operation(summary = "Создать маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto create(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
+                                  @Schema(description = "Дата выполения") @RequestParam String dateComplete) {
+        return docCardRouteService.create(routeStepCostumersId, dateComplete);
     }
 
-    @PatchMapping("/{id}")
-    public DocCardRoute patch(@PathVariable UUID id, @RequestBody JsonNode patchNode) throws IOException {
-        return docCardRouteService.patch(id, patchNode);
+    @PatchMapping
+    @Operation(summary = "Изменить маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto patch(@Schema(description = "ID карточки документа") @RequestParam UUID id,
+                                 @Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
+                                 @Schema(description = "Дата выполения") @RequestParam String dateComplete) throws IOException {
+        return docCardRouteService.patch(id, routeStepCostumersId, dateComplete);
     }
 
-    @PostMapping("/setReady/{id}")
-    public DocCardRoute setReady(@PathVariable UUID id) throws IOException {
+    @PostMapping("/setReady")
+    @Operation(summary = "Установить готовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto setReady(@Schema(description = "ID карточки документа") @RequestParam UUID id) throws IOException {
         return docCardRouteService.setReady(id);
     }
 
-    @PostMapping("/setUnready/{id}")
-    public DocCardRoute setUnready(@PathVariable UUID id) throws IOException {
+    @PostMapping("/setUnready")
+    @Operation(summary = "Установить Неготовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @RequestParam UUID id) throws IOException {
         return docCardRouteService.setUnready(id);
     }
 
-    @DeleteMapping("/{id}")
-    public DocCardRoute delete(@PathVariable UUID id) {
+    @DeleteMapping
+    @Operation(summary = "Удалить маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto delete(@Schema(description = "ID карточки документа") @RequestParam UUID id) {
         return docCardRouteService.delete(id);
     }
 

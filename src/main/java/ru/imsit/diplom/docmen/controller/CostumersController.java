@@ -43,7 +43,7 @@ public class CostumersController {
                                @Schema(description = "Фамилия сотрудника") @RequestParam String surName,
                                @Schema(description = "Фамилия сотрудника") @RequestParam String lastName,
                                @Schema(description = "Почта сотрудника") @RequestParam String email,
-                               @Schema(description = "Телефон сотрудника")@RequestParam String phoneNumber,
+                               @Schema(description = "Телефон сотрудника") @RequestParam String phoneNumber,
                                @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String gender,
                                @Schema(description = "Должность сотрудника") @RequestParam String typeCostumer,
                                @Schema(description = "Логин сотрудника") @RequestParam String username) {
