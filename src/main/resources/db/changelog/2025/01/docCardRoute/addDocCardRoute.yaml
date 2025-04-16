@@ -33,3 +33,22 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: route_step_costumers
 
+  - changeSet:
+      id: 1743768723701-3
+      author: Vadim
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: doc_card_route
+            columns:
+              - column:
+                  name: route_step_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: route_step_id
+            baseTableName: doc_card_route
+            constraintName: FK_DOC_CARD_ROUTE_ON_ROUTE_STEP
+            referencedColumnNames: id
+            referencedTableName: route_steps

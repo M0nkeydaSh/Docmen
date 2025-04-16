@@ -52,15 +52,15 @@ public class DocCardRouteController {
         return docCardRouteService.patch(id, routeStepCostumersId, dateComplete);
     }
 
-    @PostMapping("/setReady")
-    @Operation(summary = "Установить готовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
-    public DocCardRouteDto setReady(@Schema(description = "ID карточки документа") @RequestParam UUID id) throws IOException {
+    @GetMapping ("/setReady/{id}")
+    @Operation(summary = "Установить готовность маршрута карточки документа", description = "В ответе возвращается объекты DocCardRouteDto")
+    public DocCardRouteDto setReady(@Schema(description = "ID маршрута карточки документа") @PathVariable UUID id) throws IOException {
         return docCardRouteService.setReady(id);
     }
 
-    @PostMapping("/setUnready")
+    @GetMapping("/setUnready/{id}")
     @Operation(summary = "Установить Неготовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
-    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @RequestParam UUID id) throws IOException {
+    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @PathVariable UUID id) throws IOException {
         return docCardRouteService.setUnready(id);
     }
 

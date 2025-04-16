@@ -50,29 +50,43 @@ public class DocCardRouteService {
     }
 
     public DocCardRouteDto setReady(UUID id) {
-        var docCardRoute = docCardRouteRepository.findById(id);
-        docCardRoute.ifPresent(value -> value.setReady("Y"));
-        return null;
+        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        docCardRoute.setReady("Y");
+        docCardRouteRepository.save(docCardRoute);
+        //Получить RouteStep
+        //Получит по RouteStep все визы и их статусы и проверить на статус "Y"
+        //если все визы "Y" тогда мы документ должны продвинуть на следующий шаг маршрута
+        //если нет следующего шага маршрута значит завершить работу с документом проставив статус завершен
+
+        //Если есть то мы его продвигаем на следующий шаг
+        //По аналогии со стартом машрута мы получаем все шаги находим следубщий шаг после текущего
+        //109 строка добавить логику + повторить используя найденый шаг
+        return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
     public DocCardRouteDto setUnready(UUID id) {
-        var docCardRoute = docCardRouteRepository.findById(id);
-        docCardRoute.ifPresent(value -> value.setReady("N"));
-        return null;
+        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        //откатить документ до статуса черновик и почистить таблицу доккард роут удалить всю инфу относящуюся к маршруту документа
+        //Получить RouteStep
+        //и пройдя по всем шагам мы должны удалить все элементы докКардРоута относящиеся ко всем шагам маршрута которые документ прошел
+        return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
     public DocCardRouteDto create(UUID routeStepCostumerId, String dateComplete) {
-        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId);
-        var docCardRoute = DocCardRoute.builder().routeStepCostumers(routeStepCostumer.orElseThrow()).ready("N").dateComplete(dateComplete).build();
+        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        var docCardRoute = DocCardRoute.builder().routeStepCostumers(routeStepCostumer).ready("N").dateComplete(dateComplete).build();
         return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
     public DocCardRouteDto patch(UUID id, UUID routeStepCostumerId, String dateComplete) {
-        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId);
-        var docCardRoute = docCardRouteRepository.findById(id);
-        docCardRoute.ifPresent(value -> value.setRouteStepCostumers(routeStepCostumer.orElseThrow()));
-        docCardRoute.ifPresent(value -> value.setDateComplete(dateComplete));
-        return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute.orElseThrow()));
-
+        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Шаг пользователя маршрута не найден"));
+        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        docCardRoute.setRouteStepCostumers(routeStepCostumer);
+        docCardRoute.setDateComplete(dateComplete);
+        return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
+
+
+
+
 }
