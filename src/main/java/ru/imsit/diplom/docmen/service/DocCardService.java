@@ -32,6 +32,12 @@ public class DocCardService {
 
     private final TypeDocumentRepository typeDocumentRepository;
 
+    private final RouteStepService routeStepService;
+
+    private final RouteStepCostumersService routeStepCostumersService;
+    private final DocCardRouteService docCardRouteService;
+
+
     public Page<DocCardDto> getAll(DocCardFilter filter, Pageable pageable) {
         Specification<DocCard> spec = filter.toSpecification();
         Page<DocCard> docCards = docCardRepository.findAll(spec, pageable);
@@ -79,5 +85,37 @@ public class DocCardService {
         return docCardMapper.toDocCardDto(docCard);
     }
 
+    public DocCardDto setState(UUID docCardId, String state) {
+        var docCard = docCardRepository.findById(docCardId);
+        docCard.ifPresent(value -> value.setState(StatesEnum.getState(state)));
+        return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
+    }
+
+    public void startRoute(UUID docCardId) {
+        //запускаем документ по маршруту
+        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Документ не найден"));
+        //получить шаги маршрута документа
+        var routeSteps = routeStepService.getStepsByDocCardId(docCardId);
+        //проверить есть ли шаги маршрута документа
+        if (routeSteps.isEmpty()) {
+            throw new RuntimeException("Документ не имеет маршрута");
+        }
+        //проверить что документ не имеет маршрута
+        if (!docCard.getState().equals(StatesEnum.DRAFT)) {
+            throw new RuntimeException("Документ уже имеет маршрут");
+        }
+        var firstStep = routeSteps.get(0);
+        //Выставить статус равный стутусу шага маршрута
+        docCard.setState(StatesEnum.valueOf(firstStep.getRouteStepState()));
+        docCardRepository.save(docCard);
+        //Создать визы маршрута документа
+        //Получить всех пользователей которые будут выполнять шаги маршрута документа
+        var routeStepCostumers = routeStepCostumersService.getAllUsersByRouteStepId(UUID.fromString(firstStep.getId()));
+        //Создаем визы маршрута документа
+        for (var routeStepCostumer : routeStepCostumers) {
+            docCardRouteService.create(UUID.fromString(routeStepCostumer.getId()), routeStepCostumer.getControlDate());
+        }
+
+    }
 
 }

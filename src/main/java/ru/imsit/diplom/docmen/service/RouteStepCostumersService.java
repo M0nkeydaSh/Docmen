@@ -16,8 +16,10 @@ import ru.imsit.diplom.docmen.repository.CostumersRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepCostumersRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -45,12 +47,10 @@ public class RouteStepCostumersService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
-
-
     public RouteStepCostumersDto create(String routeStepId, String costumersId, String ready, String dateTime) {
         var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId));
         var costumer = costumersRepository.findById(UUID.fromString(costumersId));
-        var routeStepParticipants = RouteStepCostumers.builder().routeStep(routeStep.orElseThrow()).costumers(costumer.orElseThrow()).ready(ready).dateTime(dateTime).build();
+        var routeStepParticipants = RouteStepCostumers.builder().routeStep(routeStep.orElseThrow()).costumers(costumer.orElseThrow()).ready(ready).controlDate(dateTime).build();
         return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepParticipants));
     }
 
@@ -61,7 +61,7 @@ public class RouteStepCostumersService {
         routeStepParticipants.ifPresent(value -> value.setRouteStep(routeStep.orElseThrow()));
         routeStepParticipants.ifPresent(value -> value.setCostumers(costumer.orElseThrow()));
         routeStepParticipants.ifPresent(value -> value.setReady(ready));
-        routeStepParticipants.ifPresent(value -> value.setDateTime(dateTime));
+        routeStepParticipants.ifPresent(value -> value.setControlDate(dateTime));
         return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepParticipants.orElseThrow()));
     }
 
@@ -72,4 +72,11 @@ public class RouteStepCostumersService {
         }
         return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumers);
     }
+
+    //создать метод получения списка пользователей по маршруту
+    public List<RouteStepCostumersDto> getAllUsersByRouteStepId(UUID routeStepId) {
+        List<RouteStepCostumers> routeStepCostumersList = routeStepCostumersRepository.findAllByRouteStepId(routeStepId);
+        return routeStepCostumersList.stream().map(routeStepCostumersMapper::toRouteStepParticipantsDto).collect(Collectors.toList());
+    }
+
 }

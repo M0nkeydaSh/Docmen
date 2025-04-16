@@ -10,6 +10,7 @@ import ru.imsit.diplom.docmen.enums.RouteStepStatesEnum;
  */
 @Value
 public class RouteStepDto {
+    String id;
     String docCardId;
     String number;
     @ArraySchema(schema = @Schema(description = "Статус шага маршрута", example = "Согласование", implementation = RouteStepStatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED))

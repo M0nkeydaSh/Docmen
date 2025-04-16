@@ -8,6 +8,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.imsit.diplom.docmen.dto.DocCardDto;
 import ru.imsit.diplom.docmen.enums.StatesEnum;
@@ -61,10 +62,19 @@ public class DocCardController {
         return docCardService.patch(id, name, description, typeDocument, regNum, keyWords, state);
     }
 
+    @PostMapping("/startRoute")
+    @Operation(summary = "Начать маршрут карточки документа", description = "В ответе возвращается объект DocCardDto")
+    public HttpStatus startRoute(@Schema(description = "ID карточки документа") @RequestParam UUID docCardId){
+        docCardService.startRoute(docCardId);
+        return HttpStatus.OK;
+    }
+
     @DeleteMapping
     @Operation(summary = "Удалить карточку", description = "В ответе возвращается объект DocCardDto")
     public DocCardDto delete(@Schema(description = "ID карточки документа") @RequestParam UUID id) {
         return docCardService.delete(id);
     }
+
+
 
 }

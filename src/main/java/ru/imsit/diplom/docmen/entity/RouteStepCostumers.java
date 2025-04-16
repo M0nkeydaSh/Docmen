@@ -30,7 +30,7 @@ public class RouteStepCostumers {
     private String ready;
 
     @Column(name = "control_date")
-    private String dateTime;
+    private String controlDate;
 
     @Column(name = "change_date")
     private String changeDate;

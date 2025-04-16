@@ -16,12 +16,14 @@ import ru.imsit.diplom.docmen.mapper.RouteStepMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class RouteStepService{
+public class RouteStepService {
 
     private final RouteStepMapper routeStepMapper;
 
@@ -63,5 +65,15 @@ public class RouteStepService{
             routeStepRepository.delete(routeStep);
         }
         return routeStepMapper.toRouteStepDto(routeStep);
+    }
+
+    /**
+     * Получить шаги маршрута DocCard по его id
+     * @param docCardId id документа
+     * @return все шаги маршрута данного документа
+     */
+    public List<RouteStepDto> getStepsByDocCardId(UUID docCardId) {
+        List<RouteStep> routeStepList = routeStepRepository.findAllByDocCardIdOrderByNumberOfStep(docCardId);
+        return routeStepList.stream().map(routeStepMapper::toRouteStepDto).collect(Collectors.toList());
     }
 }
