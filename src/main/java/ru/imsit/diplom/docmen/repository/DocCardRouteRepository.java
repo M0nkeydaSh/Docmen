@@ -7,4 +7,6 @@ import ru.imsit.diplom.docmen.entity.DocCardRoute;
 import java.util.UUID;
 
 public interface DocCardRouteRepository extends JpaRepository<DocCardRoute, UUID>, JpaSpecificationExecutor<DocCardRoute> {
+    void deleteAllByRouteStep_Id(UUID routeStepId);
+
 }

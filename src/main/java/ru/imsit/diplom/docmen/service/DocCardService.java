@@ -34,10 +34,6 @@ public class DocCardService {
 
     private final RouteStepService routeStepService;
 
-    private final RouteStepCostumersService routeStepCostumersService;
-    private final DocCardRouteService docCardRouteService;
-
-
     public Page<DocCardDto> getAll(DocCardFilter filter, Pageable pageable) {
         Specification<DocCard> spec = filter.toSpecification();
         Page<DocCard> docCards = docCardRepository.findAll(spec, pageable);
@@ -105,16 +101,8 @@ public class DocCardService {
             throw new RuntimeException("Документ уже имеет маршрут");
         }
         var firstStep = routeSteps.get(0);
-        //Выставить статус равный стутусу шага маршрута
-        docCard.setState(StatesEnum.valueOf(firstStep.getRouteStepState()));
-        docCardRepository.save(docCard);
-        //Создать визы маршрута документа
-        //Получить всех пользователей которые будут выполнять шаги маршрута документа
-        var routeStepCostumers = routeStepCostumersService.getAllUsersByRouteStepId(UUID.fromString(firstStep.getId()));
-        //Создаем визы маршрута документа
-        for (var routeStepCostumer : routeStepCostumers) {
-            docCardRouteService.create(UUID.fromString(routeStepCostumer.getId()), routeStepCostumer.getControlDate());
-        }
+        //Выставить статус равный статусу шага маршрута
+        userInfoHelper.startRouteStep(docCard, firstStep);
 
     }
 

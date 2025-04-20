@@ -22,6 +22,10 @@ public class DocCardRoute {
     @JoinColumn(name = "route_step_costumer_id")
     private RouteStepCostumers routeStepCostumers;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route_step_id")
+    private RouteStep routeStep;
+
     @Column(name = "ready")
     private String ready;
 

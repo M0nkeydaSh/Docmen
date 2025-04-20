@@ -40,16 +40,18 @@ public class DocCardRouteController {
     @PostMapping
     @Operation(summary = "Создать маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
     public DocCardRouteDto create(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
+                                  @Schema(description = "ID шага маршрута") @RequestParam UUID routeStepId,
                                   @Schema(description = "Дата выполения") @RequestParam String dateComplete) {
-        return docCardRouteService.create(routeStepCostumersId, dateComplete);
+        return docCardRouteService.create(routeStepCostumersId, dateComplete, routeStepId);
     }
 
     @PatchMapping
     @Operation(summary = "Изменить маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
     public DocCardRouteDto patch(@Schema(description = "ID карточки документа") @RequestParam UUID id,
                                  @Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
+                                 @Schema(description = "ID шага маршрута") @RequestParam UUID routeStepId,
                                  @Schema(description = "Дата выполения") @RequestParam String dateComplete) throws IOException {
-        return docCardRouteService.patch(id, routeStepCostumersId, dateComplete);
+        return docCardRouteService.patch(id, routeStepCostumersId, routeStepId, dateComplete);
     }
 
     @GetMapping ("/setReady/{id}")
@@ -58,10 +60,11 @@ public class DocCardRouteController {
         return docCardRouteService.setReady(id);
     }
 
-    @GetMapping("/setUnready/{id}")
+    @PostMapping("/setUnready/{id}")
     @Operation(summary = "Установить Неготовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
-    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @PathVariable UUID id) throws IOException {
-        return docCardRouteService.setUnready(id);
+    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @PathVariable UUID id,
+                                      @Schema(description = "ID карточки документа") @RequestParam String comment) throws IOException {
+        return docCardRouteService.setUnready(id, comment);
     }
 
     @DeleteMapping

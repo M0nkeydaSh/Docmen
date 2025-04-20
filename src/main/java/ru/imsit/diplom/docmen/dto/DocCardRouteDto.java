@@ -10,4 +10,5 @@ public class DocCardRouteDto {
     RouteStepCostumersDto routeStepCostumers;
     String ready;
     String dateComplete;
+    RouteStepDto routeStep;
 }
