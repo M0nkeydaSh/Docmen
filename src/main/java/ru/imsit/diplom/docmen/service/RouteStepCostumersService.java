@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,8 +27,6 @@ public class RouteStepCostumersService {
     private final RouteStepCostumersMapper routeStepCostumersMapper;
 
     private final RouteStepCostumersRepository routeStepCostumersRepository;
-
-    private final ObjectMapper objectMapper;
 
     private final RouteStepRepository routeStepRepository;
 

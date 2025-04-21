@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +28,6 @@ public class RouteStepService {
 
     private final RouteStepRepository routeStepRepository;
 
-    private final ObjectMapper objectMapper;
     private final DocCardRepository docCardRepository;
 
     public Page<RouteStepDto> getAll(RouteStepFilter filter, Pageable pageable) {
