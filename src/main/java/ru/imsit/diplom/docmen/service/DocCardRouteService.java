@@ -58,7 +58,7 @@ public class DocCardRouteService {
     }
 
     public DocCardRouteDto delete(UUID id) {
-        DocCardRoute docCardRoute = docCardRouteRepository.findById(id).orElse(null);
+        DocCardRoute docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Карточка карточки документа не найден"));
         if (docCardRoute != null) {
             docCardRouteRepository.delete(docCardRoute);
         }
@@ -66,7 +66,7 @@ public class DocCardRouteService {
     }
 
     public DocCardRouteDto setReady(UUID id) {
-        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут карточки документа не найден"));
         docCardRoute.setReady("Y");
         var result = docCardRouteRepository.save(docCardRoute);
         //Получить RouteStep
@@ -153,7 +153,7 @@ public class DocCardRouteService {
     public DocCardRouteDto patch(UUID id, UUID routeStepCostumerId, UUID routeStepId, String dateComplete) {
         var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Маршрут шага пользователя не найден"));
         var routeStep = routeStepRepository.findById(routeStepId).orElseThrow(() -> new RuntimeException("Маршрут шага документа не найден"));
-        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
+        var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут карточки документа не найден"));
         docCardRoute.setRouteStepCostumers(routeStepCostumer);
         docCardRoute.setRouteStep(routeStep);
         docCardRoute.setDateComplete(dateComplete);

@@ -43,25 +43,25 @@ public class FilesService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
-    public FilesDto create(String name, String docCard) {
+    public FilesDto create(String name, String docCardId) {
         var user = userInfoHelper.getUser();
-        var docCards = docCardRepository.findByName(docCard);
-        var file = Files.builder().name(name).docCard(docCards.orElseThrow()).user(user).build();
+        var docCard = docCardRepository.findByName(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        var file = Files.builder().name(name).docCard(docCard).user(user).build();
         return filesMapper.toFilesDto(filesRepository.save(file));
     }
 
     public FilesDto patch(UUID id, String name) throws IOException {
-        var file = filesRepository.findById(id);
-        file.ifPresent(value -> value.setName(name));
-        return filesMapper.toFilesDto(filesRepository.save(file.orElseThrow()));
+        var file = filesRepository.findById(id).orElseThrow(() -> new RuntimeException("Файл не найден"));
+        file.setName(name);
+        return filesMapper.toFilesDto(filesRepository.save(file));
     }
 
     public FilesDto delete(UUID id) {
-        Files files = filesRepository.findById(id).orElse(null);
-        if (files != null) {
-            filesRepository.delete(files);
+        Files file = filesRepository.findById(id).orElseThrow(() -> new RuntimeException("Файл не найден"));
+        if (file != null) {
+            filesRepository.delete(file);
         }
-        return filesMapper.toFilesDto(files);
+        return filesMapper.toFilesDto(file);
     }
 
 

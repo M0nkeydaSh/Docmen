@@ -56,43 +56,39 @@ public class UserService {
     }
 
     public UserDto create(String username, String password, Set<String> authoritySet) {
-        var user = new User();
         Set<Authority> roles = new HashSet<>();
         for (var authority : authoritySet) {
             var role = authorityRepository.findByName(authority);
             roles.add(role);
         }
-        user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(roles).build();
+        var user = User.builder().username(username).password(passwordEncoder.encode(password)).enabled(true).authorities(roles).build();
         return userMapper.toUserDto(userRepository.save(user));
     }
 
     public UserDto patch(String username, boolean enabled, Set<String> authorities) {
-        var user = userRepository.findByUsername(username);
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         Set<Authority> roles = new HashSet<>();
         for (var authority : authorities) {
             var role = authorityRepository.findByName(authority);
             roles.add(role);
         }
-
-        user.ifPresent(value -> {
-            value.setEnabled(enabled);
-            value.setAuthorities(roles);
-        });
-        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+        user.setEnabled(enabled);
+        user.setAuthorities(roles);
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     public UserDto patchDeactivate(String username, boolean enabled) {
-        var user = userRepository.findByUsername(username);
-        user.ifPresent(value -> value.setEnabled(enabled));
-        return userMapper.toUserDto(userRepository.save(user.orElseThrow()));
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        user.setEnabled(enabled);
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     public void patchPassword(String username, String password) {
-        var user = userRepository.findByUsername(username);
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         var autorizationUser = userInfoHelper.getUser();
         if (autorizationUser.getUsername().equals(username) || autorizationUser.getAuthorities().stream().anyMatch(i -> i.getName().equals("ADMIN"))) {
-            user.ifPresent(value -> value.setPassword(passwordEncoder.encode(password)));
-            userRepository.save(user.orElseThrow());
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }

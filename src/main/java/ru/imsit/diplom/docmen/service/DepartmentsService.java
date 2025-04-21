@@ -42,13 +42,13 @@ public class DepartmentsService {
     }
 
     public DepartmentsDto patch(UUID id, String name) throws IOException {
-        var department = departmentsRepository.findById(id);
-        department.ifPresent(value -> value.setName(name));
-        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department.orElseThrow()));
+        var department = departmentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Департамент не найден"));
+        department.setName(name);
+        return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department));
     }
 
     public DepartmentsDto delete(UUID id) {
-        Departments departments = departmentsRepository.findById(id).orElse(null);
+        Departments departments = departmentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Департамент не найден"));
         if (departments != null) {
             departmentsRepository.delete(departments);
         }

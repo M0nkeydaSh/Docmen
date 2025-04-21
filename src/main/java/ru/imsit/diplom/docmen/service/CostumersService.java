@@ -43,40 +43,38 @@ public class CostumersService {
     }
 
     public CostumersDto create(String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer, String username) {
-        var costumers = new Costumers();
-        var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
+        var typeCostumers = typeCostumerRepository.findByName(typeCostumer).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         var user = userInfoHelper.getUserByUsername(username);
-        // Создание через builder нужно распологать вертикально!
-        costumers = Costumers.builder()
+        var costumers = Costumers.builder()
                 .firstName(firstname)
                 .surName(surName)
                 .lastName(lastName)
                 .email(email)
                 .phoneNumber(phoneNumber)
                 .gender(GenderEnum.getGender(gender))
-                .typeCostumer(typeCostumers.orElseThrow())
+                .typeCostumer(typeCostumers)
                 .user(user)
                 .build();
         return costumersMapper.toCostumersDto(costumersRepository.save(costumers));
     }
 
-    public CostumersDto patch(String username, String firstname, String surName, String lastName, String email, String phoneNumber,String gender, String typeCostumer) {
-        var costumer = costumersRepository.findByUser_Username(username);
-        var typeCostumers = typeCostumerRepository.findByName(typeCostumer);
+    public CostumersDto patch(String username, String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer) {
+        var costumer = costumersRepository.findByUser_Username(username).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
+        var typeCostumers = typeCostumerRepository.findByName(typeCostumer).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         var user = userInfoHelper.getUserByUsername(username);
-        costumer.ifPresent(value -> value.setFirstName(firstname));
-        costumer.ifPresent(value -> value.setSurName(surName));
-        costumer.ifPresent(value -> value.setLastName(lastName));
-        costumer.ifPresent(value -> value.setEmail(email));
-        costumer.ifPresent(value -> value.setPhoneNumber(phoneNumber));
-        costumer.ifPresent(value -> value.setGender(GenderEnum.valueOf(gender)));
-        costumer.ifPresent(value -> value.setTypeCostumer(typeCostumers.orElseThrow()));
-        costumer.ifPresent(value -> value.setUser(user));
-        return costumersMapper.toCostumersDto(costumersRepository.save(costumer.orElseThrow()));
+        costumer.setFirstName(firstname);
+        costumer.setSurName(surName);
+        costumer.setLastName(lastName);
+        costumer.setEmail(email);
+        costumer.setPhoneNumber(phoneNumber);
+        costumer.setGender(GenderEnum.valueOf(gender));
+        costumer.setTypeCostumer(typeCostumers);
+        costumer.setUser(user);
+        return costumersMapper.toCostumersDto(costumersRepository.save(costumer));
     }
 
     public CostumersDto delete(String username) {
-        Costumers costumers = costumersRepository.findByUser_Username(username).orElse(null);
+        Costumers costumers = costumersRepository.findByUser_Username(username).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
         if (costumers != null) {
             costumersRepository.delete(costumers);
         }

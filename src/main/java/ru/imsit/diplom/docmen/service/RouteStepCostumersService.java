@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +28,6 @@ public class RouteStepCostumersService {
 
     private final RouteStepCostumersRepository routeStepCostumersRepository;
 
-    private final ObjectMapper objectMapper;
-
     private final RouteStepRepository routeStepRepository;
 
     private final CostumersRepository costumersRepository;
@@ -48,29 +45,34 @@ public class RouteStepCostumersService {
     }
 
     public RouteStepCostumersDto create(String routeStepId, String costumersId, String ready, String dateTime) {
-        var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId));
-        var costumer = costumersRepository.findById(UUID.fromString(costumersId));
-        var routeStepParticipants = RouteStepCostumers.builder().routeStep(routeStep.orElseThrow()).costumers(costumer.orElseThrow()).ready(ready).controlDate(dateTime).build();
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepParticipants));
+        var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId)).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
+        var costumer = costumersRepository.findById(UUID.fromString(costumersId)).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
+        var routeStepCostumer = RouteStepCostumers.builder()
+                .routeStep(routeStep)
+                .costumers(costumer)
+                .ready(ready)
+                .controlDate(dateTime)
+                .build();
+        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 
     public RouteStepCostumersDto patch(UUID id, String routeStepId, String costumersId, String ready, String dateTime) {
-        var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId));
-        var costumer = costumersRepository.findById(UUID.fromString(costumersId));
-        var routeStepParticipants = routeStepCostumersRepository.findById(id);
-        routeStepParticipants.ifPresent(value -> value.setRouteStep(routeStep.orElseThrow()));
-        routeStepParticipants.ifPresent(value -> value.setCostumers(costumer.orElseThrow()));
-        routeStepParticipants.ifPresent(value -> value.setReady(ready));
-        routeStepParticipants.ifPresent(value -> value.setControlDate(dateTime));
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepParticipants.orElseThrow()));
+        var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId)).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
+        var costumer = costumersRepository.findById(UUID.fromString(costumersId)).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
+        var routeStepCostumer = routeStepCostumersRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь шага маршрута не найден"));
+        routeStepCostumer.setRouteStep(routeStep);
+        routeStepCostumer.setCostumers(costumer);
+        routeStepCostumer.setReady(ready);
+        routeStepCostumer.setControlDate(dateTime);
+        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 
     public RouteStepCostumersDto delete(UUID id) {
-        RouteStepCostumers routeStepCostumers = routeStepCostumersRepository.findById(id).orElse(null);
-        if (routeStepCostumers != null) {
-            routeStepCostumersRepository.delete(routeStepCostumers);
+        var routeStepCostumer = routeStepCostumersRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь шага маршрута не найден"));
+        if (routeStepCostumer != null) {
+            routeStepCostumersRepository.delete(routeStepCostumer);
         }
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumers);
+        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumer);
     }
 
     //создать метод получения списка пользователей по маршруту

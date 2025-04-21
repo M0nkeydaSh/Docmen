@@ -29,7 +29,7 @@ public class TypeDocumentService {
     }
 
     public TypeDocumentDto getOne(UUID id) {
-        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.findById(id).orElseThrow());
+        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип документа не найден")));
     }
 
 
@@ -38,13 +38,13 @@ public class TypeDocumentService {
     }
 
     public TypeDocumentDto patch(UUID id, String name) throws IOException {
-        var typeDocument = typeDocumentRepository.findById(id);
-        typeDocument.ifPresent(value -> value.setName(name));
-        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(typeDocument.orElseThrow()));
+        var typeDocument = typeDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип документа не найден"));
+        typeDocument.setName(name);
+        return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(typeDocument));
     }
 
     public TypeDocumentDto delete(UUID id) {
-        TypeDocument typeDocument = typeDocumentRepository.findById(id).orElse(null);
+        TypeDocument typeDocument = typeDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип документа не найден"));
         if (typeDocument != null) {
             typeDocumentRepository.delete(typeDocument);
         }

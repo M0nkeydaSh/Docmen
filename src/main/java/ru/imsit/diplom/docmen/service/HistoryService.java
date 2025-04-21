@@ -45,24 +45,24 @@ public class HistoryService {
     }
 
     public HistoryDto create(UUID docCardId, String state) {
-        var docCard = docCardRepository.findById(docCardId);
+        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         var user = userInfoHelper.getUser();
-        var history = History.builder().docCard(docCard.orElseThrow()).user(user).state(StatesEnum.valueOf(state)).build();
+        var history = History.builder().docCard(docCard).user(user).state(StatesEnum.valueOf(state)).build();
         return historyMapper.toHistoryDto(historyRepository.save(history));
 
     }
 
     public HistoryDto patch(UUID id, String docCardName,  String state) throws IOException {
-        var history = historyRepository.findById(id);
-        var docCard = docCardRepository.findByName(docCardName);
-        history.ifPresent(value -> value.setDocCard(docCard.orElseThrow()));
-        history.ifPresent(value -> value.setState(StatesEnum.valueOf(state)));
-        return historyMapper.toHistoryDto(historyRepository.save(history.orElseThrow()));
+        var history = historyRepository.findById(id).orElseThrow(() -> new RuntimeException("История не найдена"));
+        var docCard = docCardRepository.findByName(docCardName).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        history.setDocCard(docCard);
+        history.setState(StatesEnum.valueOf(state));
+        return historyMapper.toHistoryDto(historyRepository.save(history));
     }
 
 
     public HistoryDto delete(UUID id) {
-        History history = historyRepository.findById(id).orElse(null);
+        History history = historyRepository.findById(id).orElseThrow(() -> new RuntimeException("История не найдена"));
         if (history != null) {
             historyRepository.delete(history);
         }
