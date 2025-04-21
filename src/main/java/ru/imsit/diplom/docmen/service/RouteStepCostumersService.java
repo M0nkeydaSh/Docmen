@@ -81,4 +81,8 @@ public class RouteStepCostumersService {
         return routeStepCostumersList.stream().map(routeStepCostumersMapper::toRouteStepParticipantsDto).collect(Collectors.toList());
     }
 
+
+    public RouteStepCostumers findById(UUID routeStepCostumerId) {
+      return routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Маршрут шага пользователя не найден"));
+    }
 }
