@@ -42,8 +42,16 @@ public class CostumersService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(username))));
     }
 
-    public CostumersDto create(String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer, String username) {
-        var typeCostumers = typeCostumerRepository.findByName(typeCostumer).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
+    public CostumersDto create(String firstname,
+                               String surName,
+                               String lastName,
+                               String email,
+                               String phoneNumber,
+                               String gender,
+                               String typeCostumer,
+                               String username) {
+        var typeCostumers = typeCostumerRepository.findByName(typeCostumer)
+                .orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         var user = userInfoHelper.getUserByUsername(username);
         var costumers = Costumers.builder()
                 .firstName(firstname)

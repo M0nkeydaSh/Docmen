@@ -74,4 +74,8 @@ public class RouteStepService {
         List<RouteStep> routeStepList = routeStepRepository.findAllByDocCardIdOrderByNumberOfStep(docCardId);
         return routeStepList.stream().map(routeStepMapper::toRouteStepDto).collect(Collectors.toList());
     }
+
+    public RouteStep findById(UUID routeStepId) {
+      return routeStepRepository.findById(routeStepId).orElseThrow(() -> new RuntimeException("Маршрут шага документа не найден"));
+    }
 }

@@ -34,6 +34,8 @@ public class DocCardService {
 
     private final RouteStepService routeStepService;
 
+    private final DocCardRouteService docCardRouteService;
+
     public Page<DocCardDto> getAll(DocCardFilter filter, Pageable pageable) {
         Specification<DocCard> spec = filter.toSpecification();
         Page<DocCard> docCards = docCardRepository.findAll(spec, pageable);
@@ -81,12 +83,6 @@ public class DocCardService {
         return docCardMapper.toDocCardDto(docCard);
     }
 
-    public DocCardDto setState(UUID docCardId, String state) {
-        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
-        docCard.setState(StatesEnum.getState(state));
-        return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
-    }
-
     public void startRoute(UUID docCardId) {
         //запускаем документ по маршруту
         var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
@@ -102,7 +98,7 @@ public class DocCardService {
         }
         var firstStep = routeSteps.get(0);
         //Выставить статус равный статусу шага маршрута
-        userInfoHelper.startRouteStep(docCard, firstStep);
+        docCardRouteService.startRouteStep(docCard, firstStep);
 
     }
 

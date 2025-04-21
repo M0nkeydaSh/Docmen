@@ -1,6 +1,5 @@
 package ru.imsit.diplom.docmen.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,15 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.imsit.diplom.docmen.dto.DocCardRouteDto;
+import ru.imsit.diplom.docmen.dto.RouteStepDto;
+import ru.imsit.diplom.docmen.entity.DocCard;
 import ru.imsit.diplom.docmen.entity.DocCardRoute;
-import ru.imsit.diplom.docmen.enums.StatesEnum;
 import ru.imsit.diplom.docmen.filter.DocCardRouteFilter;
-import ru.imsit.diplom.docmen.helper.UserInfoHelper;
+import ru.imsit.diplom.docmen.helper.DocCardHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardRouteMapper;
-import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.DocCardRouteRepository;
-import ru.imsit.diplom.docmen.repository.RouteStepCostumersRepository;
-import ru.imsit.diplom.docmen.repository.RouteStepRepository;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -28,12 +25,6 @@ public class DocCardRouteService {
 
     private final DocCardRouteRepository docCardRouteRepository;
 
-    private final DocCardRepository docCardRepository;
-
-    private final RouteStepCostumersRepository routeStepCostumersRepository;
-
-    private final RouteStepRepository routeStepRepository;
-
     private final DocCardRouteMapper docCardRouteMapper;
 
     private final RouteStepCostumersService routeStepCostumersService;
@@ -42,7 +33,7 @@ public class DocCardRouteService {
 
     private final CommentsService commentsService;
 
-    private final UserInfoHelper userInfoHelper;
+    private final DocCardHelper docCardHelper;
 
 
     public Page<DocCardRouteDto> getAll(DocCardRouteFilter filter, Pageable pageable) {
@@ -94,13 +85,12 @@ public class DocCardRouteService {
             }
 
             if (routeStepIndex == (countSteps - 1)) { //поменять первый аргумент
-                currentDocCard.setState(StatesEnum.valueOf("COMPLETED"));
-                docCardRepository.save(currentDocCard);
+                docCardHelper.setDocCardState(currentDocCard.getId(), "COMPLETED");
             } else {
                 //Получить следующий шаг после текущего шага маршрута документа
                 var nextStep = routeSteps.get(routeStepIndex + 1);
                 //Выставить статус равный статусу шага маршрут
-                userInfoHelper.startRouteStep(currentDocCard, nextStep);
+                startRouteStep(currentDocCard, nextStep);
             }
         }
         return docCardRouteMapper.toDocCardRouteDto(result);
@@ -108,7 +98,7 @@ public class DocCardRouteService {
 
     public DocCardRouteDto setUnready(UUID id, String comment) {
         var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
-        //откатить документ до статуса черновик и почистить таблицу docCardRoute удалить всю инфу относящуюся к маршруту документа
+        //откатить документ до статуса черновик и почистить таблицу docCardRoute удалить всю информацию, относящуюся к маршруту документа
         //получить RouteStep
         var routeStep = docCardRoute.getRouteStep();
 
@@ -119,11 +109,9 @@ public class DocCardRouteService {
             commentsService.create(comment, String.valueOf(curentDocCard.getId()));
         }
 
-        //Изменить статус документа на черновик
-        curentDocCard.setState(StatesEnum.valueOf("DRAFT"));
-
-        // Сохраняем обновленный DocCard
-        docCardRepository.save(curentDocCard);
+        //Изменить статус документа на черновик.
+        //Сохраняем обновленный DocCard
+        docCardHelper.setDocCardState(curentDocCard.getId(), "DRAFT");
 
         //Получить ID текущего документа
         UUID currentDocCardId = curentDocCard.getId();
@@ -139,20 +127,19 @@ public class DocCardRouteService {
 
         }
 
-
         return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
     public DocCardRouteDto create(UUID routeStepCostumerId, String dateComplete, UUID routeStepId) {
-        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Маршрут шага пользователя не найден"));
-        var routeStep = routeStepRepository.findById(routeStepId).orElseThrow(() -> new RuntimeException("Маршрут шага документа не найден"));
+        var routeStepCostumer = routeStepCostumersService.findById(routeStepCostumerId);
+        var routeStep = routeStepService.findById(routeStepId);
         var docCardRoute = DocCardRoute.builder().routeStepCostumers(routeStepCostumer).routeStep(routeStep).ready("N").dateComplete(dateComplete).build();
         return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
     public DocCardRouteDto patch(UUID id, UUID routeStepCostumerId, UUID routeStepId, String dateComplete) {
-        var routeStepCostumer = routeStepCostumersRepository.findById(routeStepCostumerId).orElseThrow(() -> new RuntimeException("Маршрут шага пользователя не найден"));
-        var routeStep = routeStepRepository.findById(routeStepId).orElseThrow(() -> new RuntimeException("Маршрут шага документа не найден"));
+        var routeStepCostumer = routeStepCostumersService.findById(routeStepCostumerId);
+        var routeStep = routeStepService.findById(routeStepId);
         var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут карточки документа не найден"));
         docCardRoute.setRouteStepCostumers(routeStepCostumer);
         docCardRoute.setRouteStep(routeStep);
@@ -160,5 +147,14 @@ public class DocCardRouteService {
         return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 
-
+    public void startRouteStep(DocCard docCard, RouteStepDto firstStep) {
+        docCardHelper.setDocCardState(docCard.getId(), firstStep.getRouteStepState());
+        //Создать визы маршрута документа
+        //получить всех пользователей которые будут выполнять шаги маршрута документа
+        var routeStepCostumers = routeStepCostumersService.getAllUsersByRouteStepId(UUID.fromString(firstStep.getId()));
+        //Создаем визы маршрута документа
+        for (var routeStepCostumer : routeStepCostumers) {
+            create(UUID.fromString(routeStepCostumer.getId()), routeStepCostumer.getControlDate(), UUID.fromString(routeStepCostumer.getRouteStepId()));
+        }
+    }
 }
