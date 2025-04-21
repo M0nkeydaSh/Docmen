@@ -45,22 +45,22 @@ public class RouteStepService {
     }
 
     public RouteStepDto create(String docCardId, String numberOfStep, String routeStepState) {
-        var docCard = docCardRepository.findById(UUID.fromString(docCardId));
-        var routeStep = RouteStep.builder().docCard(docCard.orElseThrow()).numberOfStep(numberOfStep).routeStepState(RouteStepStatesEnum.valueOf(routeStepState)).build();
+        var docCard = docCardRepository.findById(UUID.fromString(docCardId)).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        var routeStep = RouteStep.builder().docCard(docCard).numberOfStep(numberOfStep).routeStepState(RouteStepStatesEnum.valueOf(routeStepState)).build();
         return routeStepMapper.toRouteStepDto(routeStepRepository.save(routeStep));
     }
 
     public RouteStepDto patch(UUID id, String docCardId, String numberOfStep, String routeStepState) {
-        var docCard = docCardRepository.findById(UUID.fromString(docCardId));
-        var routeStep = routeStepRepository.findById(id);
-        routeStep.ifPresent(value -> value.setDocCard(docCard.orElseThrow()));
-        routeStep.ifPresent(value -> value.setNumberOfStep(numberOfStep));
-        routeStep.ifPresent(value -> value.setRouteStepState(RouteStepStatesEnum.valueOf(routeStepState)));
-        return routeStepMapper.toRouteStepDto(routeStepRepository.save(routeStep.orElseThrow()));
+        var docCard = docCardRepository.findById(UUID.fromString(docCardId)).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        var routeStep = routeStepRepository.findById(id).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
+        routeStep.setDocCard(docCard);
+        routeStep.setNumberOfStep(numberOfStep);
+        routeStep.setRouteStepState(RouteStepStatesEnum.valueOf(routeStepState));
+        return routeStepMapper.toRouteStepDto(routeStepRepository.save(routeStep));
     }
 
     public RouteStepDto delete(UUID id) {
-        RouteStep routeStep = routeStepRepository.findById(id).orElse(null);
+        RouteStep routeStep = routeStepRepository.findById(id).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
         if (routeStep != null) {
             routeStepRepository.delete(routeStep);
         }

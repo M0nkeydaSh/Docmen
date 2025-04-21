@@ -32,24 +32,23 @@ public class TypeCostumerService {
     }
 
     public TypeCostumerDto getOne(UUID id) {
-       return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.findById(id).orElseThrow());
+       return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден")));
     }
 
     public TypeCostumerDto create(String name, String departments) {
-        var typeCostumer = new TypeCostumer();
-        var department = departmentsRepository.findByName(departments);
-        typeCostumer = TypeCostumer.builder().name(name).department(department.orElseThrow()).build();
+        var department = departmentsRepository.findByName(departments).orElseThrow(() -> new RuntimeException("Департамент не найден"));
+        var typeCostumer = TypeCostumer.builder().name(name).department(department).build();
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 
     public TypeCostumerDto patch(UUID id, String name) throws IOException {
-        var typeCostumer = typeCostumerRepository.findById(id);
-        typeCostumer.ifPresent(value -> value.setName(name));
-        return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer.orElseThrow()));
+        var typeCostumer = typeCostumerRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
+        typeCostumer.setName(name);
+        return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 
     public TypeCostumerDto delete(UUID id) {
-        TypeCostumer typeCostumer = typeCostumerRepository.findById(id).orElse(null);
+        TypeCostumer typeCostumer = typeCostumerRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         if (typeCostumer != null) {
             typeCostumerRepository.delete(typeCostumer);
         }

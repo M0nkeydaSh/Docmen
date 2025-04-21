@@ -45,19 +45,19 @@ public class CommentsService {
 
     public CommentsDto create(String content, String docCard) {
         var user = userInfoHelper.getUser();
-        var docCards = docCardRepository.findByName(docCard);
-        var comment = Comments.builder().content(content).docCard(docCards.orElseThrow()).user(user).build();
+        var docCards = docCardRepository.findByName(docCard).orElseThrow(() -> new RuntimeException("Карточка документа не найден"));
+        var comment = Comments.builder().content(content).docCard(docCards).user(user).build();
         return commentsMapper.toCommentsDto(commentsRepository.save(comment));
     }
 
     public CommentsDto patch(UUID id, String content) throws IOException {
-       var comments = commentsRepository.findById(id);
-       comments.ifPresent(value -> value.setContent(content));
-       return commentsMapper.toCommentsDto(commentsRepository.save(comments.orElseThrow()));
+        var comments = commentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Комментарий не найден"));
+        comments.setContent(content);
+        return commentsMapper.toCommentsDto(commentsRepository.save(comments));
     }
 
     public CommentsDto delete(UUID id) {
-        Comments comments = commentsRepository.findById(id).orElse(null);
+        Comments comments = commentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Комментарий не найден"));
         if (comments != null) {
             commentsRepository.delete(comments);
         }

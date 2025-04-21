@@ -47,34 +47,34 @@ public class DocCardService {
     }
 
     public DocCardDto create(String name, String description, String typeDocumentName, String regNum, String keyWords, String state) {
-        var typeDocument = typeDocumentRepository.findByName(typeDocumentName);
+        var typeDocument = typeDocumentRepository.findByName(typeDocumentName).orElseThrow(() -> new RuntimeException("Тип документа не найден"));
         var user = userInfoHelper.getUser();
         var docCard = DocCard.builder()
                 .name(name)
                 .description(description)
                 .user(user)
                 .state(StatesEnum.getState(state))
-                .typeDocument(typeDocument.orElseThrow())
+                .typeDocument(typeDocument)
                 .regNum(regNum)
                 .keyWords(keyWords).build();
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
     public DocCardDto patch(UUID id, String name, String description, String typeDocumentName, String regNum, String keyWords, String state) throws IOException {
-        var docCard = docCardRepository.findById(id);
-        var typeDocument = typeDocumentRepository.findByName(typeDocumentName);
-        docCard.ifPresent(value -> value.setName(name));
-        docCard.ifPresent(value -> value.setTypeDocument(typeDocument.orElseThrow()));
-        docCard.ifPresent(value -> value.setDescription(description));
-        docCard.ifPresent(value -> value.setRegNum(regNum));
-        docCard.ifPresent(value -> value.setKeyWords(keyWords));
-        docCard.ifPresent(value -> value.setState(StatesEnum.getState(state)));
-        return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
+        var docCard = docCardRepository.findById(id).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        var typeDocument = typeDocumentRepository.findByName(typeDocumentName).orElseThrow(() -> new RuntimeException("Тип документа не найден"));
+        docCard.setName(name);
+        docCard.setTypeDocument(typeDocument);
+        docCard.setDescription(description);
+        docCard.setRegNum(regNum);
+        docCard.setKeyWords(keyWords);
+        docCard.setState(StatesEnum.getState(state));
+        return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
 
     public DocCardDto delete(UUID id) {
-        DocCard docCard = docCardRepository.findById(id).orElse(null);
+        DocCard docCard = docCardRepository.findById(id).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         if (docCard != null) {
             docCardRepository.delete(docCard);
         }
@@ -82,14 +82,14 @@ public class DocCardService {
     }
 
     public DocCardDto setState(UUID docCardId, String state) {
-        var docCard = docCardRepository.findById(docCardId);
-        docCard.ifPresent(value -> value.setState(StatesEnum.getState(state)));
-        return docCardMapper.toDocCardDto(docCardRepository.save(docCard.orElseThrow()));
+        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        docCard.setState(StatesEnum.getState(state));
+        return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
     public void startRoute(UUID docCardId) {
         //запускаем документ по маршруту
-        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Документ не найден"));
+        var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         //получить шаги маршрута документа
         var routeSteps = routeStepService.getStepsByDocCardId(docCardId);
         //проверить есть ли шаги маршрута документа
