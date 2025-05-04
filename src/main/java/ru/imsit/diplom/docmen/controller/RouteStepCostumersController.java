@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/admin-ui/routeStepParticipants")
+@RequestMapping("/rest/admin-ui/RouteStepCostumers")
 @RequiredArgsConstructor
-@Tag(name = "RouteStepParticipants API")
+@Tag(name = "RouteStepCostumers API")
 public class RouteStepCostumersController {
 
     private final RouteStepCostumersService routeStepCostumersService;
@@ -41,7 +41,7 @@ public class RouteStepCostumersController {
     @Operation(summary = "Создать пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public RouteStepCostumersDto create(@Schema(description = "ID шага маршрута") @RequestParam String routeStepId,
                                         @Schema(description = "ID работника") @RequestParam String costumerId,
-                                        @Schema(description = "Готоность") @RequestParam String ready,
+                                        @Schema(description = "Готовность") @RequestParam String ready,
                                         @Schema(description = "Срок исполнения") @RequestParam String dateTime) {
         return routeStepCostumersService.create(routeStepId, costumerId, ready, dateTime);
     }

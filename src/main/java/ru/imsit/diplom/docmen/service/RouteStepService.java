@@ -44,7 +44,11 @@ public class RouteStepService {
 
     public RouteStepDto create(String docCardId, String numberOfStep, String routeStepState) {
         var docCard = docCardRepository.findById(UUID.fromString(docCardId)).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
-        var routeStep = RouteStep.builder().docCard(docCard).numberOfStep(numberOfStep).routeStepState(RouteStepStatesEnum.valueOf(routeStepState)).build();
+        var routeStep = RouteStep.builder()
+                .docCard(docCard)
+                .numberOfStep(numberOfStep)
+                .routeStepState(RouteStepStatesEnum.getState(routeStepState))
+                .build();
         return routeStepMapper.toRouteStepDto(routeStepRepository.save(routeStep));
     }
 
