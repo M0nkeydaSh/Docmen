@@ -16,7 +16,6 @@ import ru.imsit.diplom.docmen.mapper.HistoryMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.HistoryRepository;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,15 +50,6 @@ public class HistoryService {
         return historyMapper.toHistoryDto(historyRepository.save(history));
 
     }
-
-    public HistoryDto patch(UUID id, String docCardName,  String state) throws IOException {
-        var history = historyRepository.findById(id).orElseThrow(() -> new RuntimeException("История не найдена"));
-        var docCard = docCardRepository.findByName(docCardName).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
-        history.setDocCard(docCard);
-        history.setState(StatesEnum.valueOf(state));
-        return historyMapper.toHistoryDto(historyRepository.save(history));
-    }
-
 
     public HistoryDto delete(UUID id) {
         History history = historyRepository.findById(id).orElseThrow(() -> new RuntimeException("История не найдена"));

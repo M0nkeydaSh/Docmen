@@ -1,9 +1,6 @@
 package ru.imsit.diplom.docmen.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import ru.imsit.diplom.docmen.dto.RouteStepCostumersDto;
 import ru.imsit.diplom.docmen.entity.RouteStepCostumers;
 
@@ -11,7 +8,9 @@ import ru.imsit.diplom.docmen.entity.RouteStepCostumers;
 public interface RouteStepCostumersMapper {
     RouteStepCostumers toEntity(RouteStepCostumersDto routeStepCostumersDto);
 
-    RouteStepCostumersDto toRouteStepParticipantsDto(RouteStepCostumers routeStepCostumers);
+    @Mapping(target = "routeStepId", source = "routeStep.id")
+    @Mapping(target = "costumerId", source = "costumers.id")
+    RouteStepCostumersDto toRouteStepCostumersDto(RouteStepCostumers routeStepCostumers);
 
     RouteStepCostumers updateWithNull(RouteStepCostumersDto routeStepCostumersDto, @MappingTarget RouteStepCostumers routeStepCostumers);
 }

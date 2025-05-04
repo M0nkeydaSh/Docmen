@@ -43,9 +43,9 @@ public class CommentsService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
-    public CommentsDto create(String content, String docCard) {
+    public CommentsDto create(String content, String docCardId) {
         var user = userInfoHelper.getUser();
-        var docCards = docCardRepository.findByName(docCard).orElseThrow(() -> new RuntimeException("Карточка документа не найден"));
+        var docCards = docCardRepository.findById(UUID.fromString(docCardId)).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         var comment = Comments.builder().content(content).docCard(docCards).user(user).build();
         return commentsMapper.toCommentsDto(commentsRepository.save(comment));
     }

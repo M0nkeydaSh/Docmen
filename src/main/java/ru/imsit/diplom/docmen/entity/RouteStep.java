@@ -21,7 +21,7 @@ public class RouteStep {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "doc_card_id")
     private DocCard docCard;
 

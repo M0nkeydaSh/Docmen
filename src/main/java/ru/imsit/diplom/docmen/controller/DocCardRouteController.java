@@ -41,7 +41,7 @@ public class DocCardRouteController {
     @Operation(summary = "Создать маршрут карточки", description = "В ответе возвращается объекты DocCardRouteDto")
     public DocCardRouteDto create(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
                                   @Schema(description = "ID шага маршрута") @RequestParam UUID routeStepId,
-                                  @Schema(description = "Дата выполения") @RequestParam String dateComplete) {
+                                  @Schema(description = "Дата выполнения") @RequestParam String dateComplete) {
         return docCardRouteService.create(routeStepCostumersId, dateComplete, routeStepId);
     }
 
@@ -50,7 +50,7 @@ public class DocCardRouteController {
     public DocCardRouteDto patch(@Schema(description = "ID карточки документа") @RequestParam UUID id,
                                  @Schema(description = "ID пользователя шага маршрута") @RequestParam UUID routeStepCostumersId,
                                  @Schema(description = "ID шага маршрута") @RequestParam UUID routeStepId,
-                                 @Schema(description = "Дата выполения") @RequestParam String dateComplete) throws IOException {
+                                 @Schema(description = "Дата выполнения") @RequestParam String dateComplete) throws IOException {
         return docCardRouteService.patch(id, routeStepCostumersId, routeStepId, dateComplete);
     }
 
@@ -62,8 +62,8 @@ public class DocCardRouteController {
 
     @PostMapping("/setUnready/{id}")
     @Operation(summary = "Установить Неготовность маршрута карточки", description = "В ответе возвращается объекты DocCardRouteDto")
-    public DocCardRouteDto setUnready(@Schema(description = "ID карточки документа") @PathVariable UUID id,
-                                      @Schema(description = "ID карточки документа") @RequestParam String comment) throws IOException {
+    public DocCardRouteDto setUnready(@Schema(description = "ID маршрута карточки документа") @PathVariable UUID id,
+                                      @Schema(description = "Комментарий") @RequestParam String comment) throws IOException {
         return docCardRouteService.setUnready(id, comment);
     }
 

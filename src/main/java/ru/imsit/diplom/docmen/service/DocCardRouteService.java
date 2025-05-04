@@ -1,5 +1,6 @@
 package ru.imsit.diplom.docmen.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -84,7 +85,7 @@ public class DocCardRouteService {
                 }
             }
 
-            if (routeStepIndex == (countSteps - 1)) { //поменять первый аргумент
+            if (routeStepIndex == (countSteps - 1)) { //маршрут завершен завершаем документ
                 docCardHelper.setDocCardState(currentDocCard.getId(), "COMPLETED");
             } else {
                 //Получить следующий шаг после текущего шага маршрута документа
@@ -96,6 +97,7 @@ public class DocCardRouteService {
         return docCardRouteMapper.toDocCardRouteDto(result);
     }
 
+    @Transactional
     public DocCardRouteDto setUnready(UUID id, String comment) {
         var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут документа не найден"));
         //откатить документ до статуса черновик и почистить таблицу docCardRoute удалить всю информацию, относящуюся к маршруту документа

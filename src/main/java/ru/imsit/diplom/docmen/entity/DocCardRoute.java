@@ -18,11 +18,11 @@ public class DocCardRoute {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_step_costumer_id")
     private RouteStepCostumers routeStepCostumers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_step_id")
     private RouteStep routeStep;
 

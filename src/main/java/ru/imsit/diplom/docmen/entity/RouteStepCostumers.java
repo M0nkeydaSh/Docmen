@@ -22,7 +22,7 @@ public class RouteStepCostumers {
     @JoinColumn(name = "route_step_id")
     private  RouteStep routeStep;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "costumer_id")
     private Costumers costumers;
 

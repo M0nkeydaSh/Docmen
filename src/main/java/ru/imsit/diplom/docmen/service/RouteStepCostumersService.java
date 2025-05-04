@@ -35,12 +35,12 @@ public class RouteStepCostumersService {
     public Page<RouteStepCostumersDto> getAll(RouteStepCostumersFilter filter, Pageable pageable) {
         Specification<RouteStepCostumers> spec = filter.toSpecification();
         Page<RouteStepCostumers> routeStepParticipants = routeStepCostumersRepository.findAll(spec, pageable);
-        return routeStepParticipants.map(routeStepCostumersMapper::toRouteStepParticipantsDto);
+        return routeStepParticipants.map(routeStepCostumersMapper::toRouteStepCostumersDto);
     }
 
     public RouteStepCostumersDto getOne(UUID id) {
         Optional<RouteStepCostumers> routeStepParticipantsOptional = routeStepCostumersRepository.findById(id);
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepParticipantsOptional.orElseThrow(() ->
+        return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepParticipantsOptional.orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
@@ -53,7 +53,7 @@ public class RouteStepCostumersService {
                 .ready(ready)
                 .controlDate(dateTime)
                 .build();
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepCostumer));
+        return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 
     public RouteStepCostumersDto patch(UUID id, String routeStepId, String costumersId, String ready, String dateTime) {
@@ -64,7 +64,7 @@ public class RouteStepCostumersService {
         routeStepCostumer.setCostumers(costumer);
         routeStepCostumer.setReady(ready);
         routeStepCostumer.setControlDate(dateTime);
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumersRepository.save(routeStepCostumer));
+        return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 
     public RouteStepCostumersDto delete(UUID id) {
@@ -72,13 +72,13 @@ public class RouteStepCostumersService {
         if (routeStepCostumer != null) {
             routeStepCostumersRepository.delete(routeStepCostumer);
         }
-        return routeStepCostumersMapper.toRouteStepParticipantsDto(routeStepCostumer);
+        return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumer);
     }
 
     //создать метод получения списка пользователей по маршруту
     public List<RouteStepCostumersDto> getAllUsersByRouteStepId(UUID routeStepId) {
         List<RouteStepCostumers> routeStepCostumersList = routeStepCostumersRepository.findAllByRouteStepId(routeStepId);
-        return routeStepCostumersList.stream().map(routeStepCostumersMapper::toRouteStepParticipantsDto).collect(Collectors.toList());
+        return routeStepCostumersList.stream().map(routeStepCostumersMapper::toRouteStepCostumersDto).collect(Collectors.toList());
     }
 
 

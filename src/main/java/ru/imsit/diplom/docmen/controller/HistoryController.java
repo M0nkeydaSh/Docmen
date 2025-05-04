@@ -14,7 +14,6 @@ import ru.imsit.diplom.docmen.enums.StatesEnum;
 import ru.imsit.diplom.docmen.filter.HistoryFilter;
 import ru.imsit.diplom.docmen.service.HistoryService;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -45,13 +44,6 @@ public class HistoryController {
         return historyService.create(docCardId, state);
     }
 
-    @PatchMapping
-    @Operation(summary = "Изменить историю", description = "В ответе возвращается объект HistoryDto")
-    public HistoryDto patch(@Schema(description = "ID истории") @RequestParam UUID id,
-                            @Schema(description = "ID карточки документа") @RequestParam String docCard,
-                            @Schema(description = "Статус истории", implementation = StatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String state) throws IOException {
-        return historyService.patch(id, docCard, state);
-    }
 
     @DeleteMapping
     @Operation(summary = "Удалить историю", description = "В ответе возвращается объект HistoryDto")
