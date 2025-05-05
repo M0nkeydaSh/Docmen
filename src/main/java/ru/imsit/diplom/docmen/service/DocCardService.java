@@ -36,6 +36,8 @@ public class DocCardService {
 
     private final DocCardRouteService docCardRouteService;
 
+    private final HistoryService historyService;
+
     public Page<DocCardDto> getAll(DocCardFilter filter, Pageable pageable) {
         Specification<DocCard> spec = filter.toSpecification();
         Page<DocCard> docCards = docCardRepository.findAll(spec, pageable);
@@ -55,10 +57,13 @@ public class DocCardService {
                 .name(name)
                 .description(description)
                 .user(user)
-                .state(StatesEnum.getState(state))
+                .state(StatesEnum.getStateRus(state))
                 .typeDocument(typeDocument)
                 .regNum(regNum)
                 .keyWords(keyWords).build();
+        docCardMapper.toDocCardDto(docCardRepository.save(docCard));
+        var docCardId = docCard.getId();
+        historyService.create(docCardId,state);
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 
@@ -70,7 +75,7 @@ public class DocCardService {
         docCard.setDescription(description);
         docCard.setRegNum(regNum);
         docCard.setKeyWords(keyWords);
-        docCard.setState(StatesEnum.getState(state));
+        docCard.setState(StatesEnum.getStateRus(state));
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 

@@ -27,8 +27,8 @@ public class CostumersController {
     @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех costumer", description = "В ответе возвращается объекты CostumerDto")
     public PagedModel<CostumersDto> getAll(@ParameterObject @ModelAttribute CostumersFilter filter, @ParameterObject Pageable pageable) {
-        Page<CostumersDto> costumersDtos = costumersService.getAll(filter, pageable);
-        return new PagedModel<>(costumersDtos);
+        Page<CostumersDto> costumersDto = costumersService.getAll(filter, pageable);
+        return new PagedModel<>(costumersDto);
     }
 
     @GetMapping("/getOne")

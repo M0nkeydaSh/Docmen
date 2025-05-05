@@ -27,8 +27,8 @@ public class FilesController {
     @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех файлах", description = "В ответе возвращается объекты FilesDto")
     public PagedModel<FilesDto> getAll(@ParameterObject @ModelAttribute FilesFilter filter, @ParameterObject Pageable pageable) {
-        Page<FilesDto> filesDtos = filesService.getAll(filter, pageable);
-        return new PagedModel<>(filesDtos);
+        Page<FilesDto> filesDto = filesService.getAll(filter, pageable);
+        return new PagedModel<>(filesDto);
     }
 
     @GetMapping("/getOne")

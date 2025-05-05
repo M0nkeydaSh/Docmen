@@ -31,8 +31,8 @@ public class UserController {
     @GetMapping
     @Operation(summary = "Получить данные о всех пользователях", description = "В ответе возвращается объект UserDto ")
     public PagedModel<UserDto> getAll(@ParameterObject @ModelAttribute UserFilter filter, @ParameterObject Pageable pageable) {
-        Page<UserDto> userDtos = userService.getAll(filter, pageable);
-        return new PagedModel<>(userDtos);
+        Page<UserDto> userDto = userService.getAll(filter, pageable);
+        return new PagedModel<>(userDto);
     }
 
     @Tag(name = "User API")
