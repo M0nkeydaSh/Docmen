@@ -28,8 +28,8 @@ public class RouteStepController {
     @GetMapping("/getAll")
     @Operation(summary = "Получить данные о всех шагах маршрута", description = "В ответе возвращаются объекты RouteStepDto")
     public PagedModel<RouteStepDto> getAll(@ParameterObject @ModelAttribute RouteStepFilter filter, @ParameterObject Pageable pageable) {
-        Page<RouteStepDto> routeStepDtos = routeStepService.getAll(filter, pageable);
-        return new PagedModel<>(routeStepDtos);
+        Page<RouteStepDto> routeStepDto = routeStepService.getAll(filter, pageable);
+        return new PagedModel<>(routeStepDto);
     }
 
     @GetMapping("/getOne")

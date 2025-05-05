@@ -32,12 +32,23 @@ public enum StatesEnum {
                 return state;
         }
 
-        public static StatesEnum getState(String stateValue) {
+        public static StatesEnum getStateEng(String stateValue) {
                 if (stateValue != null) {
                         stateValue = StatesEnum.valueOf(stateValue).state;
                         var finalStateValue = stateValue;
                         return Stream.of(StatesEnum.values())
                                 .filter(statesEnum -> statesEnum.state.equals(finalStateValue))
+                                .findFirst()
+                                .orElse(StatesEnum.DRAFT);
+                } else {
+                        return StatesEnum.DRAFT;
+                }
+        }
+
+        public static StatesEnum getStateRus(String stateValue) {
+                if (stateValue != null) {
+                        return Stream.of(StatesEnum.values())
+                                .filter(statesEnum -> statesEnum.state.equals(stateValue))
                                 .findFirst()
                                 .orElse(StatesEnum.DRAFT);
                 } else {
