@@ -39,7 +39,8 @@ public class WebSecurityConfiguration {
         });
         http.headers(Customizer.withDefaults());
         http.sessionManagement(Customizer.withDefaults());
-        http.formLogin(Customizer.withDefaults());
+        http.formLogin(formLogin -> formLogin
+                .defaultSuccessUrl("/swagger-ui/index.html"));
         http.anonymous(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
