@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/files")
 @RequiredArgsConstructor
-@Tag(name = "Files API")
+@Tag(name = "Files", description = "Операции над файлами")
 public class FilesController {
 
     private final FilesService filesService;

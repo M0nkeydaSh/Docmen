@@ -22,7 +22,7 @@ public class DocCardHelper {
 
     public void setDocCardState(UUID docCardId, String state) {
         var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
-        docCard.setState(StatesEnum.getStateEng(state));
+        docCard.setState(StatesEnum.getByStateValue(state));
         historyService.create(docCardId,state);
         docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }

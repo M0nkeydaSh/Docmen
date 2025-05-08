@@ -39,7 +39,7 @@ databaseChangeLog:
                   type: UUID
               - column:
                   name: change_date
-                  type: VARCHAR(255)
+                  type: DATETIME
             tableName: costumers
   - changeSet:
       id: 1738670461688-2

@@ -2,8 +2,7 @@ package ru.imsit.diplom.docmen.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -12,11 +11,7 @@ import java.util.UUID;
 @Table(name = "doc_card_route")
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocCardRoute {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class DocCardRoute extends AuditEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_step_costumer_id")
@@ -31,8 +26,5 @@ public class DocCardRoute {
 
     @Column(name = "date_complete")
     private String dateComplete;
-
-    @Column(name = "change_date")
-    private String changeDate;
 
 }

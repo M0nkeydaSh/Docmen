@@ -32,7 +32,7 @@ public enum StatesEnum {
                 return state;
         }
 
-        public static StatesEnum getStateEng(String stateValue) {
+        public static StatesEnum getByStateValue(String stateValue) {
                 if (stateValue != null) {
                         stateValue = StatesEnum.valueOf(stateValue).state;
                         var finalStateValue = stateValue;
@@ -45,10 +45,10 @@ public enum StatesEnum {
                 }
         }
 
-        public static StatesEnum getStateRus(String stateValue) {
-                if (stateValue != null) {
+        public static StatesEnum getByStateName(String stateName) {
+                if (stateName != null) {
                         return Stream.of(StatesEnum.values())
-                                .filter(statesEnum -> statesEnum.state.equals(stateValue))
+                                .filter(statesEnum -> statesEnum.state.equals(stateName))
                                 .findFirst()
                                 .orElse(StatesEnum.DRAFT);
                 } else {

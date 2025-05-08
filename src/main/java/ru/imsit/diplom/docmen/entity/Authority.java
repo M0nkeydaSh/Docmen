@@ -1,10 +1,11 @@
 package ru.imsit.diplom.docmen.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.BaseEntity;
 
 @Getter
 @Setter
@@ -13,11 +14,7 @@ import java.util.UUID;
 @Table(name = "authority")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority implements GrantedAuthority {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class Authority extends BaseEntity implements GrantedAuthority {
 
     @Column(name = "AUTHORITY", unique = true, length = 50)
     private String name;

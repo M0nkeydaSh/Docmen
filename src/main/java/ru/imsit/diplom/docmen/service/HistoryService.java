@@ -46,7 +46,7 @@ public class HistoryService {
     public HistoryDto create(UUID docCardId, String state) {
         var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         var user = userInfoHelper.getUser();
-        var history = History.builder().docCard(docCard).user(user).state(StatesEnum.getStateRus(state)).build();
+        var history = History.builder().docCard(docCard).user(user).state(StatesEnum.getByStateName(state)).build();
         return historyMapper.toHistoryDto(historyRepository.save(history));
 
     }

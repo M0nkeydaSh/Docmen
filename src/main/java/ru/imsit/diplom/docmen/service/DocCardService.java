@@ -57,7 +57,7 @@ public class DocCardService {
                 .name(name)
                 .description(description)
                 .user(user)
-                .state(StatesEnum.getStateRus(state))
+                .state(StatesEnum.getByStateName(state))
                 .typeDocument(typeDocument)
                 .regNum(regNum)
                 .keyWords(keyWords).build();
@@ -75,7 +75,7 @@ public class DocCardService {
         docCard.setDescription(description);
         docCard.setRegNum(regNum);
         docCard.setKeyWords(keyWords);
-        docCard.setState(StatesEnum.getStateRus(state));
+        docCard.setState(StatesEnum.getByStateName(state));
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 

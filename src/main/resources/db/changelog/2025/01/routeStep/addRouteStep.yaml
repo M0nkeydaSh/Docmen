@@ -24,7 +24,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: change_date
-                  type: VARCHAR(255)
+                  type: DATETIME
             tableName: route_steps
         - addForeignKeyConstraint:
             baseColumnNames: doc_card_id

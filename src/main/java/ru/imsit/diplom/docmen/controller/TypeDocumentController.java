@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/typeDocuments")
 @RequiredArgsConstructor
-@Tag(name = "TypeDocument API")
+@Tag(name = "TypeDocument", description = "API для работы с типами документов")
 public class TypeDocumentController {
 
     private final TypeDocumentService typeDocumentService;

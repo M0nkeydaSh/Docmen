@@ -24,7 +24,7 @@ databaseChangeLog:
                   type: UUID
               - column:
                   name: change_date
-                  type: DATE
+                  type: DATETIME
             tableName: files
   - changeSet:
       id: 1738421953699-2

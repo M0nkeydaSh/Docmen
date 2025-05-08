@@ -5,8 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ru.imsit.diplom.docmen.enums.GenderEnum;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -15,11 +14,7 @@ import java.util.UUID;
 @Table(name = "costumers")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Costumers {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class Costumers extends AuditEntity {
 
     @Column(name = "first_name")
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -58,6 +53,4 @@ public class Costumers {
 //    @JoinColumn(name = "route_step_participants_id")
 //    private RouteStepParticipants RouteStepParticipants;
 
-    @Column(name = "change_date")
-    private String changeDate;
 }

@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/comments")
 @RequiredArgsConstructor
-@Tag(name = "Comments API")
+@Tag(name = "Comments", description = "API для работы с комментариями")
 public class CommentsController {
 
     private final CommentsService commentsService;

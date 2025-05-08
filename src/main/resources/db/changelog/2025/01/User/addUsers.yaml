@@ -15,7 +15,7 @@ databaseChangeLog:
                   type: UUID
               - column:
                   name: change_date
-                  type: VARCHAR(255)
+                  type: DATETIME
               - column:
                   name: password
                   type: VARCHAR(255)

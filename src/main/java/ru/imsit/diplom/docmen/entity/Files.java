@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -14,11 +13,7 @@ import java.util.UUID;
 @Table(name = "files")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Files {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class Files extends AuditEntity {
 
     @Column(name = "name")
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -32,6 +27,4 @@ public class Files {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "change_date")
-    private String changeDate;
 }

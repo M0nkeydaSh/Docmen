@@ -10,3 +10,7 @@ spring:
 api:
   server:
     url: http://localhost:8080
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha

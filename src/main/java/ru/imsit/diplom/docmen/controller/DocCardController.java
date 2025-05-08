@@ -21,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/docCards")
 @RequiredArgsConstructor
-@Tag(name = "DocCard API")
+@Tag(name = "DocCard" , description = "Контроллер для работы с карточками документов")
 public class DocCardController {
 
     private final DocCardService docCardService;

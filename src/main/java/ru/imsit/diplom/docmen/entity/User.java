@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,12 +18,7 @@ import java.util.UUID;
 })
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class User extends AuditEntity implements UserDetails {
 
     @Column(name = "USERNAME", unique = true, length = 50)
     private String username;
@@ -33,9 +28,6 @@ public class User implements UserDetails {
 
     @Column(name = "ENABLED")
     private Boolean enabled;
-
-    @Column(name = "change_date")
-    private String changeDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_sec_id"))

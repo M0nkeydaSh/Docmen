@@ -21,7 +21,7 @@ databaseChangeLog:
                   type: UUID
               - column:
                   name: change_date
-                  type: VARCHAR(255)
+                  type: DATETIME
             tableName: type_costumer
   - changeSet:
       id: 1738670895597-2

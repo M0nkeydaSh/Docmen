@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/docCardRoutes")
 @RequiredArgsConstructor
-@Tag(name = "DocCardRoute API")
+@Tag(name = "DocCardRoute", description = "API для работы с маршрутом карточки документов")
 public class DocCardRouteController {
 
     private final DocCardRouteService docCardRouteService;
