@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -14,11 +13,7 @@ import java.util.UUID;
 @Table(name = "comments")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comments {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class Comments extends AuditEntity {
 
     @Column(name = "content")
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -31,8 +26,5 @@ public class Comments {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_card_id")
     private DocCard docCard;
-
-    @Column(name = "change_date")
-    private String changeDate;
 
 }
