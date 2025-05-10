@@ -15,6 +15,7 @@ import ru.imsit.diplom.docmen.repository.CostumersRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepCostumersRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,6 +65,7 @@ public class RouteStepCostumersService {
         routeStepCostumer.setCostumers(costumer);
         routeStepCostumer.setReady(ready);
         routeStepCostumer.setControlDate(dateTime);
+        routeStepCostumer.setChangeDate(LocalDateTime.now());
         return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 

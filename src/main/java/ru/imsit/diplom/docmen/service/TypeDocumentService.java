@@ -12,6 +12,7 @@ import ru.imsit.diplom.docmen.mapper.TypeDocumentMapper;
 import ru.imsit.diplom.docmen.repository.TypeDocumentRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -40,6 +41,7 @@ public class TypeDocumentService {
     public TypeDocumentDto patch(UUID id, String name) throws IOException {
         var typeDocument = typeDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип документа не найден"));
         typeDocument.setName(name);
+        typeDocument.setChangeDate(LocalDateTime.now());
         return typeDocumentMapper.toTypeDocumentDto(typeDocumentRepository.save(typeDocument));
     }
 

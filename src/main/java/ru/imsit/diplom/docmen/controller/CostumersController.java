@@ -19,7 +19,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/rest/admin-ui/costumers")
 @RequiredArgsConstructor
-@Tag(name = "Costumers API")
+@Tag(name = "Costumers", description = "API для работы с клиентами")
 public class CostumersController {
 
     private final CostumersService costumersService;

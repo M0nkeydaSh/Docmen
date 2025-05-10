@@ -5,8 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ru.imsit.diplom.docmen.enums.RouteStepStatesEnum;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -15,11 +14,7 @@ import java.util.UUID;
 @Table(name = "route_steps")
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteStep {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class RouteStep extends AuditEntity {
 
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "doc_card_id")
@@ -32,8 +27,5 @@ public class RouteStep {
     @Column(name = "route_step_state")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private RouteStepStatesEnum routeStepState;
-
-    @Column(name = "change_date")
-    private String changeDate;
 
 }

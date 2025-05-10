@@ -17,6 +17,7 @@ import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.TypeDocumentRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,6 +77,7 @@ public class DocCardService {
         docCard.setRegNum(regNum);
         docCard.setKeyWords(keyWords);
         docCard.setState(StatesEnum.getStateRus(state));
+        docCard.setChangeDate(LocalDateTime.now());
         return docCardMapper.toDocCardDto(docCardRepository.save(docCard));
     }
 

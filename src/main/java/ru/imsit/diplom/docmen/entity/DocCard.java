@@ -5,8 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ru.imsit.diplom.docmen.enums.StatesEnum;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -15,12 +14,7 @@ import java.util.UUID;
 @Table(name = "doc_card")
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocCard {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class DocCard extends AuditEntity {
 
     @Column(name = "name")
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -50,12 +44,5 @@ public class DocCard {
     @Column(name = "state")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private StatesEnum state;
-
-    @Column(name = "change_date")
-    private String changeDate;
-
-
-
-
 
 }

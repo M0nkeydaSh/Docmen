@@ -18,7 +18,7 @@ import ru.imsit.diplom.docmen.service.HistoryService;
 @RestController
 @RequestMapping("/rest/admin-ui/histories")
 @RequiredArgsConstructor
-@Tag(name = "History API")
+@Tag(name = "History", description = "API для работы с историями")
 public class HistoryController {
 
     private final HistoryService historyService;

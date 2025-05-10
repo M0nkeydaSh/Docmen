@@ -16,6 +16,7 @@ import ru.imsit.diplom.docmen.mapper.CostumersMapper;
 import ru.imsit.diplom.docmen.repository.CostumersRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -78,6 +79,7 @@ public class CostumersService {
         costumer.setGender(GenderEnum.valueOf(gender));
         costumer.setTypeCostumer(typeCostumers);
         costumer.setUser(user);
+        costumer.setChangeDate(LocalDateTime.now());
         return costumersMapper.toCostumersDto(costumersRepository.save(costumer));
     }
 
