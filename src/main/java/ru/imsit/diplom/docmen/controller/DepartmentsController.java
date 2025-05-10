@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/departments")
 @RequiredArgsConstructor
-@Tag(name = "Departments API")
+@Tag(name = "Departments", description = "API для работы с департаментами")
 public class DepartmentsController {
 
     private final DepartmentsService departmentsService;

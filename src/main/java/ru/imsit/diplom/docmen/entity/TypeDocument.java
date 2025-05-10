@@ -1,11 +1,12 @@
 package ru.imsit.diplom.docmen.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
+import ru.imsit.diplom.docmen.model.AuditEntity;
 
 @Getter
 @Setter
@@ -14,17 +15,10 @@ import java.util.UUID;
 @Table(name = "type_document")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TypeDocument {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+public class TypeDocument extends AuditEntity {
 
     @Column(name = "name")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
-
-    @Column(name = "change_date")
-    private String changeDate;
 
 }

@@ -16,6 +16,7 @@ import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.FilesRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,6 +54,7 @@ public class FilesService {
     public FilesDto patch(UUID id, String name) throws IOException {
         var file = filesRepository.findById(id).orElseThrow(() -> new RuntimeException("Файл не найден"));
         file.setName(name);
+        file.setChangeDate(LocalDateTime.now());
         return filesMapper.toFilesDto(filesRepository.save(file));
     }
 

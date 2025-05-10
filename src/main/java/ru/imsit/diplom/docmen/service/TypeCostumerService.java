@@ -13,6 +13,7 @@ import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -44,6 +45,7 @@ public class TypeCostumerService {
     public TypeCostumerDto patch(UUID id, String name) throws IOException {
         var typeCostumer = typeCostumerRepository.findById(id).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         typeCostumer.setName(name);
+        typeCostumer.setChangeDate(LocalDateTime.now());
         return typeCostumerMapper.toTypeCostumerDto(typeCostumerRepository.save(typeCostumer));
     }
 

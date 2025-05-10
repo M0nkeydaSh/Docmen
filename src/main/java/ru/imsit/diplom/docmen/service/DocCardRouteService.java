@@ -17,6 +17,7 @@ import ru.imsit.diplom.docmen.helper.DocCardHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardRouteMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRouteRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -146,6 +147,7 @@ public class DocCardRouteService {
         docCardRoute.setRouteStepCostumers(routeStepCostumer);
         docCardRoute.setRouteStep(routeStep);
         docCardRoute.setDateComplete(dateComplete);
+        docCardRoute.setChangeDate(LocalDateTime.now());
         return docCardRouteMapper.toDocCardRouteDto(docCardRouteRepository.save(docCardRoute));
     }
 

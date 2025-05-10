@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/RouteStepCostumers")
 @RequiredArgsConstructor
-@Tag(name = "RouteStepCostumers API")
+@Tag(name = "RouteStepCostumers", description = "API для работы с участниками шагами маршрута")
 public class RouteStepCostumersController {
 
     private final RouteStepCostumersService routeStepCostumersService;

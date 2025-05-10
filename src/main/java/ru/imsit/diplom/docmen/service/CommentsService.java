@@ -16,6 +16,7 @@ import ru.imsit.diplom.docmen.repository.CommentsRepository;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,6 +54,7 @@ public class CommentsService {
     public CommentsDto patch(UUID id, String content) throws IOException {
         var comments = commentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Комментарий не найден"));
         comments.setContent(content);
+        comments.setChangeDate(LocalDateTime.now());
         return commentsMapper.toCommentsDto(commentsRepository.save(comments));
     }
 

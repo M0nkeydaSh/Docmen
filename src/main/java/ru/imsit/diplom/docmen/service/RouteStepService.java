@@ -15,6 +15,7 @@ import ru.imsit.diplom.docmen.mapper.RouteStepMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.RouteStepRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,6 +59,7 @@ public class RouteStepService {
         routeStep.setDocCard(docCard);
         routeStep.setNumberOfStep(numberOfStep);
         routeStep.setRouteStepState(RouteStepStatesEnum.valueOf(routeStepState));
+        routeStep.setChangeDate(LocalDateTime.now());
         return routeStepMapper.toRouteStepDto(routeStepRepository.save(routeStep));
     }
 

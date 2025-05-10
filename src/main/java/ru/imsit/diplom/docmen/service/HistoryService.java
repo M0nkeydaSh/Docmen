@@ -16,6 +16,7 @@ import ru.imsit.diplom.docmen.mapper.HistoryMapper;
 import ru.imsit.diplom.docmen.repository.DocCardRepository;
 import ru.imsit.diplom.docmen.repository.HistoryRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +48,7 @@ public class HistoryService {
         var docCard = docCardRepository.findById(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         var user = userInfoHelper.getUser();
         var history = History.builder().docCard(docCard).user(user).state(StatesEnum.getStateRus(state)).build();
+        history.setChangeDate(LocalDateTime.now());
         return historyMapper.toHistoryDto(historyRepository.save(history));
 
     }

@@ -14,6 +14,7 @@ import ru.imsit.diplom.docmen.mapper.DepartmentsMapper;
 import ru.imsit.diplom.docmen.repository.DepartmentsRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +45,7 @@ public class DepartmentsService {
     public DepartmentsDto patch(UUID id, String name) throws IOException {
         var department = departmentsRepository.findById(id).orElseThrow(() -> new RuntimeException("Департамент не найден"));
         department.setName(name);
+        department.setChangeDate(LocalDateTime.now());
         return departmentsMapper.toDepartmentsDto(departmentsRepository.save(department));
     }
 

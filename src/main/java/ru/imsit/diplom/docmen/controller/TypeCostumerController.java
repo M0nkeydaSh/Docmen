@@ -19,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/rest/admin-ui/typeCostumers")
 @RequiredArgsConstructor
-@Tag(name = "TypeCostumer API")
+@Tag(name = "TypeCostumer", description = "API для работы с типами работников")
 public class TypeCostumerController {
 
     private final TypeCostumerService typeCostumerService;

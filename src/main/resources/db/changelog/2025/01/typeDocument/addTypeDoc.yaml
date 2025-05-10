@@ -18,7 +18,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: change_date
-                  type: VARCHAR(255)
+                  type: DATETIME
             tableName: type_document
   - changeSet:
       id: 1742725145494-2
