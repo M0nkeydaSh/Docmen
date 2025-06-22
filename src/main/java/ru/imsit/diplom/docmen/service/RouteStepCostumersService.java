@@ -45,25 +45,24 @@ public class RouteStepCostumersService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity with id `%s` not found".formatted(id))));
     }
 
-    public RouteStepCostumersDto create(String routeStepId, String costumersId, String ready, String dateTime) {
+    public RouteStepCostumersDto create(String routeStepId, String costumersId, String dateTime) {
         var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId)).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
         var costumer = costumersRepository.findById(UUID.fromString(costumersId)).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
         var routeStepCostumer = RouteStepCostumers.builder()
                 .routeStep(routeStep)
                 .costumers(costumer)
-                .ready(ready)
+                .ready("Y")
                 .controlDate(dateTime)
                 .build();
         return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumersRepository.save(routeStepCostumer));
     }
 
-    public RouteStepCostumersDto patch(UUID id, String routeStepId, String costumersId, String ready, String dateTime) {
+    public RouteStepCostumersDto patch(UUID id, String routeStepId, String costumersId, String dateTime) {
         var routeStep = routeStepRepository.findById(UUID.fromString(routeStepId)).orElseThrow(() -> new RuntimeException("Шаг маршрута не найден"));
         var costumer = costumersRepository.findById(UUID.fromString(costumersId)).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
         var routeStepCostumer = routeStepCostumersRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь шага маршрута не найден"));
         routeStepCostumer.setRouteStep(routeStep);
         routeStepCostumer.setCostumers(costumer);
-        routeStepCostumer.setReady(ready);
         routeStepCostumer.setControlDate(dateTime);
         routeStepCostumer.setChangeDate(LocalDateTime.now());
         return routeStepCostumersMapper.toRouteStepCostumersDto(routeStepCostumersRepository.save(routeStepCostumer));

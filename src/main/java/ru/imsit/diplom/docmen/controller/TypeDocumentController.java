@@ -38,20 +38,20 @@ public class TypeDocumentController {
     }
 
     @PostMapping
-    @Operation(summary = "создать тип документа", description = "В ответе возвращается объект TypeDocumentDto")
+    @Operation(summary = "Создать тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto create(@Schema(description = "Название типа документа") @RequestParam String name) {
         return typeDocumentService.create(name);
     }
 
     @PatchMapping
-    @Operation(summary = "изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
+    @Operation(summary = "Изменить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto patch(@Schema(description = "ID типа документа") @RequestParam UUID id,
                                  @Schema(description = "Название типа документа") @RequestParam String name) throws IOException {
         return typeDocumentService.patch(id, name);
     }
 
     @DeleteMapping
-    @Operation(summary = "удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
+    @Operation(summary = "Удалить тип документа", description = "В ответе возвращается объект TypeDocumentDto")
     public TypeDocumentDto delete(@Schema(description = "ID типа документа") @RequestParam UUID id) {
         return typeDocumentService.delete(id);
     }

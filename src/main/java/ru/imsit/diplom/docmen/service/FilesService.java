@@ -55,7 +55,7 @@ public class FilesService {
 
     public FilesDto create(String name, String docCardId) {
         var user = userInfoHelper.getUser();
-        var docCard = docCardRepository.findByName(docCardId).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
+        var docCard = docCardRepository.findById(UUID.fromString(docCardId)).orElseThrow(() -> new RuntimeException("Карточка документа не найдена"));
         var file = Files.builder().name(name).docCard(docCard).user(user).build();
         return filesMapper.toFilesDto(filesRepository.save(file));
     }
@@ -122,7 +122,7 @@ public class FilesService {
     public ResponseEntity<?> downloadFile(String filename, String docCardId) throws FileNotFoundException {
 
         // Проверяем, существует ли файл
-        String fileUploadPath = Paths.get("").toAbsolutePath() + "/files/" + docCardId + "/";
+        String fileUploadPath = Paths.get("").toAbsolutePath() + File.separator + "files" + File.separator + docCardId;
         String[] filenames = this.getFiles(docCardId);
         boolean contains = Arrays.asList(filenames).contains(filename);
         if (!contains) {
@@ -140,7 +140,7 @@ public class FilesService {
 
         // Устанавливаем заголовки для ответа HTTP
         String contentType = "application/octet-stream";
-        String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
+        String headerValue = "attachment; filename=" + filename;
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
@@ -150,7 +150,7 @@ public class FilesService {
     }
 
     private String[] getFiles(String docCardId) {
-        String folderPath = Paths.get("").toAbsolutePath() + "/files/" + docCardId + "/";
+        String folderPath = Paths.get("").toAbsolutePath() + File.separator + "files" + File.separator + docCardId + File.separator;
 
         // Создаём объект типа File, который будет представлять каталог
         File directory = new File(folderPath);
