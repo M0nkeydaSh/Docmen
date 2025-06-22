@@ -41,19 +41,17 @@ public class RouteStepCostumersController {
     @Operation(summary = "Создать пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public RouteStepCostumersDto create(@Schema(description = "ID шага маршрута") @RequestParam String routeStepId,
                                         @Schema(description = "ID работника") @RequestParam String costumerId,
-                                        @Schema(description = "Готовность") @RequestParam String ready,
                                         @Schema(description = "Срок исполнения") @RequestParam String dateTime) {
-        return routeStepCostumersService.create(routeStepId, costumerId, ready, dateTime);
+        return routeStepCostumersService.create(routeStepId, costumerId, dateTime);
     }
 
     @PatchMapping
-    @Operation(summary = "изменить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
+    @Operation(summary = "Изменить пользователя шага маршрута", description = "В ответе возвращаются объект RouteStepCostumersDto")
     public RouteStepCostumersDto patch(@Schema(description = "ID пользователя шага маршрута") @RequestParam UUID id,
                                        @Schema(description = "ID  шага маршрута") @RequestParam String routeStepId,
                                        @Schema(description = "ID работника") @RequestParam String costumerId,
-                                       @Schema(description = "Готовность") @RequestParam String ready,
                                        @Schema(description = "Срок исполнения") @RequestParam String dateTime) throws IOException {
-        return routeStepCostumersService.patch(id, routeStepId, costumerId, ready, dateTime);
+        return routeStepCostumersService.patch(id, routeStepId, costumerId,  dateTime);
     }
 
     @DeleteMapping

@@ -29,7 +29,7 @@ public class User extends AuditEntity implements UserDetails {
     @Column(name = "ENABLED")
     private Boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "user_sec_id"))
     @BatchSize(size = 50)
     private Set<Authority> authorities = new LinkedHashSet<>();

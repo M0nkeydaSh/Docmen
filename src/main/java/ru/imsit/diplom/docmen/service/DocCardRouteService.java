@@ -14,7 +14,9 @@ import ru.imsit.diplom.docmen.entity.DocCard;
 import ru.imsit.diplom.docmen.entity.DocCardRoute;
 import ru.imsit.diplom.docmen.filter.DocCardRouteFilter;
 import ru.imsit.diplom.docmen.helper.DocCardHelper;
+import ru.imsit.diplom.docmen.helper.UserInfoHelper;
 import ru.imsit.diplom.docmen.mapper.DocCardRouteMapper;
+import ru.imsit.diplom.docmen.notification.INotificationService;
 import ru.imsit.diplom.docmen.repository.DocCardRouteRepository;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class DocCardRouteService {
+
+    private final UserInfoHelper userInfoHelper;
 
     private final DocCardRouteRepository docCardRouteRepository;
 
@@ -36,6 +40,8 @@ public class DocCardRouteService {
     private final CommentsService commentsService;
 
     private final DocCardHelper docCardHelper;
+
+    private final INotificationService notificationService;
 
 
     public Page<DocCardRouteDto> getAll(DocCardRouteFilter filter, Pageable pageable) {
@@ -59,7 +65,14 @@ public class DocCardRouteService {
     }
 
     public DocCardRouteDto setReady(UUID id) {
+        var autorizationUser = userInfoHelper.getUser();
         var docCardRoute = docCardRouteRepository.findById(id).orElseThrow(() -> new RuntimeException("Маршрут карточки документа не найден"));
+        var currentRouteStepCostumer = docCardRoute.getRouteStepCostumers();
+        var costumers = currentRouteStepCostumer.getCostumers();
+        var user = costumers.getUser();
+        if (!autorizationUser.getUsername().equals(user.getUsername()) && autorizationUser.getAuthorities().stream().noneMatch(i -> i.getName().equals("ADMIN"))){
+            throw new RuntimeException("У вас нет прав для выполнения данной операции");
+        }
         docCardRoute.setReady("Y");
         var result = docCardRouteRepository.save(docCardRoute);
         //Получить RouteStep
@@ -159,6 +172,7 @@ public class DocCardRouteService {
         //Создаем визы маршрута документа
         for (var routeStepCostumer : routeStepCostumers) {
             create(UUID.fromString(routeStepCostumer.getId()), routeStepCostumer.getControlDate(), UUID.fromString(routeStepCostumer.getRouteStepId()));
+            notificationService.notify(routeStepCostumer.getCostumerId(), "Вам назначен документ: " + docCard.getName());
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.imsit.diplom.docmen.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,7 +62,7 @@ public class FilesController {
         return filesService.delete(id);
     }
 
-
+    @Hidden
     @PostMapping("/upload")
     @Operation(summary = "Загрузить файл")
     public ResponseEntity<?> upload(@Schema(description = "ID карточки документа файла") @RequestParam String docCardId,
