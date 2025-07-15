@@ -20,5 +20,4 @@ public class DocCardDto {
     @ArraySchema(schema = @Schema(description = "Статус карточки документа", example = "Черновик",
             implementation = StatesEnum.class, requiredMode = Schema.RequiredMode.REQUIRED))
     String state;
-
 }

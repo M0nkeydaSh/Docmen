@@ -6,6 +6,9 @@ spring:
     url: jdbc:h2:file:./data/docmen;AUTO_SERVER=TRUE
   application:
     name: Docmen
+  banner:
+    location: banner.txt
+
 
 api:
   server:
@@ -14,3 +17,9 @@ api:
 springdoc:
   swagger-ui:
       tagsSorter: alpha
+
+application:
+  title: Система электронного документооборота
+  version: v0.0.1
+
+
