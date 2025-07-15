@@ -1,0 +1,187 @@
+21:57:13.028 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+21:57:13.060 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Starting DocmenApplication using Java 21.0.7 with PID 12460 (D:\IdeaProjects\Docmen\target\classes started by Vadim in D:\IdeaProjects\Docmen)
+21:57:13.061 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - No active profile set, falling back to 1 default profile: "default"
+21:57:13.088 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+21:57:13.088 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+21:57:13.925 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+21:57:13.993 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 14 JPA repository interfaces.
+21:57:14.449 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+21:57:14.458 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+21:57:14.459 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+21:57:14.459 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.41]
+21:57:14.496 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+21:57:14.496 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1407 ms
+21:57:14.694 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+21:57:14.936 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn1: url=jdbc:h2:file:./data/docmen user=SA
+21:57:14.937 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+21:57:14.976 [restartedMain] INFO  liquibase.database - Set default schema name to PUBLIC
+21:57:15.246 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+21:57:15.350 [restartedMain] INFO  liquibase.ui - Database is up to date, no changesets to execute
+21:57:15.351 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+21:57:15.363 [restartedMain] INFO  liquibase.util - UPDATE SUMMARY
+21:57:15.363 [restartedMain] INFO  liquibase.util - Run:                          0
+21:57:15.363 [restartedMain] INFO  liquibase.util - Previously run:              40
+21:57:15.363 [restartedMain] INFO  liquibase.util - Filtered out:                 0
+21:57:15.364 [restartedMain] INFO  liquibase.util - -------------------------------
+21:57:15.364 [restartedMain] INFO  liquibase.util - Total change sets:           40
+21:57:15.364 [restartedMain] INFO  liquibase.util - Update summary generated
+21:57:15.365 [restartedMain] INFO  liquibase.command - Command execution complete
+21:57:15.984 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+21:57:16.022 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.15.Final
+21:57:16.043 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+21:57:16.233 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+21:57:16.282 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+21:57:17.056 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+21:57:17.058 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+21:57:17.429 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+21:57:17.910 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+21:57:18.215 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+21:57:18.251 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 3c537d40-be5a-4d48-af76-bcd9a3ba6c02
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+21:57:18.257 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+21:57:18.663 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/docmen'
+21:57:18.696 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+21:57:18.745 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+21:57:18.763 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+21:57:18.776 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Started DocmenApplication in 6.008 seconds (process running for 6.791)
+21:57:19.147 [RMI TCP Connection(2)-192.168.1.64] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+21:57:19.147 [RMI TCP Connection(2)-192.168.1.64] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+21:57:19.149 [RMI TCP Connection(2)-192.168.1.64] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+21:57:34.569 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+21:57:34.572 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+21:57:34.580 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+21:57:34.584 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+21:57:34.586 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:00:04.187 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+22:00:04.221 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Starting DocmenApplication using Java 21.0.7 with PID 13092 (D:\IdeaProjects\Docmen\target\classes started by Vadim in D:\IdeaProjects\Docmen)
+22:00:04.222 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - No active profile set, falling back to 1 default profile: "default"
+22:00:04.247 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+22:00:04.248 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+22:00:05.083 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:00:05.152 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 14 JPA repository interfaces.
+22:00:05.617 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+22:00:05.627 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+22:00:05.628 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+22:00:05.628 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.41]
+22:00:05.667 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+22:00:05.667 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1419 ms
+22:00:05.871 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:00:06.117 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn1: url=jdbc:h2:file:./data/docmen user=SA
+22:00:06.118 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:00:06.160 [restartedMain] INFO  liquibase.database - Set default schema name to PUBLIC
+22:00:06.434 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+22:00:06.534 [restartedMain] INFO  liquibase.ui - Database is up to date, no changesets to execute
+22:00:06.535 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+22:00:06.547 [restartedMain] INFO  liquibase.util - UPDATE SUMMARY
+22:00:06.548 [restartedMain] INFO  liquibase.util - Run:                          0
+22:00:06.548 [restartedMain] INFO  liquibase.util - Previously run:              40
+22:00:06.548 [restartedMain] INFO  liquibase.util - Filtered out:                 0
+22:00:06.548 [restartedMain] INFO  liquibase.util - -------------------------------
+22:00:06.548 [restartedMain] INFO  liquibase.util - Total change sets:           40
+22:00:06.548 [restartedMain] INFO  liquibase.util - Update summary generated
+22:00:06.549 [restartedMain] INFO  liquibase.command - Command execution complete
+22:00:07.138 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+22:00:07.172 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.15.Final
+22:00:07.200 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:00:07.388 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:00:07.439 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+22:00:08.210 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:00:08.212 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:00:08.582 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+22:00:09.103 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+22:00:09.411 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+22:00:09.452 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 84f30326-39ab-480c-b33a-259618890af1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+22:00:09.459 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+22:00:09.910 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/docmen'
+22:00:09.947 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+22:00:10.008 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+22:00:10.020 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Started DocmenApplication in 6.092 seconds (process running for 6.765)
+22:00:10.022 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+22:00:10.024 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+22:00:10.031 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:00:10.033 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:00:10.149 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:00:39.431 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+22:00:39.462 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Starting DocmenApplication using Java 21.0.7 with PID 8632 (D:\IdeaProjects\Docmen\target\classes started by Vadim in D:\IdeaProjects\Docmen)
+22:00:39.463 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - No active profile set, falling back to 1 default profile: "default"
+22:00:39.491 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+22:00:39.491 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+22:00:40.325 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:00:40.389 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 14 JPA repository interfaces.
+22:00:40.847 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+22:00:40.856 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+22:00:40.857 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+22:00:40.857 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.41]
+22:00:40.893 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+22:00:40.893 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1402 ms
+22:00:41.109 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:00:41.338 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn1: url=jdbc:h2:file:./data/docmen user=SA
+22:00:41.339 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:00:41.380 [restartedMain] INFO  liquibase.database - Set default schema name to PUBLIC
+22:00:41.644 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+22:00:41.748 [restartedMain] INFO  liquibase.ui - Database is up to date, no changesets to execute
+22:00:41.749 [restartedMain] INFO  liquibase.changelog - Reading from PUBLIC.DATABASECHANGELOG
+22:00:41.762 [restartedMain] INFO  liquibase.util - UPDATE SUMMARY
+22:00:41.762 [restartedMain] INFO  liquibase.util - Run:                          0
+22:00:41.762 [restartedMain] INFO  liquibase.util - Previously run:              40
+22:00:41.762 [restartedMain] INFO  liquibase.util - Filtered out:                 0
+22:00:41.762 [restartedMain] INFO  liquibase.util - -------------------------------
+22:00:41.762 [restartedMain] INFO  liquibase.util - Total change sets:           40
+22:00:41.762 [restartedMain] INFO  liquibase.util - Update summary generated
+22:00:41.763 [restartedMain] INFO  liquibase.command - Command execution complete
+22:00:42.458 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+22:00:42.492 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.15.Final
+22:00:42.514 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:00:42.703 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:00:42.753 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+22:00:43.540 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:00:43.542 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:00:43.921 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+22:00:44.414 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+22:00:44.738 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+22:00:44.773 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: b1e958c1-3fdf-483e-85d4-b7986a070dbd
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+22:00:44.779 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+22:00:45.227 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/docmen'
+22:00:45.265 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+22:00:45.324 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+22:00:45.336 [restartedMain] INFO  r.i.diplom.docmen.DocmenApplication - Started DocmenApplication in 6.165 seconds (process running for 6.779)
+22:00:45.338 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+22:00:45.341 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+22:00:45.352 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:00:45.354 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:00:45.414 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
