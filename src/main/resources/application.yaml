@@ -6,9 +6,13 @@ spring:
     url: jdbc:h2:file:./data/docmen;AUTO_SERVER=TRUE
   application:
     name: Docmen
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 50
+    show-sql: true
   banner:
-    location: banner.txt
-
+    location: classpath:banner.txt
 
 api:
   server:
@@ -20,6 +24,6 @@ springdoc:
 
 application:
   title: Система электронного документооборота
-  version: v0.0.1
+  version: 0.0.1
 
 
