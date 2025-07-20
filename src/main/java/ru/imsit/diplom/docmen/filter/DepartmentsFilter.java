@@ -6,7 +6,7 @@ import ru.imsit.diplom.docmen.entity.Departments;
 
 public record DepartmentsFilter(String name) {
     public Specification<Departments> toSpecification() {
-        return Specification.where(nameSpec());
+        return nameSpec();
     }
 
     private Specification<Departments> nameSpec() {
@@ -14,4 +14,5 @@ public record DepartmentsFilter(String name) {
                 ? cb.equal(cb.lower(root.get("name")), name.toLowerCase())
                 : null);
     }
+
 }

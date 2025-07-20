@@ -20,7 +20,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
             <!-- daily rollover -->
-            <fileNamePattern>log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOGS}/log.%d{yyyy-MM-dd}.log</fileNamePattern>
 
         </rollingPolicy>
     </appender>
