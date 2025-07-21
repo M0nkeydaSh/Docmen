@@ -16,6 +16,7 @@ import ru.imsit.diplom.docmen.mapper.CostumersMapper;
 import ru.imsit.diplom.docmen.repository.CostumersRepository;
 import ru.imsit.diplom.docmen.repository.TypeCostumerRepository;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class CostumersService {
                                String phoneNumber,
                                String gender,
                                String typeCostumer,
-                               String username) {
+                               String username) throws Exception {
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer)
                 .orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         var user = userInfoHelper.getUserByUsername(username);
@@ -67,7 +68,7 @@ public class CostumersService {
         return costumersMapper.toCostumersDto(costumersRepository.save(costumers));
     }
 
-    public CostumersDto patch(String username, String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer) {
+    public CostumersDto patch(String username, String firstname, String surName, String lastName, String email, String phoneNumber, String gender, String typeCostumer) throws IOException {
         var costumer = costumersRepository.findByUser_Username(username).orElseThrow(() -> new RuntimeException("Сотрудник не найден"));
         var typeCostumers = typeCostumerRepository.findByName(typeCostumer).orElseThrow(() -> new RuntimeException("Тип сотрудника не найден"));
         var user = userInfoHelper.getUserByUsername(username);

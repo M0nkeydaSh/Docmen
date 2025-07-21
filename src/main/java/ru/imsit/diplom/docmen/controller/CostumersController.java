@@ -46,7 +46,7 @@ public class CostumersController {
                                @Schema(description = "Телефон сотрудника") @RequestParam String phoneNumber,
                                @Schema(description = "Пол сотрудника", implementation = GenderEnum.class, requiredMode = Schema.RequiredMode.REQUIRED) @RequestParam String gender,
                                @Schema(description = "Должность сотрудника") @RequestParam String typeCostumer,
-                               @Schema(description = "Логин сотрудника") @RequestParam String username) {
+                               @Schema(description = "Логин сотрудника") @RequestParam String username) throws Exception {
         return costumersService.create(firstname, surName, lastName, email, phoneNumber, gender, typeCostumer, username);
     }
 
